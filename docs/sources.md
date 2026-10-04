@@ -44,3 +44,13 @@ Checked: 2026-10-04. These references establish context and prior work, not succ
    ZKPassport is not a dependency, and its product claims were not independently audited here.
 
 No survey of the public's awareness was performed. No audience-reach or brand-lift measurement was performed.
+
+## Data retention and management
+
+8. 個人情報保護委員会・通則編（2026-10-04確認）
+   https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/
+   Source for purpose-specific retention, efforts to erase data no longer needed, access controls and lifecycle handling. It does not set one retention period for every car-sharing record. The recommendations in press-ja.md are operational proposals, not a determination of any company's legal duties.
+
+9. 個人情報保護委員会・不正アクセス等への対策FAQ（2026-10-04確認）
+   https://www.ppc.go.jp/all_faq_index/faq1-q10-7/
+   Covers damage-limiting measures and encryption with attention to key/password management.

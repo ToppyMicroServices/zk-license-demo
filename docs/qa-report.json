@@ -54,8 +54,21 @@
     "screenshot_sha256": "9a3d675fbc34f2fe05dbb16f87d93bc0f43711214595c8080a6ddf42ca226f44",
     "review": "Entire final HTML rendered; all three sections and footer are readable."
   },
-  "github": "NOT_PUBLISHED",
-  "ci": "NOT_RUN",
+  "github": {
+    "status": "PUBLIC",
+    "url": "https://github.com/ToppyMicroServices/zk-license-demo"
+  },
+  "ci": {
+    "status": "PASSED",
+    "url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/37205490616",
+    "head_sha": "217145611be20bfd8fe910b42d6b8f2e9d3c7be8",
+    "platform": "Ubuntu 24.04 x86_64",
+    "python": "3.12.14",
+    "tests_passed": 46,
+    "proof_generation": "PASSED",
+    "independent_verifier": "PASSED",
+    "replay_rejection": "PASSED"
+  },
   "linkedin": "NOT_POSTED",
   "dependency": {
     "filename": "anoncreds-0.2.3-py3-none-macosx_10_9_universal2.whl",

@@ -7,8 +7,18 @@
   "crypto_tests_written": 16,
   "crypto_tests_executed": 16,
   "release_gate": "PASSED_LOCAL",
-  "github_write": "NOT_PUBLISHED",
-  "ci": "NOT_RUN",
+  "github_write": "PUBLISHED",
+  "ci": {
+    "status": "PASSED",
+    "url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/37205490616",
+    "head_sha": "217145611be20bfd8fe910b42d6b8f2e9d3c7be8",
+    "platform": "Ubuntu 24.04 x86_64",
+    "python": "3.12.14",
+    "tests_passed": 46,
+    "proof_generation": "PASSED",
+    "independent_verifier": "PASSED",
+    "replay_rejection": "PASSED"
+  },
   "linkedin": "NOT_POSTED",
   "no_real_identity_data_used": true,
   "preparation_record": {

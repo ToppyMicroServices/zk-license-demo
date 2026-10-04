@@ -1,6 +1,6 @@
 # Validation record
 
-Updated: 2026-10-04. The current result is a local macOS run, not a CI result or a production audit.
+Updated: 2026-10-04. The local macOS run and Ubuntu CI are recorded separately. Neither is a production audit.
 
 ## Current execution
 
@@ -12,6 +12,8 @@ Updated: 2026-10-04. The current result is a local macOS run, not a CI result or
 - Real credential issuance, proof generation and verification succeeded.
 - A separate CLI process accepted the presentation. Its next invocation refused it with `already_used`.
 - `pip check` and `bash -n publish.sh` passed.
+- In an isolated environment without the backend, release-mode tests and the demo failed as intended; no successful HTML report was produced.
+- The final HTML was visually inspected in the Codex in-app browser, including all sections and the footer. The full-page image is retained locally.
 
 The first real-crypto run exposed two failures in the prepared sample: proofs of weaker entitlement and expiry
 thresholds were accepted against the intended request. The verifier now compares the embedded predicate names,
@@ -39,13 +41,21 @@ One illustrative run measured proof generation at 95.513 ms, verification includ
 and a compact presentation JSON size of 31,736 bytes. These are one local sample, not a benchmark.
 Issuer key generation took 8,654.065 ms and is recorded separately.
 
+## GitHub and CI
+
+The [public repository](https://github.com/ToppyMicroServices/zk-license-demo) was created and pushed.
+[CI run 37205490616](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/37205490616)
+succeeded on Ubuntu 24.04 / Python 3.12.14 at commit `217145611be20bfd8fe910b42d6b8f2e9d3c7be8`.
+The actual log records all 46 tests passing, real proof generation, independent acceptance and expected replay refusal.
+The tested crypto and policy source hashes are recorded in `qa-report.json`.
+
 ## Publication and limits
 
 GitHub authentication and active admin membership in `ToppyMicroServices` were confirmed in the current environment.
-The proposed repository lookup did not resolve. No public repository or CI run has been created in this session.
-LinkedIn and the article remain drafts pending a public URL and the owner's wording review.
+The initial repository lookup did not resolve; the repository was subsequently created.
+LinkedIn remains unposted. The general-audience explanation and retention guidance are in [press-ja.md](press-ja.md).
 
-Windows and Linux real-crypto execution remain unverified. Python 3.12 on Ubuntu is configured for CI but has not run.
+Windows real-crypto execution remains unverified. Linux real-crypto execution passed in the CI run above.
 An independent security audit, production deployment, Japanese driving-licence signature integration,
 revocation checking and real-person authentication are not established.
 

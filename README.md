@@ -9,7 +9,8 @@
 > ローカル検証（2026-10-04）: macOS / Python 3.14.6 / AnonCreds 0.2.3で、
 > 全46テスト（非暗号30件・実暗号16件）が通過しました。
 > 条件を弱めた証明の受理を修正し、条件の書き換えも拒否することを確認しています。
-> GitHub Actionsはまだ実行していません。詳細は [検証状況](docs/validation.md)。
+> Ubuntu / Python 3.12.14のGitHub Actionsでも、全46テスト・実証明・独立検証・再送拒否が成功しました。
+> 詳細は [検証状況](docs/validation.md)。
 
 ## 何を証明するか
 
@@ -28,7 +29,8 @@
 ## 実行
 
 Python 3.12をCIの検証対象として設定しています。ローカルではmacOS / Python 3.14.6で検証しました。
-WindowsとLinuxでの実暗号実行は未確認です。各環境向け公式wheelのハッシュを固定しています。
+Linux / Python 3.12.14でもCIを通過しました。Windowsでの実暗号実行は未確認です。
+各環境向け公式wheelのハッシュを固定しています。
 最初の依存関係取得にはインターネット接続が必要です。サンプル自身は通信を行いません。
 
 ```bash
@@ -86,8 +88,10 @@ ZKによる属性の非開示そのものをToppyの発明とは扱いません�
 
 ## 公開
 
-公開用リポジトリ名の案は`ToppyMicroServices/zk-license-demo`です。準備時点でその作成・存在は確認していません。
-GitHub CLIでの認証と組織への作成権限がある環境では、依存関係を入れた後に次を実行できます。
+公開コード: [ToppyMicroServices/zk-license-demo](https://github.com/ToppyMicroServices/zk-license-demo)。
+一般向けの説明と、カーシェアの情報流出をきっかけとした保持・管理の提案は[公開説明](docs/press-ja.md)を参照してください。
+`publish.sh`は初回公開に使用したスクリプトです。GitHub CLIでの認証と組織への作成権限があり、
+同名のリポジトリがまだ存在しない場合に、依存関係を入れて次を実行できます。
 
 ```bash
 ./publish.sh
@@ -122,4 +126,4 @@ License: MIT for this sample. The separately installed anoncreds dependency is A
 trusted issuer key pinning, and stateful replay rejection. Not a new cryptographic scheme, a Japanese driving
 licence reader, or a production identity service. All 46 tests passed locally on macOS with the real
 AnonCreds 0.2.3 backend. The verifier explicitly matches embedded predicates to its stored policy before
-cryptographic verification. CI remains unrun; the release gate fails when the actual backend is unavailable.
+cryptographic verification. Ubuntu / Python 3.12.14 CI also passed all tests and demo gates. The release gate fails when the actual backend is unavailable.
