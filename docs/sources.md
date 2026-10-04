@@ -19,6 +19,9 @@ Checked: 2026-10-04. These references establish context and prior work, not succ
 3. AnonCreds specification
    https://anoncreds.github.io/anoncreds-spec/
    Basis for signed attributes, hidden attributes, predicate proofs and presentation nonces.
+   Its copyright notice identifies Community Specification License 1.0:
+   https://github.com/CommunitySpecification/1.0
+   This is the specification licence; the separately installed anoncreds-rs code uses Apache-2.0.
 
 4. anoncreds-rs and its official Python example
    https://github.com/anoncreds/anoncreds-rs

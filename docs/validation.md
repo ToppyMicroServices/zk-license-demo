@@ -53,7 +53,9 @@ The tested crypto and policy source hashes are recorded in `qa-report.json`.
 
 GitHub authentication and active admin membership in `ToppyMicroServices` were confirmed in the current environment.
 The initial repository lookup did not resolve; the repository was subsequently created.
-LinkedIn remains unposted. The general-audience explanation and retention guidance are in [press-ja.md](press-ja.md).
+LinkedIn remains unposted. The general-audience explanation and retention guidance are in
+[Japanese](press-ja.md) and [English](press-en.md), with corresponding articles on the official site:
+[Japanese](https://www.toppymicros.com/zk-license-demo.html) · [English](https://www.toppymicros.com/zk-license-demo-en.html).
 
 Windows real-crypto execution remains unverified. Linux real-crypto execution passed in the CI run above.
 An independent security audit, production deployment, Japanese driving-licence signature integration,

@@ -89,7 +89,9 @@ ZKによる属性の非開示そのものをToppyの発明とは扱いません�
 ## 公開
 
 公開コード: [ToppyMicroServices/zk-license-demo](https://github.com/ToppyMicroServices/zk-license-demo)。
-一般向けの説明と、カーシェアの情報流出をきっかけとした保持・管理の提案は[公開説明](docs/press-ja.md)を参照してください。
+一般向けの説明と、カーシェアの情報流出をきっかけとした保持・管理の提案を日英で公開しています。
+[日本語記事](https://www.toppymicros.com/zk-license-demo.html) · [English article](https://www.toppymicros.com/zk-license-demo-en.html)
+（リポジトリ内の本文: [日本語](docs/press-ja.md) · [English](docs/press-en.md)）。
 `publish.sh`は初回公開に使用したスクリプトです。GitHub CLIでの認証と組織への作成権限があり、
 同名のリポジトリがまだ存在しない場合に、依存関係を入れて次を実行できます。
 
@@ -125,5 +127,6 @@ License: MIT for this sample. The separately installed anoncreds dependency is A
 **English summary:** An educational, synthetic-credential demonstration of non-disclosing AnonCreds predicates,
 trusted issuer key pinning, and stateful replay rejection. Not a new cryptographic scheme, a Japanese driving
 licence reader, or a production identity service. All 46 tests passed locally on macOS with the real
-AnonCreds 0.2.3 backend. The verifier explicitly matches embedded predicates to its stored policy before
+AnonCreds 0.2.3 backend. A [public English article](https://www.toppymicros.com/zk-license-demo-en.html)
+explains the proposal and data-retention guidance. The verifier explicitly matches embedded predicates to its stored policy before
 cryptographic verification. Ubuntu / Python 3.12.14 CI also passed all tests and demo gates. The release gate fails when the actual backend is unavailable.

@@ -8,7 +8,8 @@
 「Toppyが新しい本人確認技術を発明した」という告知には向かない。
 **コードは公開済み。** macOSとLinuxのCIで全46テストと実証明の検証が通過し、公開GitHub URLも確認した。
 LinkedInにはまだ投稿していない。投稿案の使用は、実際に投稿する文面と宛先の確認後とする。
-一般向けの説明と保持・管理の提案は[press-ja.md](press-ja.md)にまとめた。
+一般向けの説明と保持・管理の提案は[日本語](press-ja.md)と[English](press-en.md)にまとめた。
+公式サイトにも[日本語](https://www.toppymicros.com/zk-license-demo.html)と[English](https://www.toppymicros.com/zk-license-demo-en.html)の記事を公開した。
 ブランド向上の効果は推測であり、測定した事実ではない。
 
 ## 新規性と読者にとっての新しさ
