@@ -1,0 +1,97 @@
+{
+  "recorded_at": "2026-10-04T22:17:21.918814+09:00",
+  "python": "3.14.6",
+  "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+  "anoncreds": "0.2.3",
+  "checks": {
+    "tests": {
+      "passed": true,
+      "total": 46,
+      "non_crypto": 30,
+      "crypto": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "log": "docs/test-release.log"
+    },
+    "pip-check": {
+      "exit_code": 0,
+      "log": "docs/release-gate-current.log"
+    },
+    "shell-syntax": {
+      "exit_code": 0,
+      "log": "docs/release-gate-current.log"
+    },
+    "demo-run": {
+      "exit_code": 0,
+      "log": "docs/release-gate-current.log"
+    },
+    "independent-verifier": {
+      "exit_code": 0,
+      "log": "docs/release-gate-current.log"
+    },
+    "replay-rejection": {
+      "exit_code": 1,
+      "log": "docs/release-gate-current.log",
+      "expected_reason": "already_used"
+    },
+    "missing-backend-tests": {
+      "passed": true,
+      "expected_exit_code": 1,
+      "log": "docs/release-gate-current.log"
+    },
+    "missing-backend-demo": {
+      "passed": true,
+      "expected_exit_code": 1,
+      "log": "docs/release-gate-current.log"
+    }
+  },
+  "html_visual_review": {
+    "status": "PASSED",
+    "browser": "Codex in-app browser",
+    "renderer_version": "NOT_EXPOSED",
+    "screenshot": "artifacts/final-qa/report-full.jpg",
+    "screenshot_sha256": "9a3d675fbc34f2fe05dbb16f87d93bc0f43711214595c8080a6ddf42ca226f44",
+    "review": "Entire final HTML rendered; all three sections and footer are readable."
+  },
+  "github": "NOT_PUBLISHED",
+  "ci": "NOT_RUN",
+  "linkedin": "NOT_POSTED",
+  "dependency": {
+    "filename": "anoncreds-0.2.3-py3-none-macosx_10_9_universal2.whl",
+    "sha256": "9bc5d6f4404f611e8ad74801fcf1aa05bf4307831edf18bfd9438d811df053fc",
+    "installed_with_require_hashes": true
+  },
+  "measurements": {
+    "accepted": true,
+    "replay": "rejected: already_used",
+    "service_day": "2030-06-01",
+    "setup_ms": 8654.065,
+    "proof_ms": 95.513,
+    "verify_with_state_ms": 92.504,
+    "proof_json_bytes": 31736,
+    "runs": 1,
+    "python": "3.14.6",
+    "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+    "anoncreds": "0.2.3"
+  },
+  "artifact_sha256": {
+    "artifacts/final-run/demo-state.sqlite3": "f0de801fcc39e16b6d7c202e9e78fed085a7ce285529cc12a78be4f0e7e32667",
+    "artifacts/final-run/proof-envelope.json": "ad65e81475e217c3b1d4ac868f180be0cacf029b6faffa1022fdf4a40d4470a2",
+    "artifacts/final-run/report.html": "4bc1b488fafad20d4bd95b184a7ce1016f38c6635b5f2d78622c21fa9e16c5d5",
+    "artifacts/final-run/report.json": "57279583e1acaa8e15691f6396cb7efe56e3d435dde2f171b0b8dbcc9c0bb678",
+    "artifacts/final-run/request.json": "0355ace18822ba358a371eda3f3579dd8b29722ba3bd5036135d54aeefd1cc77",
+    "artifacts/final-run/trust.json": "fd19a77313e6e3d4363844efee304cb9e1ddcf7665aa3bb00c1d820d70e35a02",
+    "artifacts/final-run/verifier-state.sqlite3": "f0de801fcc39e16b6d7c202e9e78fed085a7ce285529cc12a78be4f0e7e32667"
+  },
+  "local_release_gate": "PASSED",
+  "tested_source_sha256": {
+    "zk_license.py": "04f3eb89037757bba1deaec02625f37f4f54e3e10d99c496c102f6e61cae3891",
+    "request_store.py": "f0e75d7e003874e04ac2422931ec3fe63b9631a5c0920b88b89befa945f82386",
+    "tests/test_crypto.py": "186639f8c1e85e81e1adab6c445740b2290d90e5d4f1400ca7fcdc1887934c4b",
+    "tests/test_policy.py": "94d6a4001814e5d46a8c864d95842da50b0920362aa5300906e9325a17e617b6"
+  },
+  "final_source_sha256": {
+    "demo.py": "0d956a267e2663347779fb793a2948b0f0e6dbd5055553d432c69d37d1f44e59"
+  }
+}

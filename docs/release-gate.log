@@ -1,0 +1,44 @@
+setUpClass (test_crypto.CryptoTests) ... ERROR
+test_duplicate_json_rejected (test_policy.InputTests.test_duplicate_json_rejected) ... ok
+test_json_must_be_object (test_policy.InputTests.test_json_must_be_object) ... ok
+test_json_size_limit (test_policy.InputTests.test_json_size_limit) ... ok
+test_nonfinite_json_rejected (test_policy.InputTests.test_nonfinite_json_rejected) ... ok
+test_accept_then_reject_replay (test_policy.PolicyTests.test_accept_then_reject_replay) ... ok
+test_backwards_clock_is_rejected (test_policy.PolicyTests.test_backwards_clock_is_rejected) ... ok
+test_bad_proof_does_not_consume (test_policy.PolicyTests.test_bad_proof_does_not_consume) ... ok
+test_callback_exception_rolls_back (test_policy.PolicyTests.test_callback_exception_rolls_back) ... ok
+test_challenges_are_distinct (test_policy.PolicyTests.test_challenges_are_distinct) ... ok
+test_concurrent_replay_only_one_acceptance (test_policy.PolicyTests.test_concurrent_replay_only_one_acceptance) ... ok
+test_date_encoding (test_policy.PolicyTests.test_date_encoding) ... ok
+test_exact_deadline_is_expired (test_policy.PolicyTests.test_exact_deadline_is_expired) ... ok
+test_invalid_ttl (test_policy.PolicyTests.test_invalid_ttl) ... ok
+test_policy_has_two_pinned_predicates (test_policy.PolicyTests.test_policy_has_two_pinned_predicates) ... ok
+test_replay_state_survives_restart (test_policy.PolicyTests.test_replay_state_survives_restart) ... ok
+test_truthy_non_boolean_callback_rejected (test_policy.PolicyTests.test_truthy_non_boolean_callback_rejected) ... ok
+test_unknown_request (test_policy.PolicyTests.test_unknown_request) ... ok
+test_wrong_audience_does_not_consume (test_policy.PolicyTests.test_wrong_audience_does_not_consume) ... ok
+test_wrong_context_prevents_crypto_callback (test_policy.PolicyTests.test_wrong_context_prevents_crypto_callback) ... ok
+test_wrong_session_does_not_consume (test_policy.PolicyTests.test_wrong_session_does_not_consume) ... ok
+test_additional_identity_value_rejected (test_policy.ShapeTests.test_additional_identity_value_rejected) ... ok
+test_boolean_index_rejected (test_policy.ShapeTests.test_boolean_index_rejected) ... ok
+test_extra_envelope_field_rejected (test_policy.ShapeTests.test_extra_envelope_field_rejected) ... ok
+test_malformed_input_rejected (test_policy.ShapeTests.test_malformed_input_rejected) ... ok
+test_minimal_shape_only (test_policy.ShapeTests.test_minimal_shape_only) ... ok
+test_missing_predicate_rejected (test_policy.ShapeTests.test_missing_predicate_rejected) ... ok
+test_mixed_credentials_rejected (test_policy.ShapeTests.test_mixed_credentials_rejected) ... ok
+test_revocation_not_silently_supported (test_policy.ShapeTests.test_revocation_not_silently_supported) ... ok
+test_self_attestation_rejected (test_policy.ShapeTests.test_self_attestation_rejected) ... ok
+test_unknown_issuer (test_policy.ShapeTests.test_unknown_issuer) ... ok
+
+======================================================================
+ERROR: setUpClass (test_crypto.CryptoTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/zk-license-demo/tests/test_crypto.py", line 27, in setUpClass
+    raise RuntimeError("REQUIRE_CRYPTO=1 but anoncreds is unavailable")
+RuntimeError: REQUIRE_CRYPTO=1 but anoncreds is unavailable
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.018s
+
+FAILED (errors=1)

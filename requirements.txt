@@ -1,0 +1,6 @@
+# Official anoncreds-rs Python wrapper. Hashes from PyPI, checked 2026-10-04.
+anoncreds==0.2.3 \
+    --hash=sha256:5fe3172d37a88640a0af65e16a1f6da74f9dbac9d962e77b288dcacbb1c10cfc \
+    --hash=sha256:079040da7346fcdd4e70e7103a5644692460c4e88d1d845f6918f9a3e0a6c475 \
+    --hash=sha256:9bc5d6f4404f611e8ad74801fcf1aa05bf4307831edf18bfd9438d811df053fc \
+    --hash=sha256:cd9c747eeff5dc3d975f99671f6e79b1d287c5fb625abf4dafadeaa69bdfc739

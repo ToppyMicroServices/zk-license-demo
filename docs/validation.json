@@ -1,0 +1,25 @@
+{
+  "record_date": "2026-10-04",
+  "python": "3.14.6",
+  "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+  "anoncreds": "0.2.3",
+  "non_crypto_tests_passed": 30,
+  "crypto_tests_written": 16,
+  "crypto_tests_executed": 16,
+  "release_gate": "PASSED_LOCAL",
+  "github_write": "NOT_PUBLISHED",
+  "ci": "NOT_RUN",
+  "linkedin": "NOT_POSTED",
+  "no_real_identity_data_used": true,
+  "preparation_record": {
+    "record_date": "2026-10-04",
+    "python": "3.13.5",
+    "non_crypto_tests_passed": 30,
+    "crypto_tests_written": 12,
+    "crypto_tests_executed": 0,
+    "release_gate": "BLOCKED_MISSING_BACKEND",
+    "github_write": "FAILED_403",
+    "linkedin": "NOT_POSTED",
+    "no_real_identity_data_used": true
+  }
+}
