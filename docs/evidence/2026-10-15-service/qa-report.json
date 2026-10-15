@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-15T05:04:45.362821+00:00",
+  "scope": "Local synthetic service; not real identity, licence status, production readiness or independent audit",
+  "local_tests": {
+    "count": 68,
+    "result": "passed",
+    "command": "REQUIRE_CRYPTO=1 .venv/bin/python -W error -m unittest discover -s tests -v",
+    "log": "tests-macos.log"
+  },
+  "browser": {
+    "surface": "Codex in-app browser on macOS",
+    "flows": [
+      "login",
+      "request review",
+      "approve with actual proof verification",
+      "deny",
+      "logout"
+    ],
+    "visual_check": "Default desktop viewport; full-page screenshots inspected. Mobile and other browser engines not checked."
+  },
+  "other_checks": [
+    "node --check web/app.js",
+    "bash -n publish.sh",
+    "pip check",
+    "git diff --check"
+  ],
+  "ci": {
+    "status": "success",
+    "run_id": 38684849636,
+    "url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/38684849636",
+    "source_commit": "09ee8ba21fda409553a1edda3ee33b6eab400ecf",
+    "tests_per_platform": 68,
+    "platforms": [
+      "ubuntu-24.04",
+      "windows-2022"
+    ],
+    "gates": [
+      "real backend required",
+      "unit and HTTP tests",
+      "proof generation",
+      "independent CLI verifier",
+      "replay refusal",
+      "30-run serial benchmark"
+    ]
+  },
+  "source_sha256": {
+    "service.py": "95266525a2ae5f8caf1d08f28be4d5883b2f4d4981f9a7fdb3c3b45217e9a639",
+    "request_store.py": "f0e75d7e003874e04ac2422931ec3fe63b9631a5c0920b88b89befa945f82386",
+    "zk_license.py": "04f3eb89037757bba1deaec02625f37f4f54e3e10d99c496c102f6e61cae3891",
+    "tests/test_service.py": "4cb81d5ddf0a2fe507cf774dcd053e3635efb8690e4f88fa3014aadbd39574dd",
+    "web/index.html": "37383f3cdf18c231beb70cafaff071e43baf00a40cf77c792c67f0e126d0b5d6",
+    "web/app.js": "4238757fcaba5e6ec7ee0130c72326d4b98f25f84581343f0551ecf9d280940e",
+    "web/style.css": "25d7f653d08b98ca8dcb900a0e94b060359939b6bdedfc4409e91db75014be2e"
+  },
+  "artifact_sha256": {
+    "ci-artifacts.json": "2bcdb8543225648c12aceeabd24ab4198630873c98af73693de7fc7f4fedb874",
+    "ci-run.json": "91f59ae97068fb3be2edd257d113175d5f4c383cb22059ea8ceb9e7707f8f795",
+    "consent.jpg": "81fbd9fb72c1be1139ab5eca06abe459b318dc365358ac76694a2432bdc11fde",
+    "denied.jpg": "41607ecb09e1771d85a10bec6cf17d7f03e04777a15bfec6b4e8dcd52241fbc3",
+    "environment-ubuntu.json": "dac55737c1e160c0b286cd7e4bd5a612ea9779e0529cb6e7c3233c6d68ff312a",
+    "environment-windows.json": "4031ef63ac5d6ed9761351861ba7e2bc3e0da17a4f730094cd8606ea94439447",
+    "tests-macos.log": "7d21e00fc8e18743ac6e6587da5962133284ec2c965769f50e038f35a263b11b",
+    "tests-service-macos.log": "dc3bd4fdcac0e74c9a0db52730c9cf5729e70f6580677e23ac810810829673a4",
+    "tests-ubuntu.log": "6becea4810dae65d1c60751d46842f136b182d7b4cca89c6223b93e1a374cd9f",
+    "tests-windows.log": "901bbe2d2e5cec3fd793a57d636cc0d914ad2a154f0810857e66562cd39fd796",
+    "verified.jpg": "9f2c8408e8e5094592ca0dc154efe8a79ecf6114f6e0de44cdfeaa0bab6a5c43"
+  }
+}
