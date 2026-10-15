@@ -1,0 +1,16 @@
+{
+  "accepted": true,
+  "replay": "rejected: already_used",
+  "service_day": "2030-06-01",
+  "setup_ms": 1727.433,
+  "proof_ms": 122.324,
+  "verify_with_state_ms": 120.484,
+  "proof_json_bytes": 31709,
+  "runs": 1,
+  "python": "3.12.15",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "anoncreds": "0.2.3"
+}
+Independent verification (within the request TTL):
+python demo.py verify --out 'artifacts/ci-run'
+The second successful independent-verifier invocation must reject as replay.

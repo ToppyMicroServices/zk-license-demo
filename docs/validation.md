@@ -1,8 +1,21 @@
 # Validation record
 
-Updated: 2026-10-04. The local macOS run and Ubuntu CI are recorded separately. Neither is a production audit.
+Updated: 2026-10-15. Records below are dated separately. None is a production audit.
 
-## Current execution
+## Windows and repeated measurements: 2026-10-15
+
+At commit `78ba7d16f353cb7518edd74f71ce3f864512e699`, all 50 tests passed on local
+macOS and on Ubuntu 24.04 and Windows Server 2022 x64 in
+[CI run 38671009097](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/38671009097).
+There were 34 non-crypto tests and 16 real-crypto tests, with no skips.
+Both CI jobs also passed proof generation, independent CLI verification and replay rejection.
+
+Each environment completed three warmups and 30 measured proof/verification iterations.
+[Performance results](performance.md) describe the timing boundaries and limitations.
+[The dated QA report](evidence/2026-10-15/qa-report.json) records checks and evidence hashes.
+The older JSON records and logs below remain historical records of October 4.
+
+## Initial execution: 2026-10-04
 
 - macOS 26.7.1, ARM64, Python 3.14.6, AnonCreds 0.2.3.
 - The official macOS universal2 wheel was downloaded and installed with `--require-hashes`.
@@ -57,7 +70,8 @@ LinkedIn remains unposted. The general-audience explanation and retention guidan
 [Japanese](press-ja.md) and [English](press-en.md), with corresponding articles on the official site:
 [Japanese](https://www.toppymicros.com/zk-license-demo.html) · [English](https://www.toppymicros.com/zk-license-demo-en.html).
 
-Windows real-crypto execution remains unverified. Linux real-crypto execution passed in the CI run above.
+Windows was unverified in this initial record; the October 15 run above closes that gap for
+Windows Server 2022 x64. Linux real-crypto execution passed in the initial CI run above.
 An independent security audit, production deployment, Japanese driving-licence signature integration,
 revocation checking and real-person authentication are not established.
 

@@ -6,11 +6,11 @@
 暗号処理は [AnonCreds / anoncreds-rs](https://github.com/anoncreds/anoncreds-rs) を利用します。
 独自の暗号方式、新しい本人確認標準、日本の実免許証認証サービスではありません。
 
-> ローカル検証（2026-10-04）: macOS / Python 3.14.6 / AnonCreds 0.2.3で、
-> 全46テスト（非暗号30件・実暗号16件）が通過しました。
-> 条件を弱めた証明の受理を修正し、条件の書き換えも拒否することを確認しています。
-> Ubuntu / Python 3.12.14のGitHub Actionsでも、全46テスト・実証明・独立検証・再送拒否が成功しました。
-> 詳細は [検証状況](docs/validation.md)。
+> 検証（2026-10-15）: macOS、Ubuntu 24.04、Windows Server 2022 x64で、
+> 全50テスト（非暗号34件・実暗号16件）が通過しました。
+> UbuntuとWindowsのCIで、実証明・独立検証・再送拒否も成功しました。
+> 3環境で各30回の性能計測を実施しました。詳細は[検証状況](docs/validation.md)と
+> [計測結果・範囲](docs/performance.md)を参照してください。
 
 ## 何を証明するか
 
@@ -29,7 +29,7 @@
 ## 実行
 
 Python 3.12をCIの検証対象として設定しています。ローカルではmacOS / Python 3.14.6で検証しました。
-Linux / Python 3.12.14でもCIを通過しました。Windowsでの実暗号実行は未確認です。
+Ubuntu / Python 3.12.15とWindows Server 2022 x64 / Python 3.12.10でもCIを通過しました。
 各環境向け公式wheelのハッシュを固定しています。
 最初の依存関係取得にはインターネット接続が必要です。サンプル自身は通信を行いません。
 
@@ -142,7 +142,7 @@ License: MIT for this sample. The separately installed anoncreds dependency is A
 
 **English summary:** An educational, synthetic-credential demonstration of non-disclosing AnonCreds predicates,
 trusted issuer key pinning, and stateful replay rejection. Not a new cryptographic scheme, a Japanese driving
-licence reader, or a production identity service. All 46 tests passed locally on macOS with the real
-AnonCreds 0.2.3 backend. A [public English article](https://www.toppymicros.com/zk-license-demo-en.html)
+licence reader, or a production identity service. All 50 tests passed on macOS, Ubuntu 24.04 and
+Windows Server 2022 x64 with the real AnonCreds 0.2.3 backend. A [public English article](https://www.toppymicros.com/zk-license-demo-en.html)
 explains the proposal and data-retention guidance. The verifier explicitly matches embedded predicates to its stored policy before
-cryptographic verification. Ubuntu / Python 3.12.14 CI also passed all tests and demo gates. The release gate fails when the actual backend is unavailable.
+cryptographic verification. Ubuntu and Windows CI passed all demo gates. The release gate fails when the actual backend is unavailable.
