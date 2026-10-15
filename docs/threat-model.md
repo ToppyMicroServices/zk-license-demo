@@ -68,5 +68,8 @@ from a verifier rejecting an actually generated proof. Weaker-policy tests delib
 claim and submit it to the stricter verifier.
 
 A passing suite provides regression evidence, not a cryptographic audit or proof of end-to-end production security.
-No service endpoint, rate limiting, user authentication, device attestation, issuer key rotation, recovery, deployment hardening,
-Japanese licence RSA adapter, or revocation subsystem is included.
+The optional loopback service adds synthetic-account sessions, request review and consent,
+server-side ownership checks, CSRF/origin checks and process-local rate limits; see [service.md](service.md).
+Its startup code authenticates access to one demo account, not a real person. Issuer, holder and verifier
+still share one process. Real-person authentication, device attestation, issuer key rotation, recovery,
+deployment hardening, a Japanese licence RSA adapter and a revocation subsystem remain unimplemented.

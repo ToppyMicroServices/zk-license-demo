@@ -55,7 +55,7 @@ session must remain live after cryptographic work; requests also expire after
   closed; capacity errors return 503. Crypto operations run serially under a
   process lock. These bounds are not a service availability guarantee.
 - POST bodies are capped at 300,000 bytes; proof shape has the existing 262,144-byte
-  cap. Duplicate keys, non-finite JSON, unexpected fields and transfer encoding
+  cap. Duplicate keys, NaN/Infinity literals, unexpected fields and transfer encoding
   are refused. Only three named static resources are served; no directory is exposed.
 - The issuer key, credential, link secret, login code, sessions and consent state
   live in memory. Request state lives in a private temporary directory and is
