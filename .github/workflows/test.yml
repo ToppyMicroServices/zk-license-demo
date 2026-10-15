@@ -7,10 +7,18 @@ permissions:
   contents: read
 jobs:
   test:
-    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
     env:
       REQUIRE_CRYPTO: "1"
+      PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,12 +26,16 @@ jobs:
           python-version: "3.12"
       - name: Install pinned real cryptographic backend
         run: python -m pip install --require-hashes -r requirements.txt
+      - name: Record environment
+        run: |
+          mkdir -p artifacts/validation
+          python -c 'import json, platform, sqlite3; from importlib.metadata import version; print(json.dumps(dict(python=platform.python_version(), platform=platform.platform(), machine=platform.machine(), sqlite=sqlite3.sqlite_version, anoncreds=version("anoncreds"))))' > artifacts/validation/environment.json
       - name: Policy and real cryptographic tests (missing backend is an error)
-        run: python -W error -m unittest discover -s tests -v
+        run: python -W error -m unittest discover -s tests -v 2>&1 | tee artifacts/validation/tests.log
       - name: Generate an actual proof and local report
-        run: python demo.py run --out artifacts/ci-run
+        run: python demo.py run --out artifacts/ci-run | tee artifacts/validation/demo.log
       - name: Independent verifier
-        run: python demo.py verify --out artifacts/ci-run
+        run: python demo.py verify --out artifacts/ci-run | tee artifacts/validation/verify.log
       - name: Replay must fail for the expected reason
         shell: bash
         run: |
@@ -32,3 +44,16 @@ jobs:
             exit 1
           fi
           grep -q already_used artifacts/replay-error.txt
+      - name: Measure repeated serial proofs
+        run: python benchmark.py --runs 30 --warmups 3 --out artifacts/validation/benchmark.json
+      - name: Retain validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-${{ matrix.os }}-${{ github.sha }}
+          path: |
+            artifacts/validation/
+            artifacts/ci-run/report.json
+            artifacts/replay-error.txt
+          if-no-files-found: error
+          retention-days: 14

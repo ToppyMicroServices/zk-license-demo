@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "started_at": "2026-10-15T02:27:15.972997+00:00",
+  "finished_at": "2026-10-15T02:27:29.107947+00:00",
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-2022Server-10.0.20348-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 17 Stepping 1, AuthenticAMD",
+    "logical_cpus": 4,
+    "sqlite": "3.49.1",
+    "anoncreds": "0.2.3"
+  },
+  "source": {
+    "sha256": {
+      "benchmark.py": "f0810a166ba4cb40e3243249cc1b184cdc3c2294fcf4d30aab64a583151ca55a",
+      "demo.py": "54a0b35d4fe51856353c472996a591aac028aee963ea124d3dec24f7a83cdf8c",
+      "request_store.py": "33e526997b7f057c2a7505c44cc68ac4a90d59cb309fe2af9c4075207ab97816",
+      "zk_license.py": "263f1595f7a28e594efcafe42535a4ebafc2a7d9bf82fdfec1c80c19844c0c5b",
+      "requirements.txt": "5ab31fb37bdd93cea4c9e92e118775d9181bc4d6784a1405f17493696636f4a9"
+    },
+    "git_commit": "78ba7d16f353cb7518edd74f71ce3f864512e699",
+    "source_dirty": false
+  },
+  "protocol": {
+    "runs": 30,
+    "warmups": 3,
+    "service_day": "2030-06-01",
+    "concurrency": 1,
+    "issuer_count": 1,
+    "credential_count": 1,
+    "p95_method": "nearest-rank: sorted[ceil(0.95 * n) - 1]",
+    "verification": "RequestStore.consume including SQLite transaction and crypto",
+    "excluded_from_iteration_timing": [
+      "issuer setup",
+      "credential issuance",
+      "challenge creation and insertion",
+      "JSON serialization",
+      "replay check"
+    ],
+    "scope": "Serial local microbenchmark; not service load or production throughput"
+  },
+  "setup_ms": 3323.2007000000012,
+  "issuance_ms": 96.01599999999166,
+  "summary": {
+    "proof_ms": {
+      "count": 30,
+      "min": 107.1130999999923,
+      "median": 107.4487500000032,
+      "p95": 108.0624999999884,
+      "max": 108.12140000001591,
+      "mean": 107.49274666666793
+    },
+    "verify_with_state_ms": {
+      "count": 30,
+      "min": 126.50849999999991,
+      "median": 129.74674999999536,
+      "p95": 299.6787000000154,
+      "max": 402.44349999997553,
+      "mean": 154.6223533333309
+    },
+    "proof_json_bytes": {
+      "count": 30,
+      "min": 31692,
+      "median": 31749.0,
+      "p95": 31802,
+      "max": 31819,
+      "mean": 31744.733333333334
+    }
+  },
+  "warmup_samples": [
+    {
+      "iteration": 1,
+      "proof_ms": 108.10229999998455,
+      "verify_with_state_ms": 128.0979000000002,
+      "proof_json_bytes": 31770,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 2,
+      "proof_ms": 107.4345999999764,
+      "verify_with_state_ms": 130.88350000001014,
+      "proof_json_bytes": 31784,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 3,
+      "proof_ms": 107.77989999999704,
+      "verify_with_state_ms": 248.09079999999994,
+      "proof_json_bytes": 31761,
+      "accepted": true,
+      "replay": "already_used"
+    }
+  ],
+  "samples": [
+    {
+      "iteration": 4,
+      "proof_ms": 107.54499999998757,
+      "verify_with_state_ms": 127.4180000000058,
+      "proof_json_bytes": 31749,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 5,
+      "proof_ms": 107.45130000000813,
+      "verify_with_state_ms": 299.6787000000154,
+      "proof_json_bytes": 31724,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 6,
+      "proof_ms": 107.64019999999164,
+      "verify_with_state_ms": 129.41680000000133,
+      "proof_json_bytes": 31749,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 7,
+      "proof_ms": 107.24079999999958,
+      "verify_with_state_ms": 130.10850000000573,
+      "proof_json_bytes": 31693,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 8,
+      "proof_ms": 107.49620000001414,
+      "verify_with_state_ms": 127.98869999997464,
+      "proof_json_bytes": 31753,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 9,
+      "proof_ms": 107.22440000000688,
+      "verify_with_state_ms": 402.44349999997553,
+      "proof_json_bytes": 31753,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 10,
+      "proof_ms": 107.42209999997954,
+      "verify_with_state_ms": 129.59079999998835,
+      "proof_json_bytes": 31748,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 11,
+      "proof_ms": 108.0624999999884,
+      "verify_with_state_ms": 173.90779999999495,
+      "proof_json_bytes": 31762,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 12,
+      "proof_ms": 107.59490000000937,
+      "verify_with_state_ms": 129.80139999999096,
+      "proof_json_bytes": 31692,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 13,
+      "proof_ms": 107.59600000000091,
+      "verify_with_state_ms": 131.22070000000008,
+      "proof_json_bytes": 31819,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 14,
+      "proof_ms": 107.37720000000195,
+      "verify_with_state_ms": 219.86160000000154,
+      "proof_json_bytes": 31779,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 15,
+      "proof_ms": 107.55380000000514,
+      "verify_with_state_ms": 142.33189999998785,
+      "proof_json_bytes": 31777,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 16,
+      "proof_ms": 107.62179999997556,
+      "verify_with_state_ms": 127.66189999999256,
+      "proof_json_bytes": 31744,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 17,
+      "proof_ms": 107.41310000000226,
+      "verify_with_state_ms": 256.1443999999824,
+      "proof_json_bytes": 31710,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 18,
+      "proof_ms": 108.12140000001591,
+      "verify_with_state_ms": 130.57190000000674,
+      "proof_json_bytes": 31752,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 19,
+      "proof_ms": 107.67740000000003,
+      "verify_with_state_ms": 127.84350000001155,
+      "proof_json_bytes": 31746,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 20,
+      "proof_ms": 107.28259999999068,
+      "verify_with_state_ms": 138.97420000000693,
+      "proof_json_bytes": 31705,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 21,
+      "proof_ms": 107.1130999999923,
+      "verify_with_state_ms": 131.22860000001424,
+      "proof_json_bytes": 31752,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 22,
+      "proof_ms": 107.49920000000657,
+      "verify_with_state_ms": 129.59390000000326,
+      "proof_json_bytes": 31706,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 23,
+      "proof_ms": 107.44619999999827,
+      "verify_with_state_ms": 128.44909999998322,
+      "proof_json_bytes": 31712,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 24,
+      "proof_ms": 107.67250000000672,
+      "verify_with_state_ms": 129.69209999999975,
+      "proof_json_bytes": 31716,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 25,
+      "proof_ms": 107.31370000002016,
+      "verify_with_state_ms": 126.50849999999991,
+      "proof_json_bytes": 31755,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 26,
+      "proof_ms": 107.93559999999047,
+      "verify_with_state_ms": 128.20850000002793,
+      "proof_json_bytes": 31749,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 27,
+      "proof_ms": 107.31800000002067,
+      "verify_with_state_ms": 128.61279999998487,
+      "proof_json_bytes": 31799,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 28,
+      "proof_ms": 107.78210000000854,
+      "verify_with_state_ms": 162.88119999998685,
+      "proof_json_bytes": 31746,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 29,
+      "proof_ms": 107.21829999999954,
+      "verify_with_state_ms": 127.0020000000045,
+      "proof_json_bytes": 31754,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 30,
+      "proof_ms": 107.42380000002072,
+      "verify_with_state_ms": 131.6131000000098,
+      "proof_json_bytes": 31760,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 31,
+      "proof_ms": 107.20779999999763,
+      "verify_with_state_ms": 127.4148999999909,
+      "proof_json_bytes": 31708,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 32,
+      "proof_ms": 107.38240000000587,
+      "verify_with_state_ms": 133.4812999999997,
+      "proof_json_bytes": 31728,
+      "accepted": true,
+      "replay": "already_used"
+    },
+    {
+      "iteration": 33,
+      "proof_ms": 107.14899999999261,
+      "verify_with_state_ms": 129.02029999997922,
+      "proof_json_bytes": 31802,
+      "accepted": true,
+      "replay": "already_used"
+    }
+  ]
+}

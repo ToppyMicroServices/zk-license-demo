@@ -1,0 +1,66 @@
+{
+  "recorded_at": "2026-10-15T02:28:50.866870+00:00",
+  "status": "PASSED",
+  "checked_commit": "78ba7d16f353cb7518edd74f71ce3f864512e699",
+  "ci_url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/38671009097",
+  "checks": {
+    "macos": {
+      "tests_passed": 50,
+      "crypto_tests": 16,
+      "skipped": 0,
+      "measured_iterations": 30,
+      "warmups": 3,
+      "raw_summary_consistency": "PASSED",
+      "acceptance_and_replay": "PASSED",
+      "source_hashes": "PASSED",
+      "source_line_endings": "LF"
+    },
+    "ubuntu": {
+      "tests_passed": 50,
+      "crypto_tests": 16,
+      "skipped": 0,
+      "measured_iterations": 30,
+      "warmups": 3,
+      "raw_summary_consistency": "PASSED",
+      "acceptance_and_replay": "PASSED",
+      "source_hashes": "PASSED",
+      "source_line_endings": "LF"
+    },
+    "windows": {
+      "tests_passed": 50,
+      "crypto_tests": 16,
+      "skipped": 0,
+      "measured_iterations": 30,
+      "warmups": 3,
+      "raw_summary_consistency": "PASSED",
+      "acceptance_and_replay": "PASSED",
+      "source_hashes": "PASSED",
+      "source_line_endings": "CRLF"
+    }
+  },
+  "sha256": {
+    "benchmark-macos.json": "8331296f40eefe6b172761f75f9eae6d816e91a06caf9cb91423cad73c9e6a56",
+    "benchmark-ubuntu.json": "566e4915df1bbcd248971c8f48e0ce07e910346945c8109346b5319f880181cb",
+    "benchmark-windows.json": "aac2bfd9d878580811abc0e3bf7255d8a0924782eca9146bc94c1020f953fb84",
+    "ci-artifacts.json": "ba159993ac90bc55145e645b052264fea5f54adcc116b926299218e28bb0f558",
+    "ci-run.json": "b657c07dc921bd2d077c67b43b525ca33f110690f56e265e77b51e179ffb7b7b",
+    "demo-ubuntu.log": "1650e7cd36f37063b9d781a7ae3316859f08b69fb010eb95fb6fa9b7575f7c60",
+    "demo-windows.log": "3d3794d7b1967219f9d6e20f42760e6d003a384f98d476cd40aa2bbf756fd98e",
+    "environment-ubuntu.json": "dac55737c1e160c0b286cd7e4bd5a612ea9779e0529cb6e7c3233c6d68ff312a",
+    "environment-windows.json": "4031ef63ac5d6ed9761351861ba7e2bc3e0da17a4f730094cd8606ea94439447",
+    "replay-ubuntu.log": "24aca3ab197f206d8040cd6861870e029c461295a464905413372546b28a6eae",
+    "replay-windows.log": "5d97068af30fada0e360374bc8df758f93f8e3605d95ba3deb3fc8f58cb1499c",
+    "tests-macos.log": "05626e8fc39cf7cbb158ec62a83cc2de02b519d08f71d23ee7eed17aee59e266",
+    "tests-ubuntu.log": "eceb834fd51c4123d75b17f014b18fd59db2a48afce4060063541b4e67114435",
+    "tests-windows.log": "c064acc5c0fd8b6125cf59b9a432c5ede9c766cde98fa7b7ad710ce686e66375",
+    "verify-ubuntu.log": "5b7b929eeedf8a988e216113f7cc323a38927a475b9407c5fe520c2e5eb9e1bf",
+    "verify-windows.log": "4060247c9729314c398a40d94548104e9e778f83460376e747c8c1a292e3edf0"
+  },
+  "limits": [
+    "Serial microbenchmark only; one issuer and credential per platform",
+    "Hardware, Python, SQLite and OS differ between environments; no OS-only speed comparison",
+    "Windows Server 2022 x64 tested; Windows desktop, ARM and PowerShell instructions not separately exercised",
+    "Windows verification tail latency observed; cause not isolated",
+    "Not a production audit or independent security review"
+  ]
+}
