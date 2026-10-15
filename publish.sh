@@ -20,6 +20,6 @@ if python demo.py verify --out "$out" 2>"$out/replay-error.txt"; then
 fi
 grep -q already_used "$out/replay-error.txt"
 git init -b main
-git add -- .gitignore .github README.md LICENSE requirements.txt request_store.py zk_license.py demo.py benchmark.py tests docs publish.sh
+git add -- .gitignore .github README.md LICENSE requirements.txt request_store.py zk_license.py demo.py benchmark.py service.py web tests docs publish.sh
 git commit -m 'feat(demo): add synthetic license proofs and rejection tests'
 gh repo create ToppyMicroServices/zk-license-demo --public --source=. --remote=origin --push
