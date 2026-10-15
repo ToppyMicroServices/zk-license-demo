@@ -51,6 +51,18 @@ python demo.py verify --out artifacts/run
 WindowsのPowerShellではvenvの有効化に`.venv\Scripts\Activate.ps1`、環境変数設定に
 `$env:REQUIRE_CRYPTO="1"`を使用します。
 
+### 繰り返し性能評価
+
+```bash
+python benchmark.py --runs 30 --warmups 3 --out artifacts/benchmark.json
+```
+
+同じ模擬資格情報から、新しい要求ごとに証明を作成・検証します。
+鍵生成・資格情報発行は別に計測し、3回のウォームアップを除いた30回の生データ、
+中央値・p95、実行環境とソースのハッシュをJSONに保存します。
+各回で再送拒否も確認します。既存の結果ファイルは上書きしません。
+これはローカルでの直列計測であり、サービスの負荷試験や本番性能を示すものではありません。
+
 ### 出力の読み方
 
 `artifacts/run/report.html`をブラウザで開くと、利用者側の模擬データと、検証者へ渡る項目の説明を確認できます。
@@ -77,6 +89,7 @@ ZKによる属性の非開示そのものをToppyの発明とは扱いません�
 `tests/test_crypto.py`は16件の実AnonCreds統合テストです。署名改ざん、弱い条件への差し替え、
 条件の値・属性・演算子の変更、同じ発行者IDを名乗る別鍵、証明改ざん、
 独立したプロセスでの検証を含みます。
+`tests/test_benchmark.py`の4件は、集計方法と既存結果の保護、失敗時に成功レポートを出さないことを確認します。
 
 検証前に、証明内の属性名・演算子・閾値が保存した要求と一致することを確認します。
 固定したAnonCreds 0.2.3では、要求を渡して暗号検証するだけでは弱い条件の証明を拒否できませんでした。
@@ -119,6 +132,9 @@ ZKは流出済み画像の無効化や侵入防止の代替策ではありませ
 - [報道・一次発表・先行技術の確認](docs/sources.md)
 - [脅威モデルと責任分界](docs/threat-model.md)
 - [記事案](docs/article-ja.md)
+
+残作業はBeadsで管理します。`bd list --limit 0`で一覧を確認できます。
+データの扱いは[タスク管理の説明](.beads/README.md)を参照してください。
 
 License: MIT for this sample. The separately installed anoncreds dependency is Apache-2.0.
 
