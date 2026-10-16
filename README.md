@@ -72,6 +72,14 @@ python service.py
 詳しい起動方法・API・制限は[画面版の説明](docs/service.md)、
 実連携の利用条件は[調査メモ](docs/real-license-integration.md)を参照してください。
 
+### ウォレットを分離したCLIと鍵管理
+
+`split_demo.py` は発行者・ウォレット・検証者を別プロセスと別の保存領域で動かします。
+ウォレットが要求を認証して同意を確認し、検証者には実AnonCreds証明だけを渡します。
+模擬発行鍵の更新・併存・停止、個別資格情報の失効、再発行、バックアップからの復旧を実装しています。
+警察の停止・取消し照会には接続していません。
+[分離版の実行手順と制限](docs/split-wallet.md)を参照してください。
+
 ### 繰り返し性能評価
 
 ```bash
@@ -96,7 +104,7 @@ python benchmark.py --runs 30 --warmups 3 --out artifacts/benchmark.json
 - `request.json`: 検証者が作った要求の説明用エクスポート。CLIのセッション値は本人認証の代わりではありません。
 - `report.json` / `report.html`: 模擬の個人属性も表示する**説明用レポート**。検証者の保存データとは異なります。
 
-発行者秘密鍵・利用者のlink secret・処理済み資格情報はメモリ内だけに置き、ファイルには保存しません。
+`demo.py` では発行者秘密鍵・利用者のlink secret・処理済み資格情報はメモリ内だけに置き、ファイルには保存しません。
 ただし、発行・保有・検証を1台で動かす教育用サンプルであり、OS上の隔離や安全なメモリ消去は実装していません。
 
 ## Toppyとして示す部分
@@ -114,6 +122,8 @@ ZKによる属性の非開示そのものをToppyの発明とは扱いません�
 `tests/test_service.py`は、実暗号を使う18件のHTTP統合テストです。
 認証・セッション間の分離・同意の省略・改ざん・再送・レート制限を検査します。
 ローカルソケットを利用できる環境が必要です。
+`tests/test_split_wallet.py` は分離版の実暗号テストです。別プロセス間の受け渡し、
+要求と同意、端末再登録、鍵更新・失効・復旧を検査します。
 
 検証前に、証明内の属性名・演算子・閾値が保存した要求と一致することを確認します。
 固定したAnonCreds 0.2.3では、要求を渡して暗号検証するだけでは弱い条件の証明を拒否できませんでした。
@@ -172,3 +182,5 @@ explains the proposal and data-retention guidance. The verifier explicitly match
 cryptographic verification. Ubuntu and Windows CI passed all demo gates. The release gate fails when the actual backend is unavailable.
 The local wallet/API adds synthetic-account sessions, request review, explicit consent and rate limits.
 It co-locates all roles and does not establish real identity or live driving-entitlement status.
+The separate `split_demo.py` prototype adds wallet-local custody and consent, issuer key rotation,
+native AnonCreds revocation and backup recovery. Its files are unencrypted and it makes no OS isolation claim.
