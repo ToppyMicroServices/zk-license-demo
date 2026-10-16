@@ -306,6 +306,10 @@ class SplitWalletTests(unittest.TestCase):
         with self.assertRaisesRegex(Rejected, "invalid_proof"):
             wallet.verify(self.v, self.r, weak)
         good = self.prove(signed)
+        malformed = deepcopy(good)
+        malformed["presentation"]["identifiers"] = [None]
+        with self.assertRaisesRegex(Rejected, "invalid_proof"):
+            wallet.verify(self.v, self.r, malformed)
         bad = deepcopy(good)
         bad["presentation"]["identifiers"][0]["timestamp"] += 1
         with self.assertRaisesRegex(Rejected, "invalid_proof"):

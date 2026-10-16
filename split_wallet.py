@@ -250,7 +250,7 @@ def verify_crypto(value, challenge, key):
         return bool(ac.Presentation.load(value).verify(
             policy, {key["schema_id"]: key["schema"]}, {key["cred_def_id"]: key["cred_def"]},
             {key["rev_reg_id"]: key["rev_reg_def"]}, [key["status"]]))
-    except (KeyError, IndexError, TypeError, ValueError, backend().AnoncredsError):
+    except (KeyError, IndexError, TypeError, ValueError, AttributeError, backend().AnoncredsError):
         return False
 
 

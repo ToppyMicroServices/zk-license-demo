@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-16T13:59:05.670117+00:00",
+  "checked_at": "2026-10-16T14:02:56.990286+00:00",
   "base_commit": "d10479d16f21999083b7796a399691f5e2b070a9",
   "environment": {
     "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
@@ -12,7 +12,7 @@
     "total": 84,
     "split_wallet": 16,
     "result": "passed",
-    "log_sha256": "7563a66578d5c4e0e66e0d8bc1f4ddc1a275dba9362b045b52af6b8f997650e6",
+    "log_sha256": "90217e67ef4efdb1716348026fa3fc66a90f882abce8ad5188d18253e087844c",
     "note": "The initial sandbox run could not bind loopback sockets. The complete suite passed with local socket permission."
   },
   "cli_smoke": {
@@ -92,15 +92,19 @@
       "synthetic_revocation_checked": true
     },
     "keys_distinct": true,
-    "synthetic_data_only": true
+    "synthetic_data_only": true,
+    "source_commit": "8339319b4f3f97dbece68b057ed73a0f847eceb0"
   },
   "source_sha256": {
     "lifecycle.py": "3b74ecbf28334c715cd9208a6d48ea43c1b545f71bb5bb5d45109c13cb7bd22d",
-    "split_wallet.py": "e765a3c6b87243c512de66aef709472590715599b031e3bd5f65e1f9d8517986",
+    "split_wallet.py": "8783ab6c2cdf0c843b1e36cd983515cd42427704381cb1f6e09a380d65862c84",
     "split_demo.py": "3a5cd4a06076815a8e82692ed810f96af8cfa14298734c1cf3f89992e7322851",
-    "tests/test_split_wallet.py": "0735acd1ba98d87d7f2ac24519c50d25d927b81045f5fa46fbedf1ac66b32616"
+    "tests/test_split_wallet.py": "5d9d413b2c15e20cd0ea4795160fdd58b9316715fe0c18ab534010789ae6bbfd"
   },
-  "ci": "Pending pull-request CI",
+  "ci": {
+    "checks_url": "https://github.com/ToppyMicroServices/zk-license-demo/pull/4/checks",
+    "note": "This file records local verification. CI results and the exact tested commit are available in the linked PR checks."
+  },
   "limits": [
     "Synthetic data only; no real licence reader or police status query",
     "CLI process/store separation; no OS isolation or encrypted storage",
