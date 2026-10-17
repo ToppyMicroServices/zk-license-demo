@@ -238,6 +238,13 @@ def verify_crypto(value, challenge, key):
                 or type(identifier.get("timestamp")) is not int
                 or identifier["timestamp"] != key["status"]["timestamp"]):
             return False
+        # The pinned backend can accept a predicate proof with only revocation
+        # identifier metadata. Require the native non-revocation subproof too.
+        non_revocation = value["proof"]["proofs"][0]["non_revoc_proof"]
+        if (not isinstance(non_revocation, dict)
+                or any(not isinstance(non_revocation.get(name), dict) or not non_revocation[name]
+                       for name in ("c_list", "x_list"))):
+            return False
         # Reuse the legacy narrow disclosure shape, then verify the ORIGINAL
         # revoking proof. Do not strip revocation from the cryptographic input.
         shape = deepcopy(value)

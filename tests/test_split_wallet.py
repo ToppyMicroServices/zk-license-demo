@@ -60,21 +60,28 @@ class SplitWalletTests(unittest.TestCase):
         wallet.import_credential(self.w, self.r, issued)
         return backend().Credential.load(issued["credential"]).rev_reg_index
 
-    def raw_proof(self, signed, *, weaker=False):
+    def raw_proof(self, signed, *, weaker=False, omit_revocation=False):
         """Bypass wallet consent/revoked guards to exercise verifier cryptography."""
         ac = backend()
         with issuer.store(self.w, "wallet") as local, issuer.store(self.r, "registry") as public:
             key = public["keys"][signed["payload"]["key_id"]]
             credential = ac.Credential.load(local["credentials"][signed["payload"]["key_id"]])
-            tails = self.r.parent / "tails" / key["rev_reg_def"]["value"]["tailsHash"]
-            state = ac.CredentialRevocationState.create(key["rev_reg_def"], key["status"], credential.rev_reg_index, str(tails))
             selected = ac.PresentCredentials()
-            selected.add_predicates(credential, "ordinary", "expiry", timestamp=key["status"]["timestamp"], rev_state=state)
+            if omit_revocation:
+                selected.add_predicates(credential, "ordinary", "expiry")
+            else:
+                tails = self.r.parent / "tails" / key["rev_reg_def"]["value"]["tailsHash"]
+                state = ac.CredentialRevocationState.create(key["rev_reg_def"], key["status"], credential.rev_reg_index, str(tails))
+                selected.add_predicates(credential, "ordinary", "expiry", timestamp=key["status"]["timestamp"], rev_state=state)
             policy = deepcopy(signed["payload"]["proof_request"])
             if weaker:
                 policy["requested_predicates"]["ordinary"]["p_value"] = 0
+            if omit_revocation:
+                del policy["non_revoked"]
             proof = ac.Presentation.create(policy, selected, {}, local["link_secret"],
                                            {key["schema_id"]: key["schema"]}, {key["cred_def_id"]: key["cred_def"]}).to_dict()
+            if omit_revocation:
+                proof["identifiers"][0].update(rev_reg_id=key["rev_reg_id"], timestamp=key["status"]["timestamp"])
             return {"request_id": signed["payload"]["challenge"]["request_id"], "presentation": proof}
 
     def test_separate_cli_processes_and_private_state_absent_from_verifier(self):
@@ -218,6 +225,24 @@ class SplitWalletTests(unittest.TestCase):
         # A different, newly issued credential under the same key remains valid.
         self.assertEqual(self.reissue(), 2)
         self.assertTrue(wallet.verify(self.v, self.r, self.prove())["accepted"])
+
+    def test_revoked_credential_cannot_omit_nonrevocation_subproof(self):
+        issuer.revoke_credential(self.i, self.r, self.key, 1)
+        signed = self.new_request()
+        forged = self.raw_proof(signed, omit_revocation=True)
+        self.assertIsNone(forged["presentation"]["proof"]["proofs"][0]["non_revoc_proof"])
+        with self.assertRaisesRegex(Rejected, "invalid_proof"):
+            wallet.verify(self.v, self.r, forged)
+
+    def test_missing_or_empty_nonrevocation_subproof_does_not_consume_request(self):
+        signed = self.new_request()
+        good = self.prove(signed)
+        for value in (None, {}, {"c_list": {}, "x_list": {}}, {"c_list": 1, "x_list": {}}):
+            forged = deepcopy(good)
+            forged["presentation"]["proof"]["proofs"][0]["non_revoc_proof"] = value
+            with self.subTest(value=value), self.assertRaisesRegex(Rejected, "invalid_proof"):
+                wallet.verify(self.v, self.r, forged)
+        self.assertTrue(wallet.verify(self.v, self.r, good)["accepted"])
 
     def test_backup_does_not_restore_revocations_or_reuse_indices(self):
         backup = self.root / "backup.json"

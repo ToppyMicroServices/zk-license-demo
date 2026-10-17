@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-16T14:02:56.990286+00:00",
+  "checked_at": "2026-10-17T15:08:41.845739+00:00",
   "base_commit": "d10479d16f21999083b7796a399691f5e2b070a9",
   "environment": {
     "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
@@ -9,11 +9,11 @@
   },
   "tests": {
     "command": "REQUIRE_CRYPTO=1 .venv/bin/python -W error -m unittest discover -s tests -v",
-    "total": 84,
-    "split_wallet": 16,
+    "total": 86,
+    "split_wallet": 18,
     "result": "passed",
-    "log_sha256": "90217e67ef4efdb1716348026fa3fc66a90f882abce8ad5188d18253e087844c",
-    "note": "The initial sandbox run could not bind loopback sockets. The complete suite passed with local socket permission."
+    "log_sha256": "f394985c14783cddb1c7783de95d4cbb1d7b5007d0be15bfcb53ebad5df51c22",
+    "note": "The initial sandbox run could not bind loopback sockets. The complete suite passed with local socket permission; the logged rerun passed all 86 tests."
   },
   "cli_smoke": {
     "commands": [
@@ -97,9 +97,9 @@
   },
   "source_sha256": {
     "lifecycle.py": "3b74ecbf28334c715cd9208a6d48ea43c1b545f71bb5bb5d45109c13cb7bd22d",
-    "split_wallet.py": "8783ab6c2cdf0c843b1e36cd983515cd42427704381cb1f6e09a380d65862c84",
+    "split_wallet.py": "f4be616fcf8087aae0e51ff2395639d4d4d426311e035b885c7bd4d08c3184be",
     "split_demo.py": "3a5cd4a06076815a8e82692ed810f96af8cfa14298734c1cf3f89992e7322851",
-    "tests/test_split_wallet.py": "5d9d413b2c15e20cd0ea4795160fdd58b9316715fe0c18ab534010789ae6bbfd"
+    "tests/test_split_wallet.py": "1155d1a6aa8c184893c28aec297f65fb6e0098839cbb6711f666b4d1f81a1b9f"
   },
   "ci": {
     "checks_url": "https://github.com/ToppyMicroServices/zk-license-demo/pull/4/checks",
