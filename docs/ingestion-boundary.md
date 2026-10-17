@@ -70,6 +70,7 @@ REQUIRE_CRYPTO=1 REQUIRE_CARD_CRYPTO=1 python -W error -m unittest discover -s t
 テストは生成したRSA鍵と架空のカード領域を使う。署名改ざん、別鍵、署名方式の混同、
 本人確認結果の差し替え、拒否、期限切れ、再送、並行処理を検査する。
 実カード、公式検証鍵、読み取りSDK、デジタル認証サービス、警察の処分情報は使っていない。
+macOS・Ubuntu・Windowsでの実行結果と対象コミットは[検証記録](ingestion-validation.md)に残す。
 
 ## 次の接続判断
 
