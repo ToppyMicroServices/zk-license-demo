@@ -194,7 +194,7 @@ def review(private, registry, signed, *, now=None):
                 "live_licence_status_checked": False}
 
 
-def present(private, registry, signed, review_hash, *, approve, now=None):
+def present(private, registry, signed, review_hash, *, approve, now=None, before_share=None):
     ac = backend()
     with transaction(private, "wallet", registry) as (local, public):
         challenge, key = validate_request(signed, local, public, now)
@@ -203,6 +203,8 @@ def present(private, registry, signed, review_hash, *, approve, now=None):
                 or review_hash != digest(signed)):
             raise Rejected("matching_wallet_review_required")
         if not approve:
+            if before_share is not None:
+                before_share()
             consent["decision"] = "denied"
             return {"decision": "denied", "request_id": challenge.request_id}
         value = local["credentials"].get(signed["payload"]["key_id"])
@@ -227,6 +229,8 @@ def present(private, registry, signed, review_hash, *, approve, now=None):
             {key["schema_id"]: key["schema"]}, {key["cred_def_id"]: key["cred_def"]}).to_dict()
         if now is None and int(time.time()) >= challenge.expires_at:
             raise Rejected("request_expired_during_presentation")
+        if before_share is not None:
+            before_share()
         consent["decision"] = "approved"
         return {"request_id": challenge.request_id, "presentation": result}
 
@@ -261,7 +265,7 @@ def verify_crypto(value, challenge, key):
         return False
 
 
-def verify(private, registry, envelope, *, now=None):
+def verify(private, registry, envelope, *, now=None, before_accept=None):
     with transaction(private, "verifier", registry) as (local, public):
         if set(envelope) != {"request_id", "presentation"}:
             raise Rejected("invalid_envelope")
@@ -275,6 +279,8 @@ def verify(private, registry, envelope, *, now=None):
             raise Rejected("invalid_proof")
         if now is None and int(time.time()) >= challenge.expires_at:
             raise Rejected("request_expired_during_verification")
+        if before_accept is not None:
+            before_accept()
         saved["used"] = True
         return {"accepted": True, "synthetic_revocation_checked": True,
                 "live_licence_status_checked": False}
