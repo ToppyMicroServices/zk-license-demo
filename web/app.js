@@ -2,15 +2,15 @@
 const el = id => document.getElementById(id);
 let csrf = "", currentRequest = null;
 const errors = {
-  invalid_login: "ログインコードが一致しません。起動した端末の表示を確認してください。",
+  invalid_login: "コードが一致しません。デモの起動時に表示されたログインコードを確認してください。",
   authentication_required: "ログインが必要です。セッションの期限が切れた場合は、もう一度ログインしてください。",
   rate_limited: "操作が続いたため、少し待ってからやり直してください。",
-  request_unavailable: "この要求は利用できません。期限切れの場合は新しい要求を受け取ってください。",
-  request_expired: "要求の期限が切れています。新しい要求を受け取ってください。",
-  already_used: "この要求は検証済みです。同じ証明を再送することはできません。",
-  consent_required: "この要求への同意が記録されていません。",
-  request_changed: "表示した要求と一致しません。新しい要求を受け取ってください。",
-  invalid_proof: "証明を検証できませんでした。",
+  request_unavailable: "この確認内容は利用できません。新しい内容を受け取ってください。",
+  request_expired: "操作の期限が切れました。新しい確認内容を受け取ってください。",
+  already_used: "この内容は確認済みです。新しい確認内容を受け取ってください。",
+  consent_required: "共有するには、内容を確認して同意してください。",
+  request_changed: "表示した内容と一致しません。新しい確認内容を受け取ってください。",
+  invalid_proof: "証明を確認できませんでした。もう一度お試しください。",
   csrf_failed: "操作の確認に失敗しました。画面を再読み込みしてログイン状態を確認してください。"
 };
 async function api(path, body) {
@@ -22,7 +22,7 @@ async function api(path, body) {
   const value = await response.json();
   if (!response.ok) {
     if (response.status === 401 && path !== "/api/login") showLogin();
-    throw new Error(errors[value.error] || "操作を完了できませんでした。新しい要求でやり直してください。");
+    throw new Error(errors[value.error] || "操作を完了できませんでした。新しい確認内容を受け取ってやり直してください。");
   }
   return value;
 }
@@ -71,7 +71,7 @@ el("new-request").addEventListener("click", () => perform(async () => {
   currentRequest = await api("/api/requests", {});
   el("verifier").textContent = `${currentRequest.verifier_name} (${currentRequest.audience})`;
   el("purpose").textContent = currentRequest.purpose;
-  el("service-day").textContent = `${currentRequest.service_day}（説明用の日付）`;
+  el("service-day").textContent = `${currentRequest.service_day}（デモ用の日付）`;
   el("expires").textContent = new Date(currentRequest.expires_at * 1000).toLocaleString("ja-JP");
   el("request-json").textContent = JSON.stringify(currentRequest, null, 2);
   el("request-panel").hidden = false;
@@ -93,7 +93,7 @@ el("deny").addEventListener("click", () => perform(async () => {
     decision: "deny", request_hash: currentRequest.request_hash
   });
   el("proof-details").hidden = true;
-  result("今回は共有しませんでした", "同意しないという選択を記録しました。この要求の証明は作成・送信していません。", "別の要求を受け取った場合は、改めて内容を確認して選べます。");
+  result("今回は共有しませんでした", "今回は共有しないという選択を保存しました。証明は作成・送信していません。", "新しい確認内容を受け取った場合は、改めて共有するかを選べます。");
 }));
 el("approve").addEventListener("click", () => perform(async () => {
   await api(`/api/requests/${currentRequest.request_id}/consent`, {
@@ -104,10 +104,10 @@ el("approve").addEventListener("click", () => perform(async () => {
   el("message").textContent = "証明を作成し、確認しています…";
   const envelope = await api(`/api/requests/${currentRequest.request_id}/presentation`, {});
   const verified = await api("/api/verify", envelope);
-  if (verified.verified !== true) throw new Error("検証成功を確認できませんでした。");
+  if (verified.verified !== true) throw new Error("確認結果を受け取れませんでした。もう一度お試しください。");
   el("message").textContent = "";
   el("proof-json").textContent = JSON.stringify(envelope, null, 2);
   el("proof-details").hidden = false;
-  result("模擬資格情報の条件を確認しました", "発行者の署名に基づく2つの条件を検証し、この要求を使用済みにしました。", "実免許証の有効性、停止・取消し、実在人物の本人性は確認していません。");
+  result("サンプルデータの条件を確認できました", "届いた証明から、確認したい条件を満たすことを確認しました。", "サンプルデータでの確認結果です。");
 }));
 api("/api/session").then(showWallet).catch(() => showLogin());

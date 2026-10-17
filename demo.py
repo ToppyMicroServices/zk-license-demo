@@ -61,7 +61,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:13px}small{display:bloc
 <section><h2>① 利用者側のデータ</h2><p>比較のために、この説明用レポートには模擬データを表示します。
 以下をZK検証者には送りません。</p><pre>HOLDER</pre></section>
 <section><h2>② 相手が確認する条件</h2><p>信頼する模擬発行者の署名に基づき、普通車の運転資格属性が1以上、
-かつ記録された有効期限が基準日以降であること。免停・取消しは確認していません。</p><pre>RESULT</pre></section>
+かつ記録された有効期限が基準日以降であること。実際の免許証の現在の有効性は、このサンプルでは確認しません。</p><pre>RESULT</pre></section>
 <section><h2>③ 検証者へ渡る項目</h2><p>以下は公開部分の要約です。
 実際のproof-envelope.jsonには証明・発行者定義の識別子・要求IDが入ります。
 検証者は別途、基準日・宛先・セッション・nonce・要求期限・使用済み状態を管理します。

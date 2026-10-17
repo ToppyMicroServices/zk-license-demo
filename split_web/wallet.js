@@ -3,17 +3,17 @@
 const PROTOCOL = "zk-license-split-v1";
 const el = id => document.getElementById(id);
 const errors = {
-  invalid_login: "ログインコードが一致しません。ウォレットプロセスの端末を確認してください。",
+  invalid_login: "コードが一致しません。ウォレット用のログインコードを確認してください。",
   authentication_required: "ログインの期限が切れました。もう一度ログインしてください。",
   rate_limited: "操作が続いたため、少し待ってからやり直してください。",
-  stale_registry_request: "公開状態が更新されました。検証者に新しい要求を作ってもらってください。",
-  request_expired_or_clock_invalid: "要求の期限が切れました。検証者に新しい要求を作ってもらってください。",
-  unauthenticated_request: "要求の出所を確認できませんでした。共有しないでください。",
-  unsupported_disclosure_policy: "この要求は対応していない内容です。共有しないでください。",
-  wallet_credential_unavailable: "この発行鍵に対応する模擬資格情報がありません。発行と取込みをやり直してください。",
-  credential_revoked: "この模擬資格情報は失効しています。共有できません。",
-  matching_wallet_review_required: "確認済みの要求と一致しません。新しい要求からやり直してください。",
-  request_changed_or_decided: "この要求は変更済みか、すでに選択済みです。新しい要求からやり直してください。"
+  stale_registry_request: "デモのデータが更新されました。受付画面からもう一度、確認を始めてください。",
+  request_expired_or_clock_invalid: "操作の期限が切れました。受付画面からもう一度、確認を始めてください。",
+  unauthenticated_request: "送信元を確認できませんでした。受付画面からやり直してください。",
+  unsupported_disclosure_policy: "この確認内容には対応していません。受付画面からやり直してください。",
+  wallet_credential_unavailable: "この確認に使えるサンプルデータがありません。デモを準備した人に確認してください。",
+  credential_revoked: "このサンプルデータは現在使えません。デモを準備した人に確認してください。",
+  matching_wallet_review_required: "表示した内容と一致しません。受付画面からやり直してください。",
+  request_changed_or_decided: "内容が変更されたか、すでに操作を終えています。受付画面からやり直してください。"
 };
 
 let config = null;
@@ -38,7 +38,7 @@ async function api(path, body) {
   const value = await response.json();
   if (!response.ok) {
     if (response.status === 401 && path !== "/api/login") showLogin();
-    const error = new Error(errors[value.error] || "要求を処理できませんでした。新しい要求でやり直してください。");
+    const error = new Error(errors[value.error] || "操作を完了できませんでした。受付画面からやり直してください。");
     error.code = value.error;
     throw error;
   }
@@ -81,18 +81,22 @@ function showWork() {
 function displayReview(review) {
   el("audience").textContent = review.audience;
   el("device-binding").textContent = review.device_binding;
-  el("service-day").textContent = `${review.service_day}（説明用の日付）`;
+  el("service-day").textContent = `${review.service_day}（デモ用の日付）`;
   el("expires").textContent = new Date(review.expires_at * 1000).toLocaleString("ja-JP");
   el("issuer-key").textContent = review.issuer_key;
-  el("key-state").textContent = review.key_state === "active" ? "現在の鍵" : "併存中の旧鍵";
+  el("key-state").textContent = review.key_state === "active" ? "現在の鍵" : "更新前の鍵（利用可能）";
+  const claimLabels = {
+    "can_drive_ordinary >= 1": "サンプルデータに普通車の運転資格が登録されていること",
+    [`valid_until >= ${review.service_day}`]: "登録された有効期限が利用予定日以降であること"
+  };
   el("claims").replaceChildren();
   for (const claim of review.claims) {
     const item = document.createElement("li");
-    item.textContent = claim;
+    item.textContent = claimLabels[claim] || claim;
     el("claims").append(item);
   }
   el("revealed-attributes").textContent = review.revealed_attributes.length ?
-    review.revealed_attributes.join("、") : "なし。氏名・住所・生年月日・免許証番号・有効期限の具体的な日付は渡しません。";
+    review.revealed_attributes.join("、") : "ありません。氏名・住所・生年月日・免許証番号・有効期限の具体的な日付は証明に含めません。";
   el("waiting-panel").hidden = true;
   el("result-panel").hidden = true;
   el("review-panel").hidden = false;
@@ -117,7 +121,7 @@ async function reviewPending() {
   if (!token || !pending || pending.review || reviewing || deciding) return;
   const target = pending;
   reviewing = true;
-  message("要求の出所と内容を確認しています…");
+  message("届いた内容を確認しています…");
   try {
     const review = await api("/api/review", {signed_request: pending.signed});
     if (pending !== target || !token) return;
@@ -154,7 +158,7 @@ window.addEventListener("message", event => {
   }
   pending = {id: value.request_id, signed, review: null};
   el("result-panel").hidden = true;
-  if (!token) message("要求を受け取りました。ログイン後に内容を確認します。");
+  if (!token) message("受付から確認内容が届きました。ログインすると内容を確認できます。");
   else void reviewPending();
 });
 
@@ -198,7 +202,7 @@ async function decide(decision) {
   el("approve").disabled = true;
   el("deny").disabled = true;
   el("logout").disabled = true;
-  message(decision === "approve" ? "証明を作成しています…" : "拒否を記録しています…");
+  message(decision === "approve" ? "共有する証明を準備しています…" : "選択を保存しています…");
   const requestId = pending.id;
   try {
     const result = await api("/api/decision", {
@@ -211,14 +215,14 @@ async function decide(decision) {
       }
       const sent = notifyVerifier("wallet-proof", requestId, result.presentation);
       showResult(sent ? "証明を送信しました" : "証明を送信できませんでした", sent ?
-        "この要求の証明を検証者画面へ送りました。受理結果は検証者画面で確認してください。" :
-        "この要求への同意は確定しましたが、検証者画面が利用できず証明を送れませんでした。新しい要求からやり直してください。");
+        "証明を受付画面へ送りました。確認結果は受付画面で確認できます。" :
+        "共有の選択は保存されましたが、受付画面へ送れませんでした。受付画面を開き直して、もう一度始めてください。");
     } else {
-      if (result.decision !== "denied") throw new Error("拒否の結果を確認できませんでした。");
+      if (result.decision !== "denied") throw new Error("選択を保存できたか確認できませんでした。");
       const sent = notifyVerifier("wallet-denied", requestId);
       showResult("今回は共有しませんでした", sent ?
-        "この要求への拒否を記録し、検証者画面へ伝えました。証明は作成・送信していません。" :
-        "この要求への拒否を記録しました。検証者画面が利用できず通知できませんでした。証明は作成・送信していません。");
+        "今回は共有しないという選択を受付に伝えました。証明は作成・送信していません。" :
+        "今回は共有しないという選択を保存しました。受付には通知できませんでしたが、証明は作成・送信していません。");
     }
     message("");
   } catch (error) {
