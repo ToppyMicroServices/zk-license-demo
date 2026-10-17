@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ウォレット | 分離ウォレットデモ</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/wallet.js" defer></script>
+</head>
+<body>
+  <header><div class="brand">TOPPY <span>ウォレット</span></div><span class="badge">模擬データ / LOCAL DEMO</span></header>
+  <main>
+    <p class="eyebrow">SYNTHETIC WALLET</p>
+    <h1>要求を読んで、自分で選ぶ</h1>
+    <p class="lead">検証者から届いた要求をこの画面で確認します。同意した要求についてだけ、模擬資格情報の証明を作ります。</p>
+    <aside class="notice"><strong>実免許証・実ユーザーは使用しません。</strong>警察の停止・取消し・失効照会や本人確認は行いません。証明には属性の具体的な値を含めません。</aside>
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+
+    <section id="login-panel" class="card">
+      <p class="eyebrow">01 / ACCESS</p><h2>模擬ウォレットにログイン</h2>
+      <p>ウォレットプロセスの端末に表示されたデモ用コードを入力してください。</p>
+      <form id="login-form">
+        <label for="login-code">ウォレットのログインコード</label>
+        <input id="login-code" type="password" maxlength="64" autocomplete="off" spellcheck="false" required>
+        <button type="submit">ログイン</button>
+      </form>
+      <p class="muted">このコードはローカルデモの操作用です。実在人物の認証ではありません。</p>
+    </section>
+
+    <section id="work-panel" class="card" hidden>
+      <div class="card-top"><p class="eyebrow">02 / YOUR WALLET</p><button id="logout" class="text-button" type="button">ログアウト</button></div>
+      <h2>模擬資格情報</h2>
+      <p>確認要求は検証者画面から届きます。要求内容を確認してから、共有するか決めてください。</p>
+      <div id="waiting-panel" class="waiting">要求を待っています。検証者画面で「要求を作ってウォレットを開く」を押してください。</div>
+
+      <div id="review-panel" hidden>
+        <hr><h3>この要求に同意しますか？</h3>
+        <dl class="details">
+          <div><dt>確認する相手</dt><dd id="audience"></dd></div>
+          <div><dt>端末の結び付け</dt><dd id="device-binding"></dd></div>
+          <div><dt>利用予定日</dt><dd id="service-day"></dd></div>
+          <div><dt>要求の期限</dt><dd id="expires"></dd></div>
+          <div><dt>発行鍵</dt><dd id="issuer-key"></dd></div>
+          <div><dt>鍵の状態</dt><dd id="key-state"></dd></div>
+        </dl>
+        <div class="disclosures">
+          <div><h4>証明する条件</h4><ul id="claims"></ul></div>
+          <div><h4>開示する属性値</h4><p id="revealed-attributes"></p></div>
+        </div>
+        <p class="muted">証明を共有すると、条件が成り立つこと、発行鍵の識別子、要求IDは相手に伝わります。模擬失効情報を使用しますが、実際の免許状態は照会しません。</p>
+        <div class="actions"><button id="approve" type="button">同意して証明を送る</button><button id="deny" class="secondary" type="button">同意しない</button></div>
+      </div>
+      <div id="result-panel" hidden tabindex="-1"><hr><h3 id="result-title"></h3><p id="result-description"></p></div>
+    </section>
+    <footer>この画面は別のローカルプロセスが持つウォレット情報を使います。秘密情報はブラウザから検証者へ送りません。発行鍵の更新後に資格情報がない場合は、発行者CLIで新しい模擬資格情報を発行し、このウォレットへ取り込んでください。</footer>
+  </main>
+</body>
+</html>
