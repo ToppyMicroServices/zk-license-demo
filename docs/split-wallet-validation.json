@@ -1,0 +1,113 @@
+{
+  "checked_at": "2026-10-17T15:08:41.845739+00:00",
+  "base_commit": "d10479d16f21999083b7796a399691f5e2b070a9",
+  "environment": {
+    "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6",
+    "sqlite": "3.53.4",
+    "anoncreds": "0.2.3"
+  },
+  "tests": {
+    "command": "REQUIRE_CRYPTO=1 .venv/bin/python -W error -m unittest discover -s tests -v",
+    "total": 86,
+    "split_wallet": 18,
+    "result": "passed",
+    "log_sha256": "f394985c14783cddb1c7783de95d4cbb1d7b5007d0be15bfcb53ebad5df51c22",
+    "note": "The initial sandbox run could not bind loopback sockets. The complete suite passed with local socket permission; the logged rerun passed all 86 tests."
+  },
+  "cli_smoke": {
+    "commands": [
+      {
+        "command": "issuer-init",
+        "exit_code": 0
+      },
+      {
+        "command": "verifier-init",
+        "exit_code": 0
+      },
+      {
+        "command": "wallet-init",
+        "exit_code": 0
+      },
+      {
+        "command": "issuer-offer",
+        "exit_code": 0
+      },
+      {
+        "command": "wallet-enroll",
+        "exit_code": 0
+      },
+      {
+        "command": "issuer-issue",
+        "exit_code": 0
+      },
+      {
+        "command": "wallet-import",
+        "exit_code": 0
+      },
+      {
+        "command": "verifier-request",
+        "exit_code": 0
+      },
+      {
+        "command": "wallet-review",
+        "exit_code": 0
+      },
+      {
+        "command": "wallet-decide",
+        "exit_code": 0
+      },
+      {
+        "command": "verifier-verify",
+        "exit_code": 0
+      },
+      {
+        "command": "issuer-backup",
+        "exit_code": 0
+      },
+      {
+        "command": "issuer-key",
+        "exit_code": 0
+      },
+      {
+        "command": "issuer-restore",
+        "exit_code": 0
+      },
+      {
+        "command": "issuer-rotate",
+        "exit_code": 0
+      },
+      {
+        "command": "verifier-reset",
+        "exit_code": 0
+      },
+      {
+        "command": "wallet-pair",
+        "exit_code": 0
+      }
+    ],
+    "verification": {
+      "accepted": true,
+      "live_licence_status_checked": false,
+      "synthetic_revocation_checked": true
+    },
+    "keys_distinct": true,
+    "synthetic_data_only": true,
+    "source_commit": "8339319b4f3f97dbece68b057ed73a0f847eceb0"
+  },
+  "source_sha256": {
+    "lifecycle.py": "3b74ecbf28334c715cd9208a6d48ea43c1b545f71bb5bb5d45109c13cb7bd22d",
+    "split_wallet.py": "f4be616fcf8087aae0e51ff2395639d4d4d426311e035b885c7bd4d08c3184be",
+    "split_demo.py": "3a5cd4a06076815a8e82692ed810f96af8cfa14298734c1cf3f89992e7322851",
+    "tests/test_split_wallet.py": "1155d1a6aa8c184893c28aec297f65fb6e0098839cbb6711f666b4d1f81a1b9f"
+  },
+  "ci": {
+    "checks_url": "https://github.com/ToppyMicroServices/zk-license-demo/pull/4/checks",
+    "note": "This file records local verification. CI results and the exact tested commit are available in the linked PR checks."
+  },
+  "limits": [
+    "Synthetic data only; no real licence reader or police status query",
+    "CLI process/store separation; no OS isolation or encrypted storage",
+    "Existing benchmark measures the original non-revoking CLI, not this lifecycle prototype"
+  ]
+}
