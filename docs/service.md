@@ -72,6 +72,8 @@ synthetic account, not a person's identity. This is neither passkey nor JPKI
 authentication. The prototype has no card adapter, live licence-status source,
 revocation registry, durable key rotation or recovery. AnonCreds revocation is
 still disabled. A restart creates new keys and invalidates existing sessions.
+The separate [CLI prototype](split-wallet.md) implements wallet custody, rotation,
+revocation and recovery with durable stores. Those features are not wired into this HTTP service.
 
 Python explicitly describes `http.server` as unsuitable for production in its
 [3.12 documentation](https://docs.python.org/3.12/library/http.server.html).

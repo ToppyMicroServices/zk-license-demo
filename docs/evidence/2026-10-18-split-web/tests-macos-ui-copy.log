@@ -1,0 +1,37 @@
+test_authentication_and_cookie_flags (tests.test_service.ServiceTests.test_authentication_and_cookie_flags) ... ok
+test_client_cannot_override_policy_session_or_issuer (tests.test_service.ServiceTests.test_client_cannot_override_policy_session_or_issuer) ... ok
+test_concurrent_replay_has_exactly_one_success (tests.test_service.ServiceTests.test_concurrent_replay_has_exactly_one_success) ... ok
+test_consent_is_bound_to_exact_request (tests.test_service.ServiceTests.test_consent_is_bound_to_exact_request) ... ok
+test_consent_required_even_for_externally_created_valid_proof (tests.test_service.ServiceTests.test_consent_required_even_for_externally_created_valid_proof) ... ok
+test_cross_session_request_and_proof_rejected (tests.test_service.ServiceTests.test_cross_session_request_and_proof_rejected) ... ok
+test_csrf_origin_and_host_rejection (tests.test_service.ServiceTests.test_csrf_origin_and_host_rejection) ... ok
+test_expired_request_is_removed_from_memory_and_database (tests.test_service.ServiceTests.test_expired_request_is_removed_from_memory_and_database) ... ok
+test_login_and_session_quotas (tests.test_service.ServiceTests.test_login_and_session_quotas) ... ok
+test_login_rotation_and_logout_invalidate_old_requests (tests.test_service.ServiceTests.test_login_rotation_and_logout_invalidate_old_requests) ... ok
+test_non_loopback_binding_refused (tests.test_service.ServiceTests.test_non_loopback_binding_refused) ... ok
+test_proof_cannot_be_moved_to_another_approved_request (tests.test_service.ServiceTests.test_proof_cannot_be_moved_to_another_approved_request) ... ok
+test_session_expiring_during_real_verification_rolls_back (tests.test_service.ServiceTests.test_session_expiring_during_real_verification_rolls_back) ... ok
+test_session_expiry (tests.test_service.ServiceTests.test_session_expiry) ... ok
+test_static_routes_are_allowlisted_and_no_cache (tests.test_service.ServiceTests.test_static_routes_are_allowlisted_and_no_cache) ... ok
+test_strict_json_size_and_content_type (tests.test_service.ServiceTests.test_strict_json_size_and_content_type) ... ok
+test_tampered_proof_does_not_consume_request (tests.test_service.ServiceTests.test_tampered_proof_does_not_consume_request) ... ok
+test_valid_proof_no_identity_values_and_replay_rejection (tests.test_service.ServiceTests.test_valid_proof_no_identity_values_and_replay_rejection) ... ok
+test_bearer_tokens_are_origin_local_and_request_boundary_is_strict (tests.test_split_service.SplitServiceTests.test_bearer_tokens_are_origin_local_and_request_boundary_is_strict) ... ok
+test_completed_requests_and_reviews_free_session_capacity (tests.test_split_service.SplitServiceTests.test_completed_requests_and_reviews_free_session_capacity) ... ok
+test_denial_is_terminal_and_http_sessions_own_requests (tests.test_split_service.SplitServiceTests.test_denial_is_terminal_and_http_sessions_own_requests) ... ok
+test_login_rate_limit_and_logout_invalidate_token (tests.test_split_service.SplitServiceTests.test_login_rate_limit_and_logout_invalidate_token) ... ok
+test_logout_succeeds_when_session_and_global_quotas_are_full (tests.test_split_service.SplitServiceTests.test_logout_succeeds_when_session_and_global_quotas_are_full) ... ok
+test_real_proof_needs_wallet_approval_and_verifier_needs_no_private_store (tests.test_split_service.SplitServiceTests.test_real_proof_needs_wallet_approval_and_verifier_needs_no_private_store) ... ok
+test_revocation_stale_request_reissue_and_key_rotation (tests.test_split_service.SplitServiceTests.test_revocation_stale_request_reissue_and_key_rotation) ... ok
+test_running_services_require_wallet_repair_after_verifier_reset (tests.test_split_service.SplitServiceTests.test_running_services_require_wallet_repair_after_verifier_reset) ... ok
+test_session_expiring_during_native_verification_does_not_consume_request (tests.test_split_service.SplitServiceTests.test_session_expiring_during_native_verification_does_not_consume_request) ... ok
+test_two_cli_processes_verify_after_private_stores_are_removed (tests.test_split_service.SplitServiceTests.test_two_cli_processes_verify_after_private_stores_are_removed) ... ok
+test_existing_evidence_and_invalid_counts_fail_before_measurement (tests.test_benchmark.BenchmarkTests.test_existing_evidence_and_invalid_counts_fail_before_measurement) ... ok
+test_failed_measurement_does_not_write_success_report (tests.test_benchmark.BenchmarkTests.test_failed_measurement_does_not_write_success_report) ... ok
+test_invalid_samples_rejected (tests.test_benchmark.BenchmarkTests.test_invalid_samples_rejected) ... ok
+test_nearest_rank_and_median (tests.test_benchmark.BenchmarkTests.test_nearest_rank_and_median) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 15.374s
+
+OK

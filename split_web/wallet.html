@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wallet | 共有内容の確認</title>
+  <link rel="stylesheet" href="/brand.css">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/wallet.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/" aria-label="ToppyMicroServices"><img class="brand-logo" src="/toppy-logo.png" alt="" width="40" height="40"><span>ToppyMicroServices</span></a><div class="header-meta"><span class="page-role">Wallet</span><span class="badge">サンプルデータ / DEMO</span></div></header>
+  <main>
+    <p class="eyebrow">WALLET DEMO</p>
+    <h1>共有内容の確認</h1>
+    <p class="lead">受付に送る証明の内容を確認し、共有するかを選べます。氏名や住所などの元の値は証明に含めません。</p>
+    <aside class="notice"><strong>サンプルデータを使った体験用デモです。</strong>実際の免許証が有効かどうかの確認や、本人確認には利用できません。</aside>
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+
+    <section id="login-panel" class="card">
+      <p class="eyebrow">01 / ACCESS</p><h2>Wallet へのログイン</h2>
+      <p>デモの起動時に表示された、Wallet 用のログインコードを入力してください。</p>
+      <form id="login-form">
+        <label for="login-code">Wallet 用のログインコード</label>
+        <input id="login-code" type="password" maxlength="64" autocomplete="off" spellcheck="false" required>
+        <button type="submit">ログイン</button>
+      </form>
+      <p class="muted">デモ用のサンプルアカウントで操作できます。</p>
+    </section>
+
+    <section id="work-panel" class="card" hidden>
+      <div class="card-top"><p class="eyebrow">02 / YOUR WALLET</p><button id="logout" class="text-button" type="button">ログアウト</button></div>
+      <h2>受付からの確認内容</h2>
+      <div id="waiting-panel" class="waiting">受付からの確認内容を待っています。受付画面で「Wallet を開いて確認する」を押してください。</div>
+
+      <div id="review-panel" hidden>
+        <hr><h3>共有内容</h3>
+        <dl class="details">
+          <div><dt>証明の送信先</dt><dd id="audience"></dd></div>
+          <div><dt>利用予定日</dt><dd id="service-day"></dd></div>
+          <div><dt>操作期限</dt><dd id="expires"></dd></div>
+        </dl>
+        <div class="disclosures">
+          <div><h4>受付が確認する条件</h4><ul id="claims"></ul></div>
+          <div><h4>そのまま共有する免許情報</h4><p id="revealed-attributes"></p></div>
+        </div>
+        <p class="muted">受付には、条件を満たすことを示す証明と、照合に使う識別子が伝わります。</p>
+        <details><summary>確認内容の詳細</summary><dl class="details">
+          <div><dt>デモの接続ID</dt><dd id="device-binding"></dd></div>
+          <div><dt>発行鍵</dt><dd id="issuer-key"></dd></div>
+          <div><dt>鍵の状態</dt><dd id="key-state"></dd></div>
+        </dl></details>
+        <div class="actions"><button id="approve" type="button">同意して共有する</button><button id="deny" class="secondary" type="button">今回は共有しない</button></div>
+      </div>
+      <div id="result-panel" hidden tabindex="-1"><hr><h3 id="result-title"></h3><p id="result-description"></p></div>
+    </section>
+    <footer><details><summary>デモの仕組み</summary><p>Wallet と受付は、お使いのパソコン内の別々のプログラムで動作します。証明には、元のサンプルデータや Wallet だけが保持する秘密情報を含めません。サンプルデータの準備・更新は、起動手順に沿って行います。</p></details></footer>
+  </main>
+</body>
+</html>

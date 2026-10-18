@@ -1,0 +1,19 @@
+main{max-width:790px;margin:auto;padding:38px 30px}
+.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:750;color:var(--accent);margin:0 0 12px}
+h1{font-size:clamp(29px,5vw,42px);line-height:1.4;margin:0 0 16px}h2{font-size:24px;margin:0 0 15px}h3{font-size:20px;margin:0 0 15px}h4{font-size:14px;margin:0 0 8px}
+p{margin:0 0 15px}.lead{max-width:690px;color:var(--muted)}
+.notice{font-size:13px;padding:15px 19px;background:var(--soft);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;color:var(--muted);margin:25px 0}
+.notice strong{display:block}.message{color:var(--error);font-size:14px;min-height:1.5em;margin:0 0 10px}.message:empty{min-height:0;margin:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:29px;box-shadow:0 6px 24px #00000014;margin:0 0 22px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.card-top .eyebrow{margin:0 0 10px}
+.muted,footer{font-size:13px;color:var(--muted)}footer{margin-top:25px}
+label{display:block;font-size:14px;font-weight:600;margin:22px 0 8px}
+input,select{display:block;width:100%;max-width:500px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink);font:inherit;margin-bottom:18px}
+button{font:600 14px/1.5 system-ui,sans-serif;color:var(--button-ink);background:var(--accent);border:1px solid var(--accent);border-radius:6px;cursor:pointer;padding:11px 18px}button:hover{filter:brightness(.92)}button:disabled{opacity:.55;cursor:wait}
+button.secondary{background:var(--surface);color:var(--ink);border-color:var(--line)}.text-button{color:var(--muted);background:none;border:0;padding:0;font-size:12px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.details{margin:0}.details div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}.details dt{color:var(--muted)}.details dd{margin:0;overflow-wrap:anywhere}
+.disclosures{display:grid;grid-template-columns:1fr 1fr;gap:22px;background:var(--soft);padding:19px;border-radius:8px;margin:22px 0 15px}.disclosures p,.disclosures ul{font-size:14px;margin:0}.disclosures ul{padding-left:20px}
+.waiting{padding:18px;background:var(--soft);border-radius:8px;font-size:14px;color:var(--muted)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}[hidden]{display:none!important}
+@media(max-width:600px){main{padding:26px 18px}.card{padding:21px}.details div{grid-template-columns:105px minmax(0,1fr);gap:10px}.disclosures{grid-template-columns:1fr;gap:20px}.actions button{width:100%}}

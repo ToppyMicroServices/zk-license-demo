@@ -5,6 +5,7 @@ import hashlib
 import os
 from pathlib import Path
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -163,6 +164,59 @@ class EnrollmentGateTests(unittest.TestCase):
                 return "rejected"
         with ThreadPoolExecutor(max_workers=2) as pool:
             self.assertCountEqual(list(pool.map(finish, range(2))), [self.ctx.request_id, "rejected"])
+
+    def test_slow_adapters_do_not_block_other_enrollments(self):
+        for adapter, method in ((self.reader, "read"), (self.identity, "verify_and_match")):
+            with self.subTest(method=method):
+                blocked = self.gate.begin(account_id="synthetic-account", wallet_request=b"slow-request",
+                                          purpose="test-only-enrollment", now=1000)
+                entered, release = threading.Event(), threading.Event()
+                original = getattr(adapter, method)
+
+                def slow(context, *args):
+                    if context.request_id == blocked.request_id:
+                        entered.set()
+                        if not release.wait(15):
+                            raise TimeoutError("test adapter was not released")
+                    return original(context, *args)
+
+                def other_enrollment():
+                    reopened = EnrollmentGate.reopen(self.path, **self.configuration)
+                    # A second call for the claimed request must fail immediately.
+                    with self.assertRaisesRegex(EnrollmentRejected, "unavailable_or_used"):
+                        reopened.complete(blocked.request_id, account_id="synthetic-account",
+                                          wallet_request=b"slow-request", consent=True, now=1001)
+                    context = reopened.begin(account_id="other-account", wallet_request=b"other-request",
+                                             purpose="test-only-enrollment", now=1000)
+                    return reopened.complete(context.request_id, account_id="other-account",
+                                             wallet_request=b"other-request", consent=True, now=1001)
+
+                with patch.object(adapter, method, side_effect=slow), ThreadPoolExecutor(max_workers=2) as pool:
+                    pending = pool.submit(self.gate.complete, blocked.request_id,
+                                          account_id="synthetic-account", wallet_request=b"slow-request",
+                                          consent=True, now=1001)
+                    try:
+                        self.assertTrue(entered.wait(5), "adapter did not start")
+                        receipt = pool.submit(other_enrollment).result(timeout=5)
+                        self.assertNotEqual(receipt.request_id, blocked.request_id)
+                    finally:
+                        release.set()
+                    self.assertEqual(pending.result(timeout=5).request_id, blocked.request_id)
+
+    def test_interrupted_adapter_claim_is_not_replayed_after_restart(self):
+        # A process interruption has no normal provider result to retry safely.
+        with patch.object(self.reader, "read", side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                self.complete()
+        self.gate = EnrollmentGate.reopen(self.path, **self.configuration)
+        with self.assertRaisesRegex(EnrollmentRejected, "unavailable_or_used"):
+            self.complete()
+        self.assertEqual(self.reader.calls, 0)
+        replacement = self.gate.begin(account_id="synthetic-account", wallet_request=b"replacement-request",
+                                      purpose="test-only-enrollment", now=1000)
+        receipt = self.gate.complete(replacement.request_id, account_id="synthetic-account",
+                                     wallet_request=b"replacement-request", consent=True, now=1001)
+        self.assertEqual(receipt.request_id, replacement.request_id)
 
     def test_store_and_receipt_do_not_contain_raw_card_or_provider_subject(self):
         receipt = self.complete()

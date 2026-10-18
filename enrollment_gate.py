@@ -185,37 +185,60 @@ class EnrollmentGate:
                     raise EnrollmentRejected("consent_denied")
                 if self.reader is None or self.signatures is None or self.identity is None:
                     raise IntegrationUnavailable("reader_trust_and_identity_adapters_required")
-                capture = self.reader.read(ctx)
-                if not isinstance(capture, CardCapture):
-                    raise EnrollmentRejected("invalid_reader_result")
-                # Identity matching must decode these exact verified bytes, not
-                # a second mutable capture or client-supplied attribute object.
-                signed_files = MappingProxyType(dict(capture.files))
-                record = self.signatures.verify(profile=capture.profile, key_id=capture.key_id,
-                                                 files=signed_files, signature=capture.signature)
-                person = self.identity.verify_and_match(ctx, record, signed_files)
-                finished = self._now(now)
-                if not ctx.created_at <= finished < ctx.expires_at:
-                    raise EnrollmentRejected("enrollment_expired")
-                if (not isinstance(person, BoundIdentity)
-                        or type(person.subject) is not str or not 1 <= len(person.subject) <= 512
-                        or person.provider != self.identity.provider_id
-                        or not person.provider
-                        or person.audience != ctx.audience
-                        or person.nonce != ctx.nonce
-                        or person.wallet_request_sha256 != ctx.wallet_request_sha256
-                        or person.card_evidence_sha256 != record.evidence_sha256
-                        or type(person.authenticated_at) is not int
-                        or type(person.expires_at) is not int
-                        or not ctx.created_at <= person.authenticated_at <= finished < person.expires_at
-                        or person.expires_at > ctx.expires_at):
-                    raise EnrollmentRejected("identity_binding_mismatch")
-                con.execute("UPDATE enrollments SET state='completed',card_digest=? WHERE id=?",
-                            (record.evidence_sha256, request_id))
+                # Persist the one-use claim, then release the database before
+                # calling adapters. Other enrollments must not wait for I/O.
+                con.execute("UPDATE enrollments SET state='processing' WHERE id=?", (request_id,))
                 con.commit()
-                return EnrollmentReceipt(request_id, record.evidence_sha256,
-                                         ctx.wallet_request_sha256, finished)
             except BaseException:
                 if con.in_transaction:
                     con.rollback()
                 raise
+
+        try:
+            capture = self.reader.read(ctx)
+            if not isinstance(capture, CardCapture):
+                raise EnrollmentRejected("invalid_reader_result")
+            # Identity matching receives the exact verified bytes, not a second
+            # mutable capture or client-supplied attribute object.
+            signed_files = MappingProxyType(dict(capture.files))
+            record = self.signatures.verify(profile=capture.profile, key_id=capture.key_id,
+                                             files=signed_files, signature=capture.signature)
+            person = self.identity.verify_and_match(ctx, record, signed_files)
+            with closing(self._connect()) as con:
+                con.execute("BEGIN IMMEDIATE")
+                try:
+                    finished = self._now(now)
+                    if not ctx.created_at <= finished < ctx.expires_at:
+                        raise EnrollmentRejected("enrollment_expired")
+                    if (not isinstance(person, BoundIdentity)
+                            or type(person.subject) is not str or not 1 <= len(person.subject) <= 512
+                            or person.provider != self.identity.provider_id
+                            or not person.provider
+                            or person.audience != ctx.audience
+                            or person.nonce != ctx.nonce
+                            or person.wallet_request_sha256 != ctx.wallet_request_sha256
+                            or person.card_evidence_sha256 != record.evidence_sha256
+                            or type(person.authenticated_at) is not int
+                            or type(person.expires_at) is not int
+                            or not ctx.created_at <= person.authenticated_at <= finished < person.expires_at
+                            or person.expires_at > ctx.expires_at):
+                        raise EnrollmentRejected("identity_binding_mismatch")
+                    updated = con.execute(
+                        "UPDATE enrollments SET state='completed',card_digest=? "
+                        "WHERE id=? AND state='processing'", (record.evidence_sha256, request_id))
+                    if updated.rowcount != 1:
+                        raise EnrollmentRejected("enrollment_unavailable_or_used")
+                    con.commit()
+                except BaseException:
+                    if con.in_transaction:
+                        con.rollback()
+                    raise
+            return EnrollmentReceipt(request_id, record.evidence_sha256,
+                                     ctx.wallet_request_sha256, finished)
+        except Exception:
+            # A completed call that failed can be retried. An interrupted process
+            # leaves 'processing' intact: reopening must not replay provider I/O.
+            with closing(self._connect()) as con:
+                con.execute("UPDATE enrollments SET state='pending' "
+                            "WHERE id=? AND state='processing'", (request_id,))
+            raise

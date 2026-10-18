@@ -10,7 +10,7 @@ Predicates must refer to sub-proof index 0 in exactly one credential.
 No attribute values are requested for disclosure, and the wrapper refuses additional disclosures/self-attestations.
 
 This is not a proof of physical-card possession, current legal entitlement, identity of the human at the keyboard,
-a non-compromised wallet, or up-to-date revocation status.
+a non-compromised wallet, or current police suspension/cancellation status.
 The credential holder can transfer a credential together with the secret if the environment permits it.
 
 ## Roles
@@ -18,7 +18,7 @@ The credential holder can transfer a credential together with the secret if the 
 **Issuer:** Knows and checks source attributes, signs the synthetic credential. Production source verification is not implemented.
 A compromised/malicious trusted issuer can certify false facts; a valid proof cannot fix that.
 
-**Holder:** Generates the link secret and presentation locally. The test fixture is in memory; no real document import exists.
+**Holder:** Generates the link secret and presentation locally. The original test fixture is in memory; no real document import exists.
 All three roles run on the same machine for reproducibility, with no OS-level isolation claim.
 
 **Verifier:** Pins a public credential definition and schema in its own configuration; creates and stores the exact request;
@@ -68,8 +68,16 @@ from a verifier rejecting an actually generated proof. Weaker-policy tests delib
 claim and submit it to the stricter verifier.
 
 A passing suite provides regression evidence, not a cryptographic audit or proof of end-to-end production security.
-The optional loopback service adds synthetic-account sessions, request review and consent,
+The original loopback `service.py` adds synthetic-account sessions, request review and consent,
 server-side ownership checks, CSRF/origin checks and process-local rate limits; see [service.md](service.md).
 Its startup code authenticates access to one demo account, not a real person. Issuer, holder and verifier
-still share one process. Real-person authentication, device attestation, issuer key rotation, recovery,
-deployment hardening, a Japanese licence RSA adapter and a revocation subsystem remain unimplemented.
+share one process in that version. The separate [file-exchange prototype](split-wallet.md) adds wallet-local
+custody/consent, key rotation, retirement, emergency distrust, native credential revocation and private-key recovery.
+It uses separate processes/stores, a provisioned HMAC pairing key, a trusted local public registry and durable revision checkpoints.
+Both the registry and checkpoints must survive to detect rollback; their simultaneous rollback is outside the guarantee.
+Its wallet consent is local enforcement, not a verifier-checkable consent receipt. Secrets are stored unencrypted.
+`split_service.py` puts the wallet and verifier HTTP roles in separate loopback processes and uses role-local bearer
+sessions. The browser passes a signed request and, after consent, a proof between exact configured origins.
+This does not establish OS isolation, browser/device attestation or a production authentication channel.
+Real-person authentication, OS isolation, device attestation, deployment hardening, a Japanese licence RSA adapter
+and a live legal-entitlement status source remain unimplemented.
