@@ -25,7 +25,7 @@ Windows・UbuntuのCI結果はPRのチェックに記録する。
 背景とロゴは、[Toppy の公開記事](https://www.toppymicros.com/zk-license-demo.html)で使う濃紺 `#02213b` と既存の画像ロゴにそろえた。
 3画面は同じ `web/brand.css` と `web/toppy-logo.png` をローカル配信し、表示時に外部サイトへ画像やフォントを取得しない。
 ロゴは既存サイトの `216722720.png` を無加工で再利用した（SHA-256 `00d83bad154078750b5c2b3efa0ce2586905dfab3142a93cda9e7164e68ed7c5`）。
-見出しは「共有する内容を確認する」とし、画面上の表記を `Wallet` に統一した。
-3画面の背景・ロゴ・文言はデスクトップのブラウザで表示確認した。
+見出しは「共有内容の確認」とし、画面上の表記を `Wallet` に統一した。
+3画面の背景・ロゴはデスクトップのブラウザで表示確認した。見出しの最終表記はHTMLの差分で確認した。
 共通アセットの配信、画像MIME、画像を同一originに限るCSP、許可されていないパスの拒否を含めて、macOSで全96件が成功した。
 追加の実行ログは[こちら](evidence/2026-10-18-split-web/tests-macos-brand.log)（SHA-256 `a800f03dfe27c1d1c024a75e301a8927b24bae162ed28d181e9a44a4ff1ebda8`）。
