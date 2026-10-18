@@ -2,7 +2,7 @@
 
 `split_demo.py` は、発行者・ウォレット・検証者を別のCLIプロセスとSQLiteファイルで動かす。
 属性はすべて架空だが、署名、条件証明、失効証明には既存のAnonCreds 0.2.3を使う。
-既存の `demo.py` と `service.py` の動作は変更していない。画面版は引き続き同一プロセスである。
+既存の `demo.py` と `service.py` は同一プロセス版として残る。`split_service.py` はウォレットと検証者を別のローカルWebプロセスで動かす。
 
 ## 保存と受け渡し
 
@@ -75,6 +75,30 @@ python split_demo.py verifier-verify --store "$demo_dir/verifier/state.sqlite3" 
 ウォレットは `wallet-pair --input <新しいペアリングファイル>` で更新する。古い要求と同意は使えない。
 これは実アカウントの移行・復旧ではなく、模擬の端末再登録である。
 
+## 分離したWeb画面
+
+上の初回発行とウォレットへの取込みを終えてから、別々のターミナルで次の2コマンドを実行する。
+それぞれのターミナルに異なる模擬ログインコードが表示される。両方のプロセスは同じ公開レジストリを読み、
+ウォレットはウォレットDBだけ、検証者は検証者DBだけを開く。発行者の秘密DBはWebプロセスに渡さない。
+
+```bash
+python split_service.py --role verifier --store artifacts/split/verifier/state.sqlite3 \
+  --registry artifacts/split/public/state.sqlite3 --port 8766 --peer-origin http://127.0.0.1:8767
+python split_service.py --role wallet --store artifacts/split/wallet/state.sqlite3 \
+  --registry artifacts/split/public/state.sqlite3 --port 8767 --peer-origin http://127.0.0.1:8766
+```
+
+ブラウザで `http://127.0.0.1:8766` を開いて検証者のコードでログインし、鍵を選んで要求を作る。
+開いたウォレット画面にはウォレット側のコードでログインする。認証済みの要求内容を確認して同意または拒否する。
+同意時だけ証明が検証者画面へ渡り、検証者側で条件と模擬失効情報を確認する。
+画面間では署名付き要求と同意後の証明だけを、設定された相手のoriginとウィンドウを確認して受け渡す。
+各画面のログイントークンはその画面のメモリに置き、Cookieや画面間メッセージには入れない。
+
+発行鍵の更新・個別失効・再発行や `verifier-reset` / `wallet-pair` は上記のCLIで行う。
+Webプロセスは起動したまま更新後のDBを読む。検証者画面の鍵一覧は要求作成時に更新する。
+再ペアリングや失効の後は古い要求を使わず、新しい要求を作る。画面を再読込みするとログイン状態は失われる。
+このWeb版はループバック専用の模擬アカウントで、実本人認証、外部公開用API、実免許証の状態照会は行わない。
+
 ## 鍵更新、失効、復旧
 
 発行鍵ごとに別のcredential definitionと失効レジストリを作る。
@@ -130,6 +154,6 @@ Secure Enclave/HSM、OS間の隔離、ファイルの安全な削除、端末侵
 
 実カード読取り、実本人認証、警察の停止・取消し照会、インターネット向けAPIは追加していない。
 `synthetic_revocation_checked: true` と `live_licence_status_checked: false` を結果に分けて出す。
-実行した検査とソースのハッシュは[検証記録](split-wallet-validation.json)に保存する。
-既存Web画面への接続はBeads `zkl-7al`、本番化は `zkl-9w9` に残す。
+CLI版の検査とソースのハッシュは[検証記録](split-wallet-validation.json)、分離Webの検査は[別の記録](split-web-validation.md)に保存する。
+分離Web画面の作業はBeads `zkl-7al` で追跡し、本番化は `zkl-9w9` に残す。
 公開鍵・状態照会の利用条件は[調査メモ](real-license-integration.md)を参照する。

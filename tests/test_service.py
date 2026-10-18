@@ -249,14 +249,18 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(self.call("POST", "/api/requests", {})[0], 429)
 
     def test_static_routes_are_allowlisted_and_no_cache(self):
-        for path in ("/", "/app.js", "/style.css"):
+        for path in ("/", "/app.js", "/style.css", "/brand.css", "/toppy-logo.png"):
             status, data, headers = self.call("GET", path)
             self.assertEqual(status, 200)
             self.assertTrue(data)
             self.assertEqual(headers["Cache-Control"], "no-store")
             self.assertIn("frame-ancestors 'none'", headers["Content-Security-Policy"])
+            self.assertIn("img-src 'self'", headers["Content-Security-Policy"])
             self.assertNotIn(self.app.login_code.encode(), data)
-        for path in ("/../service.py", "/.beads/issues.jsonl", "/error.log"):
+            if path == "/toppy-logo.png":
+                self.assertEqual(headers["Content-Type"], "image/png")
+                self.assertTrue(data.startswith(b"\x89PNG\r\n\x1a\n"))
+        for path in ("/../service.py", "/.beads/issues.jsonl", "/error.log", "/../web/toppy-logo.png"):
             self.assertEqual(self.call("GET", path)[0], 404)
 
     def test_non_loopback_binding_refused(self):

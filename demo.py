@@ -50,23 +50,23 @@ def render_report(path: Path, result: dict) -> None:
     html = """<!doctype html><html lang="ja"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
-<title>Toppy | 免許証のコピーを預からない条件確認</title>
+<title>Toppy | 条件確認の実行結果</title>
 <style>body{font:17px/1.8 system-ui,sans-serif;max-width:1000px;margin:3rem auto;padding:0 1.5rem}
 h1{font-size:2rem;line-height:1.4}section{border:1px solid;padding:1.2rem;margin:1.5rem 0}
 pre{white-space:pre-wrap;word-break:break-word;font-size:13px}small{display:block}</style>
 <p>TOPPY / PRIVACY ENGINEERING / SYNTHETIC DEMO</p>
-<h1>免許証のコピーではなく、<br>必要な条件だけを確認する。</h1>
-<p>このレポートは実際にAnonCredsで証明生成・検証したローカル実行の出力です。
-架空の発行者・架空の情報を使っています。日本の実免許証を認証するものではありません。</p>
-<section><h2>① 利用者側のデータ</h2><p>比較のために、この説明用レポートには模擬データを表示します。
-以下をZK検証者には送りません。</p><pre>HOLDER</pre></section>
-<section><h2>② 相手が確認する条件</h2><p>信頼する模擬発行者の署名に基づき、普通車の運転資格属性が1以上、
-かつ記録された有効期限が基準日以降であること。免停・取消しは確認していません。</p><pre>RESULT</pre></section>
-<section><h2>③ 検証者へ渡る項目</h2><p>以下は公開部分の要約です。
-実際のproof-envelope.jsonには証明・発行者定義の識別子・要求IDが入ります。
-検証者は別途、基準日・宛先・セッション・nonce・要求期限・使用済み状態を管理します。
-「何も残らない」「完全匿名」とは主張しません。</p><pre>PUBLIC</pre></section>
-<small>本文の図式は本サンプルのものです。報道された会社の実装を再現・評価したものではありません。
+<h1>条件確認の実行結果</h1>
+<p>サンプルデータを使い、このパソコンでAnonCredsによる証明の作成・確認を行った結果です。
+実際の免許証が有効かどうかの確認や、本人確認には利用できません。</p>
+<section><h2>① 利用者のサンプルデータ</h2><p>説明のために、Wallet が保持するサンプルデータを表示しています。
+これらの値は証明に含めません。</p><pre>HOLDER</pre></section>
+<section><h2>② 確認条件と実行結果</h2><p>確認した条件は、サンプルデータに普通車の運転資格が登録されていることと、
+登録された有効期限が利用予定日以降であることです。あらかじめ信頼したデモの発行元の署名に基づきます。</p><pre>RESULT</pre></section>
+<section><h2>③ 受付に渡る情報</h2><p>以下は共有する情報の要約です。
+実際のproof-envelope.jsonには証明・発行者定義の識別子・確認IDが入ります。
+受付は別途、利用予定日・宛先・セッション・nonce・操作期限・使用済み状態を管理します。
+これらの識別子や確認記録は受付に残ります。</p><pre>PUBLIC</pre></section>
+<small>このレポートは、他社の実装を再現・評価したものではありません。
 このHTMLにはスクリプト、外部画像、解析タグ、アップロード機能はありません。</small></html>"""
     html = html.replace("HOLDER", escape(json.dumps(result["synthetic_holder_data"], ensure_ascii=False, indent=2)))
     html = html.replace("RESULT", escape(json.dumps(result["measurements"], ensure_ascii=False, indent=2)))

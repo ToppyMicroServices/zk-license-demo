@@ -117,7 +117,7 @@ class DemoApplication:
     def describe(self, pending: Pending) -> dict:
         req = pending.challenge
         value = {"request_id": req.request_id, "audience": req.audience,
-                 "verifier_name": "架空のカーシェア受付", "purpose": "利用予定日の運転条件確認（模擬）",
+                 "verifier_name": "デモのカーシェア受付", "purpose": "利用予定日の運転資格と有効期限の確認",
                  "service_day": req.service_day, "expires_at": req.expires_at,
                  "proof_request": req.proof_request(self.issuer.trust.cred_def_id)}
         value["request_hash"] = hashlib.sha256(json.dumps(
@@ -243,12 +243,12 @@ class DemoApplication:
 class LocalServer(ThreadingHTTPServer):
     daemon_threads = False
 
-    def __init__(self, address, app: DemoApplication):
+    def __init__(self, address, app: DemoApplication, handler=None):
         if address[0] != "127.0.0.1":
             raise ValueError("This prototype only binds to 127.0.0.1")
         self.app = app
         self.slots = threading.BoundedSemaphore(8)
-        super().__init__(address, Handler)
+        super().__init__(address, handler or Handler)
         self.origin = f"http://127.0.0.1:{self.server_port}"
         self.expected_host = f"127.0.0.1:{self.server_port}"
 
@@ -273,6 +273,11 @@ class LocalServer(ThreadingHTTPServer):
 class Handler(BaseHTTPRequestHandler):
     server_version = "SyntheticDemo"
     sys_version = ""
+    asset_root = ASSETS
+    asset_routes = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
+                    "/style.css": ("style.css", "text/css"),
+                    "/brand.css": ("brand.css", "text/css"),
+                    "/toppy-logo.png": ("toppy-logo.png", "image/png")}
 
     def log_message(self, *_):
         pass  # Do not log cookies, codes, proof bodies or request paths.
@@ -286,7 +291,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "no-referrer")
         self.send_header("Content-Security-Policy", "default-src 'none'; script-src 'self'; "
-                         "style-src 'self'; connect-src 'self'; frame-ancestors 'none'; "
+                         "style-src 'self'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'; "
                          "base-uri 'none'; form-action 'self'")
         self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
         self.send_header("Connection", "close")
@@ -299,6 +304,15 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
         self.close_connection = True
 
+    def credentials(self):
+        cookies = SimpleCookie()
+        try:
+            cookies.load(self.headers.get("Cookie", ""))
+        except CookieError:
+            raise APIError(401, "authentication_required") from None
+        token = cookies[COOKIE].value if COOKIE in cookies else ""
+        return token, self.headers.get("X-CSRF-Token", "")
+
     def run_request(self):
         try:
             if self.headers.get_all("Host", []) != [self.server.expected_host]:
@@ -309,11 +323,10 @@ class Handler(BaseHTTPRequestHandler):
                 raise APIError(403, "origin_refused")
             if self.headers.get("Sec-Fetch-Site") == "cross-site":
                 raise APIError(403, "origin_refused")
-            assets = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
-                      "/style.css": ("style.css", "text/css")}
-            if self.command == "GET" and self.path in assets:
-                name, mime = assets[self.path]
-                self.reply(200, (ASSETS / name).read_bytes(), content_type=mime + "; charset=utf-8")
+            if self.command == "GET" and self.path in self.asset_routes:
+                name, mime = self.asset_routes[self.path]
+                content_type = mime + "; charset=utf-8" if mime.startswith("text/") else mime
+                self.reply(200, (self.asset_root / name).read_bytes(), content_type=content_type)
                 return
             if not self.path.startswith("/api/"):
                 raise APIError(404, "not_found")
@@ -333,13 +346,7 @@ class Handler(BaseHTTPRequestHandler):
                 if len(raw) != size:
                     raise APIError(400, "incomplete_body")
                 body = strict_json(raw)
-            cookies = SimpleCookie()
-            try:
-                cookies.load(self.headers.get("Cookie", ""))
-            except CookieError:
-                raise APIError(401, "authentication_required") from None
-            token = cookies[COOKIE].value if COOKIE in cookies else ""
-            csrf = self.headers.get("X-CSRF-Token", "")
+            token, csrf = self.credentials()
             value, cookie = self.server.app.dispatch(self.command, self.path, body, token, csrf)
             self.reply(200, value, cookie=cookie)
         except APIError as exc:

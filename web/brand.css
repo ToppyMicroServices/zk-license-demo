@@ -1,0 +1,28 @@
+/* Shared Toppy branding. Palette and unmodified logo match toppymicros.com. */
+:root{
+  color-scheme:dark;
+  --paper:#02213b;
+  --surface:#072d4a;
+  --ink:#f5fbff;
+  --muted:#b4cad9;
+  --accent:#62d2ff;
+  --line:rgba(185,226,255,.2);
+  --soft:#0b3653;
+  --field:#062b45;
+  --button-ink:#02213b;
+  --error:#ffb9a8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{max-width:1100px;margin:auto;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--ink);font-size:18px;font-weight:800;text-decoration:none;white-space:nowrap}
+.brand-logo{display:block;width:40px;height:40px;border-radius:6px}
+.header-meta{display:flex;align-items:center;justify-content:flex-end;gap:16px}
+.page-role{font-size:13px;color:var(--muted);white-space:nowrap}
+.badge{font:600 11px/1.4 system-ui,sans-serif;letter-spacing:.03em;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 10px;white-space:nowrap}
+@media(max-width:600px){
+  header{padding:18px;gap:12px;flex-wrap:wrap}
+  .brand{font-size:16px}
+  .brand-logo{width:32px;height:32px}
+  .header-meta{gap:12px}
+}
