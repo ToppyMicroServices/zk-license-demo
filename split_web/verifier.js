@@ -158,7 +158,7 @@ window.addEventListener("message", event => {
     message("");
     result("今回は共有されませんでした", "利用者が今回は共有しないことを選びました。証明は届いていません。");
   } else if (value.type === "wallet-error" || value.type === "wallet-busy") {
-    message("ウォレットで操作を続けられませんでした。ウォレット画面を確認してから、もう一度始めてください。");
+    message("Wallet で操作を続けられませんでした。Wallet を確認してから、もう一度始めてください。");
     current = null;
     el("request-panel").hidden = true;
   }
@@ -213,7 +213,7 @@ el("new-request").addEventListener("click", async () => {
     walletReady = false;
     walletWindow = window.open(`${config.peer_origin}/wallet.html`, "_blank", "width=620,height=820");
   } else walletWindow.focus();
-  if (!walletWindow) { message("ウォレット画面を開けませんでした。ポップアップの設定を確認してください。"); return; }
+  if (!walletWindow) { message("Wallet を開けませんでした。ポップアップの設定を確認してください。"); return; }
   const button = el("new-request");
   creating = true;
   button.disabled = true;

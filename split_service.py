@@ -215,6 +215,8 @@ class SplitHandler(Handler):
                 "/wallet.html": ("wallet.html", "text/html"),
                 "/verifier.js": ("verifier.js", "text/javascript"),
                 "/wallet.js": ("wallet.js", "text/javascript"),
+                "/brand.css": ("../web/brand.css", "text/css"),
+                "/toppy-logo.png": ("../web/toppy-logo.png", "image/png"),
                 "/style.css": ("style.css", "text/css")}
 
     def credentials(self):

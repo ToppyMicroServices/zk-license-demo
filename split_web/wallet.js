@@ -3,7 +3,7 @@
 const PROTOCOL = "zk-license-split-v1";
 const el = id => document.getElementById(id);
 const errors = {
-  invalid_login: "コードが一致しません。ウォレット用のログインコードを確認してください。",
+  invalid_login: "コードが一致しません。Wallet 用のログインコードを確認してください。",
   authentication_required: "ログインの期限が切れました。もう一度ログインしてください。",
   rate_limited: "操作が続いたため、少し待ってからやり直してください。",
   stale_registry_request: "デモのデータが更新されました。受付画面からもう一度、確認を始めてください。",
@@ -242,7 +242,7 @@ el("deny").addEventListener("click", () => void decide("deny"));
 
 api("/api/config").then(value => {
   if (value.role !== "wallet" || value.synthetic !== true || value.live_licence_status_checked !== false) {
-    throw new Error("ウォレットの設定を確認できませんでした。");
+    throw new Error("Wallet の設定を確認できませんでした。");
   }
   value.peer_origin = requirePeerOrigin(value.peer_origin);
   config = value;

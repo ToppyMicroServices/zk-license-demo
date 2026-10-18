@@ -150,6 +150,13 @@ class SplitServiceTests(unittest.TestCase):
             ("verifier", self.verifier, self.wallet_server.origin),
             ("wallet", self.wallet, self.verifier_server.origin),
         ):
+            for path, mime in (("/brand.css", "text/css"), ("/toppy-logo.png", "image/png")):
+                status, asset, headers = self.call(role, "GET", path)
+                self.assertEqual(status, 200)
+                self.assertTrue(headers["Content-Type"].startswith(mime))
+                self.assertIn("img-src 'self'", headers["Content-Security-Policy"])
+                self.assertEqual(asset, (Path(__file__).resolve().parents[1] / "web" / path[1:]).read_bytes())
+            self.assertEqual(self.call(role, "GET", "/../web/toppy-logo.png")[0], 404)
             status, config, _ = self.call(role, "GET", "/api/config")
             self.assertEqual(status, 200, config)
             self.assertEqual(config["role"], role)

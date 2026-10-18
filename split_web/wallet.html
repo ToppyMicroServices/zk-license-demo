@@ -3,24 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ウォレット | 条件確認デモ</title>
+  <title>Wallet | 条件確認デモ</title>
+  <link rel="stylesheet" href="/brand.css">
   <link rel="stylesheet" href="/style.css">
   <script src="/wallet.js" defer></script>
 </head>
 <body>
-  <header><div class="brand">TOPPY <span>ウォレット</span></div><span class="badge">サンプルデータ / DEMO</span></header>
+  <header><a class="brand" href="/" aria-label="ToppyMicroServices"><img class="brand-logo" src="/toppy-logo.png" alt="" width="40" height="40"><span>ToppyMicroServices</span></a><div class="header-meta"><span class="page-role">Wallet</span><span class="badge">サンプルデータ / DEMO</span></div></header>
   <main>
     <p class="eyebrow">WALLET DEMO</p>
-    <h1>共有する前に、内容を確認</h1>
+    <h1>共有する内容を確認する</h1>
     <p class="lead">受付から届いた内容を確認し、共有するかを選べます。共有すると、条件を満たすことを示す証明が受付に届きます。</p>
     <aside class="notice"><strong>サンプルデータを使った体験用デモです。</strong>実際の免許証が有効かどうかの確認や、本人確認には利用できません。</aside>
     <p id="message" class="message" role="status" aria-live="polite"></p>
 
     <section id="login-panel" class="card">
-      <p class="eyebrow">01 / ACCESS</p><h2>デモのウォレットにログイン</h2>
-      <p>デモの起動時に表示された、ウォレット用のログインコードを入力してください。</p>
+      <p class="eyebrow">01 / ACCESS</p><h2>デモの Wallet にログイン</h2>
+      <p>デモの起動時に表示された、Wallet 用のログインコードを入力してください。</p>
       <form id="login-form">
-        <label for="login-code">ウォレット用のログインコード</label>
+        <label for="login-code">Wallet 用のログインコード</label>
         <input id="login-code" type="password" maxlength="64" autocomplete="off" spellcheck="false" required>
         <button type="submit">ログイン</button>
       </form>
@@ -31,7 +32,7 @@
       <div class="card-top"><p class="eyebrow">02 / YOUR WALLET</p><button id="logout" class="text-button" type="button">ログアウト</button></div>
       <h2>サンプルの免許情報</h2>
       <p>受付から届く確認内容を、ここで確認できます。</p>
-      <div id="waiting-panel" class="waiting">受付からの確認内容を待っています。受付画面で「ウォレットを開いて確認する」を押してください。</div>
+      <div id="waiting-panel" class="waiting">受付からの確認内容を待っています。受付画面で「Wallet を開いて確認する」を押してください。</div>
 
       <div id="review-panel" hidden>
         <hr><h3>この内容で共有しますか？</h3>
@@ -54,7 +55,7 @@
       </div>
       <div id="result-panel" hidden tabindex="-1"><hr><h3 id="result-title"></h3><p id="result-description"></p></div>
     </section>
-    <footer><details><summary>デモの仕組み</summary><p>ウォレットと受付は、お使いのパソコン内の別々のプログラムで動作します。証明には、元のサンプルデータやウォレットだけが保持する秘密情報を含めません。サンプルデータの準備・更新は、起動手順に沿って行います。</p></details></footer>
+    <footer><details><summary>デモの仕組み</summary><p>Wallet と受付は、お使いのパソコン内の別々のプログラムで動作します。証明には、元のサンプルデータや Wallet だけが保持する秘密情報を含めません。サンプルデータの準備・更新は、起動手順に沿って行います。</p></details></footer>
   </main>
 </body>
 </html>

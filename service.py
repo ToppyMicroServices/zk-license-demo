@@ -275,7 +275,9 @@ class Handler(BaseHTTPRequestHandler):
     sys_version = ""
     asset_root = ASSETS
     asset_routes = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
-                    "/style.css": ("style.css", "text/css")}
+                    "/style.css": ("style.css", "text/css"),
+                    "/brand.css": ("brand.css", "text/css"),
+                    "/toppy-logo.png": ("toppy-logo.png", "image/png")}
 
     def log_message(self, *_):
         pass  # Do not log cookies, codes, proof bodies or request paths.
@@ -289,7 +291,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "no-referrer")
         self.send_header("Content-Security-Policy", "default-src 'none'; script-src 'self'; "
-                         "style-src 'self'; connect-src 'self'; frame-ancestors 'none'; "
+                         "style-src 'self'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'; "
                          "base-uri 'none'; form-action 'self'")
         self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
         self.send_header("Connection", "close")
@@ -323,7 +325,8 @@ class Handler(BaseHTTPRequestHandler):
                 raise APIError(403, "origin_refused")
             if self.command == "GET" and self.path in self.asset_routes:
                 name, mime = self.asset_routes[self.path]
-                self.reply(200, (self.asset_root / name).read_bytes(), content_type=mime + "; charset=utf-8")
+                content_type = mime + "; charset=utf-8" if mime.startswith("text/") else mime
+                self.reply(200, (self.asset_root / name).read_bytes(), content_type=content_type)
                 return
             if not self.path.startswith("/api/"):
                 raise APIError(404, "not_found")

@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Toppy | 条件だけを伝えるウォレット</title>
+  <title>Toppy | 条件だけを伝える Wallet</title>
+  <link rel="stylesheet" href="/brand.css">
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <header><a class="brand" href="/">TOPPY <span>Privacy engineering</span></a><span class="badge">サンプルデータ / DEMO</span></header>
+  <header><a class="brand" href="/" aria-label="ToppyMicroServices"><img class="brand-logo" src="/toppy-logo.png" alt="" width="40" height="40"><span>ToppyMicroServices</span></a><div class="header-meta"><span class="page-role">Wallet</span><span class="badge">サンプルデータ / DEMO</span></div></header>
   <main>
     <div class="intro"><p class="eyebrow">WALLET DEMO</p><h1>コピーを渡さず、<br>必要な条件を伝える。</h1><p>内容を確認し、共有するかを選ぶ。サンプルの免許情報で、同意から条件の確認までを体験できます。</p></div>
     <aside class="notice"><strong>サンプルデータを使った体験用デモです。</strong>実際の免許証が有効かどうかの確認や、本人確認には利用できません。</aside>
     <ol class="steps" aria-label="操作の流れ"><li id="step-login" aria-current="step">01 <span>ログイン</span></li><li id="step-consent">02 <span>内容の確認</span></li><li id="step-result">03 <span>確認結果</span></li></ol>
     <p id="message" class="message" role="status" aria-live="polite"></p>
     <section id="login-panel" class="card">
-      <p class="eyebrow">01 / ACCESS</p><h2>デモのウォレットにログイン</h2>
+      <p class="eyebrow">01 / ACCESS</p><h2>デモの Wallet にログイン</h2>
       <p>デモの起動時に表示されたログインコードを入力してください。</p>
       <form id="login-form"><label for="login-code">デモのログインコード</label><input id="login-code" type="password" maxlength="64" autocomplete="off" required spellcheck="false"><button type="submit">ログインする <span aria-hidden="true">→</span></button></form>
       <p class="muted">デモ用のサンプルアカウントで操作できます。</p>
@@ -35,7 +36,7 @@
       </div>
     </section>
     <section id="result-panel" class="card" hidden tabindex="-1"><p class="eyebrow">03 / RESULT</p><h2 id="result-title"></h2><p id="result-description"></p><p id="result-limit" class="muted"></p><details id="proof-details" hidden><summary>実際に送った証明を見る</summary><pre id="proof-json"></pre></details></section>
-    <footer><details><summary>デモの仕組み</summary><p>この版では、発行元・ウォレット・受付を、お使いのパソコン内の一つのプログラムで動かします。ウォレットの保存情報は別端末に隔離していません。アカウントや接続に関する情報も扱います。</p></details></footer>
+    <footer><details><summary>デモの仕組み</summary><p>この版では、発行元・Wallet・受付を、お使いのパソコン内の一つのプログラムで動かします。Wallet の保存情報は別端末に隔離していません。アカウントや接続に関する情報も扱います。</p></details></footer>
   </main>
 </body>
 </html>
