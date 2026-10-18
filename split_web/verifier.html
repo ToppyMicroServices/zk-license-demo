@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>受付 | 条件確認デモ</title>
+  <title>受付 | 利用条件の確認</title>
   <link rel="stylesheet" href="/brand.css">
   <link rel="stylesheet" href="/style.css">
   <script src="/verifier.js" defer></script>
@@ -12,13 +12,13 @@
   <header><a class="brand" href="/" aria-label="ToppyMicroServices"><img class="brand-logo" src="/toppy-logo.png" alt="" width="40" height="40"><span>ToppyMicroServices</span></a><div class="header-meta"><span class="page-role">受付</span><span class="badge">サンプルデータ / DEMO</span></div></header>
   <main>
     <p class="eyebrow">RECEPTION DEMO</p>
-    <h1>必要な条件だけを確認する</h1>
+    <h1>利用条件の確認</h1>
     <p class="lead">利用者へ確認内容を送り、同意後に届く証明を確認します。</p>
     <aside class="notice"><strong>サンプルデータを使った体験用デモです。</strong>実際の免許証が有効かどうかの確認や、本人確認には利用できません。</aside>
     <p id="message" class="message" role="status" aria-live="polite"></p>
 
     <section id="login-panel" class="card">
-      <p class="eyebrow">01 / ACCESS</p><h2>受付画面にログイン</h2>
+      <p class="eyebrow">01 / ACCESS</p><h2>受付へのログイン</h2>
       <p>デモの起動時に表示された、受付用のログインコードを入力してください。</p>
       <form id="login-form">
         <label for="login-code">受付用のログインコード</label>
@@ -30,11 +30,11 @@
 
     <section id="work-panel" class="card" hidden>
       <div class="card-top"><p class="eyebrow">02 / REQUEST</p><button id="logout" class="text-button" type="button">ログアウト</button></div>
-      <h2>条件の確認を始める</h2>
-      <p>利用予定日の条件を Wallet で確認してもらいます。</p>
+      <h2>確認内容の送信</h2>
+      <p>運転資格と有効期限の確認内容を Wallet へ送ります。</p>
       <p class="muted">利用予定日: <strong id="service-day"></strong>（デモ用の日付）</p>
       <details><summary>デモの設定</summary>
-        <p class="muted">通常は現在の鍵を使います。更新前の鍵の動作も、この設定で試せます。</p>
+        <p class="muted">通常は現在の発行鍵を使います。更新前の鍵で発行したデータの確認も試せます。</p>
         <label for="key-id">サンプルデータの発行鍵</label><select id="key-id"></select>
         <button id="refresh-keys" class="secondary" type="button">鍵一覧を更新</button>
       </details>
@@ -44,9 +44,9 @@
         <hr><h3>Wallet での操作を待っています</h3>
         <dl class="details">
           <div><dt>確認ID</dt><dd id="request-id"></dd></div>
-          <div><dt>相手</dt><dd id="audience"></dd></div>
+          <div><dt>証明の送信先</dt><dd id="audience"></dd></div>
           <div><dt>利用予定日</dt><dd id="request-day"></dd></div>
-          <div><dt>操作の期限</dt><dd id="request-expires"></dd></div>
+          <div><dt>操作期限</dt><dd id="request-expires"></dd></div>
         </dl>
         <p class="muted">Wallet で内容を確認し、共有するかを選んでください。画面を閉じた場合は、この画面からもう一度始められます。</p>
       </div>

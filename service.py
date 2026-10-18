@@ -117,7 +117,7 @@ class DemoApplication:
     def describe(self, pending: Pending) -> dict:
         req = pending.challenge
         value = {"request_id": req.request_id, "audience": req.audience,
-                 "verifier_name": "架空のカーシェア受付", "purpose": "利用予定日の運転条件確認（模擬）",
+                 "verifier_name": "デモのカーシェア受付", "purpose": "利用予定日の運転資格と有効期限の確認",
                  "service_day": req.service_day, "expires_at": req.expires_at,
                  "proof_request": req.proof_request(self.issuer.trust.cred_def_id)}
         value["request_hash"] = hashlib.sha256(json.dumps(

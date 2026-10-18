@@ -170,6 +170,7 @@ ZKは流出済み画像の無効化や侵入防止の代替策ではありませ
 
 ## 関連資料
 
+- [画面の文言・見た目に適用するUI基準](docs/ui-guidelines.md)
 - [報道・一次発表・先行技術の確認](docs/sources.md)
 - [脅威モデルと責任分界](docs/threat-model.md)
 - [記事案](docs/article-ja.md)

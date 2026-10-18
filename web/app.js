@@ -2,15 +2,16 @@
 const el = id => document.getElementById(id);
 let csrf = "", currentRequest = null;
 const errors = {
+  session_capacity: "現在ログインできません。少し待ってから、もう一度ログインしてください。",
   invalid_login: "コードが一致しません。デモの起動時に表示されたログインコードを確認してください。",
-  authentication_required: "ログインが必要です。セッションの期限が切れた場合は、もう一度ログインしてください。",
-  rate_limited: "操作が続いたため、少し待ってからやり直してください。",
-  request_unavailable: "この確認内容は利用できません。新しい内容を受け取ってください。",
-  request_expired: "操作の期限が切れました。新しい確認内容を受け取ってください。",
-  already_used: "この内容は確認済みです。新しい確認内容を受け取ってください。",
+  authentication_required: "ログインが必要です。もう一度ログインしてください。",
+  rate_limited: "操作回数の上限に達しました。少し待ってからやり直してください。",
+  request_unavailable: "この確認内容は利用できません。「確認内容を受け取る」からやり直してください。",
+  request_expired: "操作期限が切れました。「確認内容を受け取る」からやり直してください。",
+  already_used: "この確認内容は使用済みです。「確認内容を受け取る」からやり直してください。",
   consent_required: "共有するには、内容を確認して同意してください。",
   request_changed: "表示した内容と一致しません。新しい確認内容を受け取ってください。",
-  invalid_proof: "証明を確認できませんでした。もう一度お試しください。",
+  invalid_proof: "証明を確認できませんでした。「確認内容を受け取る」からやり直してください。",
   csrf_failed: "操作の確認に失敗しました。画面を再読み込みしてログイン状態を確認してください。"
 };
 async function api(path, body) {
@@ -18,11 +19,15 @@ async function api(path, body) {
   if (body !== undefined) Object.assign(options, {method: "POST", headers: {
     "Content-Type": "application/json", "X-CSRF-Token": csrf
   }, body: JSON.stringify(body)});
-  const response = await fetch(path, options);
-  const value = await response.json();
+  const response = await fetch(path, options).catch(() => {
+    throw new Error("デモに接続できませんでした。デモが起動しているか確認し、もう一度操作してください。");
+  });
+  const value = await response.json().catch(() => {
+    throw new Error("デモからの応答を読み取れませんでした。画面を開き直してください。");
+  });
   if (!response.ok) {
     if (response.status === 401 && path !== "/api/login") showLogin();
-    throw new Error(errors[value.error] || "操作を完了できませんでした。新しい確認内容を受け取ってやり直してください。");
+    throw new Error(errors[value.error] || "操作を完了できませんでした。画面を開き直して、もう一度お試しください。");
   }
   return value;
 }
@@ -93,7 +98,7 @@ el("deny").addEventListener("click", () => perform(async () => {
     decision: "deny", request_hash: currentRequest.request_hash
   });
   el("proof-details").hidden = true;
-  result("今回は共有しませんでした", "今回は共有しないという選択を保存しました。証明は作成・送信していません。", "新しい確認内容を受け取った場合は、改めて共有するかを選べます。");
+  result("今回は共有しませんでした", "証明は作成・送信していません。", "もう一度試す場合は、「確認内容を受け取る」を押してください。");
 }));
 el("approve").addEventListener("click", () => perform(async () => {
   await api(`/api/requests/${currentRequest.request_id}/consent`, {
@@ -104,10 +109,10 @@ el("approve").addEventListener("click", () => perform(async () => {
   el("message").textContent = "証明を作成し、確認しています…";
   const envelope = await api(`/api/requests/${currentRequest.request_id}/presentation`, {});
   const verified = await api("/api/verify", envelope);
-  if (verified.verified !== true) throw new Error("確認結果を受け取れませんでした。もう一度お試しください。");
+  if (verified.verified !== true) throw new Error("確認結果を受け取れませんでした。「確認内容を受け取る」からやり直してください。");
   el("message").textContent = "";
   el("proof-json").textContent = JSON.stringify(envelope, null, 2);
   el("proof-details").hidden = false;
-  result("サンプルデータの条件を確認できました", "届いた証明から、確認したい条件を満たすことを確認しました。", "サンプルデータでの確認結果です。");
+  result("条件の確認が完了しました", "サンプルデータが、運転資格と有効期限の条件を満たしています。", "サンプルデータでの確認結果です。");
 }));
 api("/api/session").then(showWallet).catch(() => showLogin());

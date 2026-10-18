@@ -3,15 +3,16 @@
 const PROTOCOL = "zk-license-split-v1";
 const el = id => document.getElementById(id);
 const errors = {
+  session_capacity: "現在ログインできません。少し待ってから、もう一度ログインしてください。",
   invalid_login: "コードが一致しません。受付用のログインコードを確認してください。",
-  authentication_required: "ログインの期限が切れました。もう一度ログインしてください。",
-  rate_limited: "操作が続いたため、少し待ってからやり直してください。",
-  request_unavailable: "この確認内容は利用できません。もう一度、確認を始めてください。",
-  request_expired: "操作の期限が切れました。もう一度、確認を始めてください。",
-  request_expired_or_clock_invalid: "操作の期限が切れました。もう一度、確認を始めてください。",
-  stale_registry_request: "デモのデータが更新されました。もう一度、確認を始めてください。",
-  already_used: "この内容は確認済みです。新しく確認を始めてください。",
-  invalid_proof: "届いた証明を確認できませんでした。もう一度、確認を始めてください。",
+  authentication_required: "ログインが必要です。もう一度ログインしてください。",
+  rate_limited: "操作回数の上限に達しました。少し待ってからやり直してください。",
+  request_unavailable: "この確認内容は利用できません。「Wallet を開いて確認する」からやり直してください。",
+  request_expired: "操作期限が切れました。「Wallet を開いて確認する」からやり直してください。",
+  request_expired_or_clock_invalid: "この確認内容は利用できません。「Wallet を開いて確認する」からやり直してください。",
+  stale_registry_request: "デモのデータが更新されました。「Wallet を開いて確認する」からやり直してください。",
+  already_used: "この確認内容は使用済みです。「Wallet を開いて確認する」からやり直してください。",
+  invalid_proof: "届いた証明を確認できませんでした。「Wallet を開いて確認する」からやり直してください。",
   key_not_trusted: "選択した発行鍵は現在使えません。デモの設定から鍵一覧を更新してください。",
   untrusted_issuer_key: "選択した発行鍵は現在使えません。デモの設定から鍵一覧を更新してください。"
 };
@@ -37,11 +38,15 @@ async function api(path, body) {
     headers["Content-Type"] = "application/json";
     options.body = JSON.stringify(body);
   }
-  const response = await fetch(path, options);
-  const value = await response.json();
+  const response = await fetch(path, options).catch(() => {
+    throw new Error("デモに接続できませんでした。デモが起動しているか確認し、もう一度操作してください。");
+  });
+  const value = await response.json().catch(() => {
+    throw new Error("デモからの応答を読み取れませんでした。画面を開き直してください。");
+  });
   if (!response.ok) {
     if (response.status === 401 && path !== "/api/login") showLogin();
-    const error = new Error(errors[value.error] || "操作を完了できませんでした。もう一度、確認を始めてください。");
+    const error = new Error(errors[value.error] || "操作を完了できませんでした。画面を開き直して、もう一度お試しください。");
     error.code = value.error;
     throw error;
   }
@@ -73,7 +78,7 @@ async function refreshConfig() {
   for (const key of keys) {
     const option = document.createElement("option");
     option.value = key.key_id;
-    option.textContent = `${key.key_id} (${key.state === "active" ? "現在の鍵" : "更新前の鍵（利用可能）"})`;
+    option.textContent = `${key.key_id} (${key.state === "active" ? "現在の発行鍵" : "更新前の鍵（確認用）"})`;
     el("key-id").append(option);
   }
   const previousKey = keys.find(key => key.key_id === previous);
@@ -105,7 +110,7 @@ function result(title, detail, verified = false) {
   el("result-description").textContent = detail;
   el("result-limits").textContent = verified ?
     "サンプルデータでの確認結果です。" :
-    "証明の確認は行っていません。必要な場合は、改めて確認を始められます。";
+    "もう一度試す場合は、「Wallet を開いて確認する」を押してください。";
   el("result-panel").hidden = false;
   el("result-panel").focus();
 }
@@ -128,11 +133,11 @@ async function verifyPresentation(value) {
     });
     if (checked.verified !== true || checked.accepted !== true ||
         checked.synthetic_revocation_checked !== true || checked.live_licence_status_checked !== false) {
-      throw new Error("結果を確認できませんでした。もう一度、確認を始めてください。");
+      throw new Error("結果を確認できませんでした。「Wallet を開いて確認する」からやり直してください。");
     }
     if (!token || !current || current.id !== requestId) return;
     message("");
-    result("サンプルデータの条件を確認できました", "届いた証明から、確認したい条件を満たすことを確認しました。", true);
+    result("条件の確認が完了しました", "サンプルデータが、運転資格と有効期限の条件を満たしています。", true);
   } catch (error) {
     if (!token || !current || current.id !== requestId) return;
     message(describeError(error));
@@ -156,7 +161,7 @@ window.addEventListener("message", event => {
   if (value.type === "wallet-proof") void verifyPresentation(value);
   else if (value.type === "wallet-denied") {
     message("");
-    result("今回は共有されませんでした", "利用者が今回は共有しないことを選びました。証明は届いていません。");
+    result("今回は共有されませんでした", "利用者が「今回は共有しない」を選びました。証明は届いていません。");
   } else if (value.type === "wallet-error" || value.type === "wallet-busy") {
     message("Wallet で操作を続けられませんでした。Wallet を確認してから、もう一度始めてください。");
     current = null;

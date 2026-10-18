@@ -3,11 +3,12 @@
 const PROTOCOL = "zk-license-split-v1";
 const el = id => document.getElementById(id);
 const errors = {
+  session_capacity: "現在ログインできません。少し待ってから、もう一度ログインしてください。",
   invalid_login: "コードが一致しません。Wallet 用のログインコードを確認してください。",
-  authentication_required: "ログインの期限が切れました。もう一度ログインしてください。",
-  rate_limited: "操作が続いたため、少し待ってからやり直してください。",
-  stale_registry_request: "デモのデータが更新されました。受付画面からもう一度、確認を始めてください。",
-  request_expired_or_clock_invalid: "操作の期限が切れました。受付画面からもう一度、確認を始めてください。",
+  authentication_required: "ログインが必要です。もう一度ログインしてください。",
+  rate_limited: "操作回数の上限に達しました。少し待ってからやり直してください。",
+  stale_registry_request: "デモのデータが更新されました。受付画面からやり直してください。",
+  request_expired_or_clock_invalid: "この確認内容は利用できません。受付画面からやり直してください。",
   unauthenticated_request: "送信元を確認できませんでした。受付画面からやり直してください。",
   unsupported_disclosure_policy: "この確認内容には対応していません。受付画面からやり直してください。",
   wallet_credential_unavailable: "この確認に使えるサンプルデータがありません。デモを準備した人に確認してください。",
@@ -34,11 +35,15 @@ async function api(path, body) {
     headers["Content-Type"] = "application/json";
     options.body = JSON.stringify(body);
   }
-  const response = await fetch(path, options);
-  const value = await response.json();
+  const response = await fetch(path, options).catch(() => {
+    throw new Error("デモに接続できませんでした。デモが起動しているか確認し、もう一度操作してください。");
+  });
+  const value = await response.json().catch(() => {
+    throw new Error("デモからの応答を読み取れませんでした。画面を開き直してください。");
+  });
   if (!response.ok) {
     if (response.status === 401 && path !== "/api/login") showLogin();
-    const error = new Error(errors[value.error] || "操作を完了できませんでした。受付画面からやり直してください。");
+    const error = new Error(errors[value.error] || "操作を完了できませんでした。画面を開き直して、もう一度お試しください。");
     error.code = value.error;
     throw error;
   }
@@ -84,7 +89,7 @@ function displayReview(review) {
   el("service-day").textContent = `${review.service_day}（デモ用の日付）`;
   el("expires").textContent = new Date(review.expires_at * 1000).toLocaleString("ja-JP");
   el("issuer-key").textContent = review.issuer_key;
-  el("key-state").textContent = review.key_state === "active" ? "現在の鍵" : "更新前の鍵（利用可能）";
+  el("key-state").textContent = review.key_state === "active" ? "現在の発行鍵" : "更新前の鍵（確認用）";
   const claimLabels = {
     "can_drive_ordinary >= 1": "サンプルデータに普通車の運転資格が登録されていること",
     [`valid_until >= ${review.service_day}`]: "登録された有効期限が利用予定日以降であること"
@@ -215,14 +220,14 @@ async function decide(decision) {
       }
       const sent = notifyVerifier("wallet-proof", requestId, result.presentation);
       showResult(sent ? "証明を送信しました" : "証明を送信できませんでした", sent ?
-        "証明を受付画面へ送りました。確認結果は受付画面で確認できます。" :
-        "共有の選択は保存されましたが、受付画面へ送れませんでした。受付画面を開き直して、もう一度始めてください。");
+        "確認結果は受付画面をご覧ください。結果が表示されない場合は、受付画面からやり直してください。" :
+        "同意は保存されましたが、証明を送信できませんでした。受付画面を開き直して、もう一度始めてください。");
     } else {
       if (result.decision !== "denied") throw new Error("選択を保存できたか確認できませんでした。");
       const sent = notifyVerifier("wallet-denied", requestId);
       showResult("今回は共有しませんでした", sent ?
-        "今回は共有しないという選択を受付に伝えました。証明は作成・送信していません。" :
-        "今回は共有しないという選択を保存しました。受付には通知できませんでしたが、証明は作成・送信していません。");
+        "共有しない選択を受付画面へ通知しました。証明は作成・送信していません。" :
+        "共有しない選択を保存しました。受付画面へ通知できませんでした。証明は作成・送信していません。");
     }
     message("");
   } catch (error) {

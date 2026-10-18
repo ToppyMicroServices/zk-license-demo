@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Toppy | 条件だけを伝える Wallet</title>
+  <title>Wallet | 共有内容の確認</title>
   <link rel="stylesheet" href="/brand.css">
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
@@ -11,31 +11,31 @@
 <body>
   <header><a class="brand" href="/" aria-label="ToppyMicroServices"><img class="brand-logo" src="/toppy-logo.png" alt="" width="40" height="40"><span>ToppyMicroServices</span></a><div class="header-meta"><span class="page-role">Wallet</span><span class="badge">サンプルデータ / DEMO</span></div></header>
   <main>
-    <div class="intro"><p class="eyebrow">WALLET DEMO</p><h1>コピーを渡さず、<br>必要な条件を伝える。</h1><p>内容を確認し、共有するかを選ぶ。サンプルの免許情報で、同意から条件の確認までを体験できます。</p></div>
+    <div class="intro"><p class="eyebrow">WALLET DEMO</p><h1>共有内容の確認</h1><p>受付に送る証明の内容を確認し、共有するかを選べます。サンプルの免許情報で、同意から結果の確認までを体験できます。</p></div>
     <aside class="notice"><strong>サンプルデータを使った体験用デモです。</strong>実際の免許証が有効かどうかの確認や、本人確認には利用できません。</aside>
-    <ol class="steps" aria-label="操作の流れ"><li id="step-login" aria-current="step">01 <span>ログイン</span></li><li id="step-consent">02 <span>内容の確認</span></li><li id="step-result">03 <span>確認結果</span></li></ol>
+    <ol class="steps" aria-label="操作の流れ"><li id="step-login" aria-current="step">01 <span>ログイン</span></li><li id="step-consent">02 <span>共有内容の確認</span></li><li id="step-result">03 <span>確認結果</span></li></ol>
     <p id="message" class="message" role="status" aria-live="polite"></p>
     <section id="login-panel" class="card">
-      <p class="eyebrow">01 / ACCESS</p><h2>デモの Wallet にログイン</h2>
+      <p class="eyebrow">01 / ACCESS</p><h2>Wallet へのログイン</h2>
       <p>デモの起動時に表示されたログインコードを入力してください。</p>
-      <form id="login-form"><label for="login-code">デモのログインコード</label><input id="login-code" type="password" maxlength="64" autocomplete="off" required spellcheck="false"><button type="submit">ログインする <span aria-hidden="true">→</span></button></form>
+      <form id="login-form"><label for="login-code">Wallet 用のログインコード</label><input id="login-code" type="password" maxlength="64" autocomplete="off" required spellcheck="false"><button type="submit">ログイン <span aria-hidden="true">→</span></button></form>
       <p class="muted">デモ用のサンプルアカウントで操作できます。</p>
     </section>
     <section id="wallet-panel" class="card" hidden>
       <div class="card-top"><p class="eyebrow">02 / YOUR WALLET</p><button id="logout" class="text-button">ログアウト</button></div>
-      <h2>サンプル利用者 01</h2><p>デモのカーシェア受付から、利用予定日の確認内容が届きます。</p>
+      <h2>サンプル利用者 01</h2><p>デモのカーシェア受付から、運転資格と有効期限の確認内容が届きます。</p>
       <div class="credential"><span class="credential-icon" aria-hidden="true">◇</span><div><strong>サンプルの免許情報</strong><p>デモ用の発行元が署名したデータ</p></div><span class="badge">DEMO</span></div>
       <button id="new-request">確認内容を受け取る <span aria-hidden="true">→</span></button>
       <div id="request-panel" hidden>
-        <hr><h3>この内容で共有しますか？</h3>
-        <dl class="details"><div><dt>送信先</dt><dd id="verifier"></dd></div><div><dt>目的</dt><dd id="purpose"></dd></div><div><dt>利用予定日</dt><dd id="service-day"></dd></div><div><dt>操作の期限</dt><dd id="expires"></dd></div></dl>
+        <hr><h3>共有内容</h3>
+        <dl class="details"><div><dt>証明の送信先</dt><dd id="verifier"></dd></div><div><dt>目的</dt><dd id="purpose"></dd></div><div><dt>利用予定日</dt><dd id="service-day"></dd></div><div><dt>操作期限</dt><dd id="expires"></dd></div></dl>
         <div class="disclosures"><div><h4>受付が確認する条件</h4><ul><li>サンプルデータに普通車の運転資格が登録されていること</li><li>登録された有効期限が利用予定日以降であること</li></ul></div><div><h4>証明に含めない情報</h4><p>氏名・住所・生年月日・免許証番号・有効期限の具体的な日付</p></div></div>
         <p class="muted">共有すると、条件を満たすことを示す証明と、照合に使う識別子が受付に伝わります。</p>
         <details><summary>確認内容の詳細</summary><p class="muted">受付には発行者・資格情報定義の識別子と確認IDも伝わります。受付は宛先、セッション、利用予定日、期限と使用済み状態を管理します。</p><pre id="request-json"></pre></details>
         <div class="actions"><button id="approve">同意して共有する</button><button id="deny" class="secondary">今回は共有しない</button></div>
       </div>
     </section>
-    <section id="result-panel" class="card" hidden tabindex="-1"><p class="eyebrow">03 / RESULT</p><h2 id="result-title"></h2><p id="result-description"></p><p id="result-limit" class="muted"></p><details id="proof-details" hidden><summary>実際に送った証明を見る</summary><pre id="proof-json"></pre></details></section>
+    <section id="result-panel" class="card" hidden tabindex="-1"><p class="eyebrow">03 / RESULT</p><h2 id="result-title"></h2><p id="result-description"></p><p id="result-limit" class="muted"></p><details id="proof-details" hidden><summary>送信した証明</summary><pre id="proof-json"></pre></details></section>
     <footer><details><summary>デモの仕組み</summary><p>この版では、発行元・Wallet・受付を、お使いのパソコン内の一つのプログラムで動かします。Wallet の保存情報は別端末に隔離していません。アカウントや接続に関する情報も扱います。</p></details></footer>
   </main>
 </body>
