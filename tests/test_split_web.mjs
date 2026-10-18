@@ -150,6 +150,7 @@ for (const decision of ["approve", "deny"]) {
     await h.event("verifier", "new-request");
     assert.equal(h.calls.filter(call => call.path === "/api/requests").length, 2);
     assert.equal(h.wallet.document.get("review-panel").hidden, false);
+    assert.equal(h.calls.filter(call => call.path === "/api/requests")[1].body.replaces_request_id, "request-1");
     assert.equal(h.popup.reloads, 0);
   });
 }
@@ -161,6 +162,7 @@ test("a closed Wallet permits a new request", async () => {
   previousPopup.closed = true;
   await h.event("verifier", "new-request");
   assert.notEqual(h.popup, previousPopup);
+  assert.equal(h.calls.filter(call => call.path === "/api/requests")[1].body.replaces_request_id, "request-1");
   await h.login("wallet");
   await h.event("wallet", "approve");
   assert.equal(h.calls.find(call => call.path === "/api/verify").body.request_id, "request-2");
@@ -171,6 +173,7 @@ test("an expired request resets the Wallet before starting again", async () => {
   await h.start();
   h.advance(301);
   await h.event("verifier", "new-request");
+  assert.equal(h.calls.filter(call => call.path === "/api/requests")[1].body.replaces_request_id, "request-1");
   assert.equal(h.messages.filter(item => item.data.type === "wallet-busy").length, 0);
   assert.equal(h.popup.reloads, 1);
   await h.login("wallet");
@@ -185,6 +188,7 @@ test("logging out of the reception abandons its old Wallet request", async () =>
   await h.event("verifier", "logout");
   await h.login("verifier");
   await h.event("verifier", "new-request");
+  assert.equal(h.calls.filter(call => call.path === "/api/requests")[1].body.replaces_request_id, undefined);
   assert.equal(h.messages.filter(item => item.data.type === "wallet-busy").length, 0);
   assert.equal(h.popup.reloads, 1);
   await h.login("wallet");

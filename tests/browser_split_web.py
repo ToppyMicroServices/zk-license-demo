@@ -99,7 +99,7 @@ class SplitBrowserTests(unittest.TestCase):
         self.context = self.browser.new_context(viewport={"width": 1100, "height": 1000})
         self.addCleanup(self.context.close)
         self.context.set_default_timeout(15000)
-        self.calls, self.page_errors = [], []
+        self.calls, self.page_errors, self.replacements = [], [], []
         self.context.on("request", self.record_request)
         self.context.on("page", lambda page: page.on(
             "pageerror", lambda error: self.page_errors.append(str(error))))
@@ -123,6 +123,8 @@ class SplitBrowserTests(unittest.TestCase):
         if request.method == "POST" and path in (
                 "/api/requests", "/api/review", "/api/decision", "/api/verify"):
             self.calls.append(path)
+            if path == "/api/requests":
+                self.replacements.append(request.post_data_json.get("replaces_request_id"))
 
     def count(self, path):
         return self.calls.count(path)
@@ -203,6 +205,7 @@ class SplitBrowserTests(unittest.TestCase):
         self.assertEqual(self.count("/api/requests"), 2)
         self.assertEqual(self.count("/api/decision"), 2)
         self.assertEqual(self.count("/api/verify"), 1)
+        self.assertEqual(self.replacements, [None, first_id])
 
     def test_reception_logout_reloads_pending_wallet(self):
         page = self.open_wallet()
@@ -221,6 +224,7 @@ class SplitBrowserTests(unittest.TestCase):
         self.assertEqual(self.count("/api/requests"), 2)
         self.assertEqual(self.count("/api/decision"), 1)
         self.assertEqual(self.count("/api/verify"), 0)
+        self.assertEqual(self.replacements, [None, None])
 
     def test_closed_wallet_starts_new_request(self):
         page = self.open_wallet()
@@ -232,6 +236,7 @@ class SplitBrowserTests(unittest.TestCase):
         self.assertEqual(self.count("/api/requests"), 2)
         self.assertEqual(self.count("/api/decision"), 1)
         self.assertEqual(self.count("/api/verify"), 1)
+        self.assertEqual(self.replacements, [None, old_id])
 
     def tearDown(self):
         for number, page in enumerate(self.context.pages):

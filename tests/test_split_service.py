@@ -393,6 +393,64 @@ class SplitServiceTests(unittest.TestCase):
             next_shown = self.review(wallet_token, next_signed)
             self.assertNotEqual(next_shown["request_id"], shown["request_id"])
 
+    def test_denied_and_abandoned_requests_can_be_replaced_at_capacity(self):
+        verifier_token, wallet_token = self.login("verifier"), self.login("wallet")
+
+        def replace(request_id):
+            status, value, _ = self.call("verifier", "POST", "/api/requests", {
+                "key_id": self.key, "replaces_request_id": request_id,
+            }, token=verifier_token)
+            self.assertEqual(status, 200, value)
+            return value["signed_request"]
+
+        with patch("split_service.MAX_PENDING", 1):
+            signed = self.request(verifier_token)
+            shown = self.review(wallet_token, signed)
+            self.assertEqual(self.decide(wallet_token, shown, decision="deny")[0], 200)
+            self.assertEqual(self.call("verifier", "POST", "/api/requests",
+                                      {"key_id": self.key}, token=verifier_token)[0], 503)
+            successor = replace(shown["request_id"])
+            self.assertEqual(self.verify(verifier_token, {
+                "request_id": shown["request_id"], "presentation": {},
+            })[0], 404)
+            abandoned_id = successor["payload"]["challenge"]["request_id"]
+            successor = replace(abandoned_id)
+            self.assertNotEqual(successor["payload"]["challenge"]["request_id"], abandoned_id)
+            shown = self.review(wallet_token, successor)
+            status, proof, _ = self.decide(wallet_token, shown)
+            self.assertEqual(status, 200, proof)
+            self.assertEqual(self.verify(verifier_token, proof)[0], 200)
+            # A consumed/expired prior ID is a harmless no-op, as in the Web flow.
+            replace(shown["request_id"])
+
+    def test_replacement_preserves_foreign_requests_and_rolls_back_on_failure(self):
+        first, second, wallet_token = self.login("verifier"), self.login("verifier"), self.login("wallet")
+        with patch("split_service.MAX_PENDING", 1):
+            signed = self.request(first)
+            shown = self.review(wallet_token, signed)
+            status, proof, _ = self.decide(wallet_token, shown)
+            self.assertEqual(status, 200, proof)
+            other = self.request(second)
+            status, _, _ = self.call("verifier", "POST", "/api/requests", {
+                "key_id": self.key, "replaces_request_id": shown["request_id"],
+            }, token=second)
+            self.assertEqual(status, 503)
+            other_review = self.review(wallet_token, other)
+            status, other_proof, _ = self.decide(wallet_token, other_review)
+            self.assertEqual(status, 200, other_proof)
+            self.assertEqual(self.verify(second, other_proof)[0], 200)
+
+            status, _, _ = self.call("verifier", "POST", "/api/requests", {
+                "key_id": "missing-key", "replaces_request_id": shown["request_id"],
+            }, token=first)
+            self.assertEqual(status, 409)
+            self.assertEqual(self.verify(first, proof)[0], 200)
+            for invalid in (None, [], "", "x" * 129):
+                with self.subTest(replacement=invalid):
+                    self.assertEqual(self.call("verifier", "POST", "/api/requests", {
+                        "key_id": self.key, "replaces_request_id": invalid,
+                    }, token=first)[0], 400)
+
     def test_login_rate_limit_and_logout_invalidate_token(self):
         results = [self.call("wallet", "POST", "/api/login", {"code": "wrong"})[0]
                    for _ in range(12)]

@@ -141,14 +141,22 @@ class SplitApplication:
 
     def verifier_dispatch(self, method, path, body, token, session):
         if method == "POST" and path == "/api/requests":
-            fields(body, {"key_id"})
+            fields(body, {"key_id", "replaces_request_id"} if "replaces_request_id" in body else {"key_id"})
             if not isinstance(body["key_id"], str) or len(body["key_id"]) > 128:
                 raise APIError(400, "invalid_key_id")
-            if len(session.requests) >= MAX_PENDING:
+            replaced = body.get("replaces_request_id")
+            if "replaces_request_id" in body and (
+                    not isinstance(replaced, str) or not replaced or len(replaced) > 128):
+                raise APIError(400, "invalid_request_id")
+            # Only an ID owned by this session can release its pending slot.
+            pending = len(session.requests) - int(replaced in session.requests)
+            if pending >= MAX_PENDING:
                 raise APIError(503, "request_capacity")
             signed = split_wallet.request(self.private, self.registry, body["key_id"], self.service_day)
             challenge = signed["payload"]["challenge"]
             request_id = challenge["request_id"]
+            # Keep the old request usable if signing its successor fails.
+            session.requests.pop(replaced, None)
             session.requests[request_id] = challenge["expires_at"]
             return {"signed_request": signed}
         if method == "POST" and path == "/api/verify":

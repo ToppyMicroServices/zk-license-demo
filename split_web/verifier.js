@@ -23,6 +23,7 @@ let walletWindow = null;
 let walletReady = false;
 let walletNeedsReset = false;
 let current = null;
+let previousRequestId = null;
 let verifying = false;
 let creating = false;
 let refreshing = false;
@@ -91,6 +92,7 @@ async function refreshConfig() {
 
 function showLogin() {
   token = "";
+  previousRequestId = null;
   walletNeedsReset ||= !!current;
   current = null;
   verifying = false;
@@ -249,12 +251,15 @@ el("new-request").addEventListener("click", async () => {
     if (token !== activeToken) return;
     const keyId = el("key-id").value;
     if (!keyId) throw new Error("確認に使えるデータがありません。デモの準備状況を確認してください。");
-    const created = await api("/api/requests", {key_id: keyId});
+    const request = {key_id: keyId};
+    if (previousRequestId) request.replaces_request_id = previousRequestId;
+    const created = await api("/api/requests", request);
     if (token !== activeToken) return;
     const signed = created.signed_request;
     const challenge = signed && signed.payload && signed.payload.challenge;
     if (!challenge || typeof challenge.request_id !== "string") throw new Error("確認内容を準備できませんでした。もう一度お試しください。");
     current = {id: challenge.request_id, signed};
+    previousRequestId = challenge.request_id;
     el("request-id").textContent = challenge.request_id;
     el("audience").textContent = challenge.audience;
     el("request-day").textContent = challenge.service_day;
