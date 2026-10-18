@@ -21,6 +21,7 @@ let config = null;
 let token = "";
 let walletWindow = null;
 let walletReady = false;
+let walletNeedsReset = false;
 let current = null;
 let verifying = false;
 let creating = false;
@@ -90,6 +91,7 @@ async function refreshConfig() {
 
 function showLogin() {
   token = "";
+  walletNeedsReset ||= !!current;
   current = null;
   verifying = false;
   el("login-panel").hidden = false;
@@ -213,12 +215,27 @@ el("refresh-keys").addEventListener("click", async () => {
 el("new-request").addEventListener("click", async () => {
   if (!config || !token || verifying || creating || refreshing) return;
   const activeToken = token;
+  const walletOpen = walletWindow && !walletWindow.closed;
+  if (walletOpen && current && current.signed.payload.challenge.expires_at * 1000 > Date.now()) {
+    walletWindow.focus();
+    message("");
+    deliverRequest();
+    return;
+  }
   // Opening in the click handler avoids the browser's popup blocker.
-  if (!walletWindow || walletWindow.closed) {
+  if (!walletOpen) {
     walletReady = false;
     walletWindow = window.open(`${config.peer_origin}/wallet.html`, "_blank", "width=620,height=820");
-  } else walletWindow.focus();
+  } else {
+    walletWindow.focus();
+    if (current || walletNeedsReset) {
+      // A fresh page drops an expired or abandoned review before the next request.
+      walletReady = false;
+      walletWindow.location = `${config.peer_origin}/wallet.html`;
+    }
+  }
   if (!walletWindow) { message("Wallet を開けませんでした。ポップアップの設定を確認してください。"); return; }
+  walletNeedsReset = false;
   const button = el("new-request");
   creating = true;
   button.disabled = true;
