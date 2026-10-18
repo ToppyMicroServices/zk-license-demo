@@ -65,3 +65,10 @@ Windows・UbuntuのCI結果はPRのチェックに記録する。
 
 模擬テストの画面再読込は同期的に実行されるため、実ブラウザのポップアップ動作や通信タイミングの証拠とは扱わない。
 内蔵ブラウザでは開いたWalletを操作対象として取得できず、Safari操作は組織ポリシーで拒否された。Chrome／Edgeの接続後に実ブラウザで両選択を確認するまで、PRのマージとBeads `zkl-7al` の完了は保留する。
+
+## クラウドでのブラウザ検証
+
+`tests/browser_split_web.py` をGitHub ActionsのUbuntu上で実行する。Playwright 1.64.0と実Chromium、実AnonCreds、別プロセスの受付・Walletを使う。API・DOM・画面間メッセージは置き換えない。
+同意・共有しない両方の終端表示、同意待ちの再クリック、ログイン済みWalletの再利用、受付ログアウト後の再開、Walletを閉じた後の再開を対象とする。
+画面・ブラウザの版・ソースSHA・API呼び出し件数をCIの `split-web-browser-*` アーティファクトに14日間保存する。ログインコード・Bearerトークン・秘密ストアは保存対象に含めない。
+実行結果はPRのCIで確認する。これはUbuntuのheadless Chromiumでの検証であり、Windowsのブラウザ、Safari、モバイルでの検証ではない。操作期限切れの実ブラウザ再現はこのスクリプトには含めず、既存のHTTP・模擬状態テストと区別する。

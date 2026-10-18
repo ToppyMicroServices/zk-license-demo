@@ -59,3 +59,38 @@ jobs:
             artifacts/replay-error.txt
           if-no-files-found: error
           retention-days: 14
+
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    env:
+      REQUIRE_CRYPTO: "1"
+      PYTHONUTF8: "1"
+      SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install real cryptographic backend and browser test driver
+        run: |
+          python -m pip install --require-hashes -r requirements.txt
+          python -m pip install playwright==1.64.0
+          python -m playwright install --with-deps chromium
+      - name: Exercise separate Wallet and reception in Chromium
+        run: |
+          mkdir -p artifacts/browser
+          python tests/browser_split_web.py --out artifacts/browser 2>&1 | tee artifacts/browser.log
+      - name: Retain browser verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: split-web-browser-${{ github.sha }}
+          path: |
+            artifacts/browser/
+            artifacts/browser.log
+          if-no-files-found: error
+          retention-days: 14
