@@ -47,25 +47,29 @@ class FixtureIdentity:
             context.created_at, context.expires_at))
 
 
+def synthetic_card_fixture():
+    try:
+        from cryptography.hazmat.primitives import serialization
+        from cryptography.hazmat.primitives.asymmetric import padding, rsa, utils
+    except ImportError:
+        if os.environ.get("REQUIRE_CARD_CRYPTO") == "1":
+            raise
+        raise unittest.SkipTest("optional card cryptography unavailable")
+    private = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    der = private.public_key().public_bytes(serialization.Encoding.DER,
+                                           serialization.PublicFormat.SubjectPublicKeyInfo)
+    key = TrustedCardKey("synthetic-test-key", "myna010", der,
+                        "npa-rsa2048-pkcs1v15-raw-sha256-experimental")
+    files = {"WEF02": b"SYNTHETIC-NOT-A-REAL-CARD".ljust(5845, b"\0")}
+    signature = private.sign(hashlib.sha256(files["WEF02"]).digest(),
+                             padding.PKCS1v15(), utils.NoDigestInfo())
+    return key, CardCapture("myna010", key.key_id, files, signature)
+
+
 class EnrollmentGateTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        try:
-            from cryptography.hazmat.primitives import serialization
-            from cryptography.hazmat.primitives.asymmetric import padding, rsa, utils
-        except ImportError:
-            if os.environ.get("REQUIRE_CARD_CRYPTO") == "1":
-                raise
-            raise unittest.SkipTest("optional card cryptography unavailable")
-        private = rsa.generate_private_key(public_exponent=65537, key_size=2048)
-        der = private.public_key().public_bytes(serialization.Encoding.DER,
-                                               serialization.PublicFormat.SubjectPublicKeyInfo)
-        cls.key = TrustedCardKey("synthetic-test-key", "myna010", der,
-                                "npa-rsa2048-pkcs1v15-raw-sha256-experimental")
-        cls.files = {"WEF02": b"SYNTHETIC-NOT-A-REAL-CARD".ljust(5845, b"\0")}
-        signature = private.sign(hashlib.sha256(cls.files["WEF02"]).digest(),
-                                 padding.PKCS1v15(), utils.NoDigestInfo())
-        cls.capture = CardCapture("myna010", cls.key.key_id, cls.files, signature)
+        cls.key, cls.capture = synthetic_card_fixture()
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()

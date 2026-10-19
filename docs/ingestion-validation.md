@@ -73,3 +73,37 @@ The reviewed head passed [hosted run 39130827582](https://github.com/ToppyMicroS
 and replay checks, and the serial benchmark. CodeQL checks also passed. The
 subsequent access-research and Beads updates do not change executable code.
 No local test was run for this review.
+
+## OS-process termination, 2026-10-19
+
+Implementation: `d55403f28a5a40a12e9bebf7469d3c7c5029d0c5`, [PR #7](https://github.com/ToppyMicroServices/zk-license-demo/pull/7).
+[Hosted run 39252692698](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39252692698)
+tested merge preview `9fc0440d08b93f91c6e0d8ceea92945411adbd98` against main
+`6b79b2ac23d7753e791af590104983cbd4cab65f`.
+
+| Hosted environment | Checks | Result |
+| --- | --- | --- |
+| Ubuntu 24.04, Python 3.12 | 139 Python tests; 5 JS state tests | Passed; Python 51.146 seconds |
+| Windows Server 2022, Python 3.12 | 139 Python tests; 5 JS state tests | Passed; Python 65.755 seconds |
+| Ubuntu 24.04, Chromium 156.0.8078.4 | 3 browser scenarios | Passed; 5.728 seconds |
+
+The three new cases use a separate spawned process and a checkpoint before the
+parent forcibly terminates it. Reader and identity-adapter checkpoints leave a
+`processing` record; the checkpoint after `complete()` returns leaves a
+`completed` record with its verified card digest. After termination, a new SQLite
+connection reports a valid store. Reopening rejects the old request without
+calling either adapter, and a fresh enrollment succeeds with fresh consent.
+
+The observed process exit codes were -9 on Ubuntu and -15 on Windows. These are
+the values reported by Python's multiprocessing API; the Windows value does not
+mean a POSIX signal was delivered. Extracted checkpoint evidence and job IDs are
+preserved in [enrollment-recovery-validation.json](enrollment-recovery-validation.json).
+Proof generation, independent verification, replay rejection and the existing
+serial benchmark also passed. No runtime code, dependency or UI was changed.
+
+These are real OS-process termination checks with synthetic data. The checkpoints
+are outside database transactions: they do not test power loss, a crash during
+SQLite writes, real-provider reconciliation, issuance atomicity or production
+recovery. All execution took place on GitHub-hosted runners; no test, build, demo
+or browser execution used the user's PC. Beads `zkl-0wc` records this bounded
+validation; `zkl-9w9` remains open.
