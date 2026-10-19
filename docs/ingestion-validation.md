@@ -60,3 +60,16 @@ All tests for this follow-up ran on GitHub-hosted runners. No test, demo, build,
 or browser verification ran on the user's PC. The real-card and provider limits
 above remain unchanged. Logs and browser screenshots are retained by the run
 for 14 days; this record preserves the tested revisions, counts and scope.
+
+## Pre-merge review, 2026-10-19
+
+Reviewed `8c91852838e0a64cb38f8be486a9acbad83c5b15..430efdd4104ec23e56ba406f71d8042f9f2ed5d6`.
+No merge-blocking correctness issue remained. The previous write-lock finding was
+fixed, and the source review covered both runtime modules, their tests, dependency
+pins, CI integration and documented limits. This was an internal review.
+
+The reviewed head passed [hosted run 39130827582](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39130827582):
+136 Python and five JS tests on each platform, three Chromium scenarios, proof
+and replay checks, and the serial benchmark. CodeQL checks also passed. The
+subsequent access-research and Beads updates do not change executable code.
+No local test was run for this review.
