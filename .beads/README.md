@@ -15,8 +15,9 @@ bd dolt commit -m 'chore(tasks): record validation progress'
 
 The initial backlog covers Windows validation, repeated performance measurements,
 an optional independent review, the prepared LinkedIn post and public-response
-evaluation. Real-licence integration and production identity services remain out
-of scope. Publication tasks retain their text and destination approval gates.
+evaluation. Real-licence and identity integration preparation is tracked
+separately; local fixtures do not establish live provider or real-card support.
+Publication tasks retain their text and destination approval gates.
 
 Beads was initialized with version 1.1.2, without installing Git hooks or changing
 agent instructions. A Dolt remote was configured by initialization; its presence
