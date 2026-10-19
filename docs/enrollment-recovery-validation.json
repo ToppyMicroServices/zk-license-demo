@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-19",
+  "source_head_sha": "d55403f28a5a40a12e9bebf7469d3c7c5029d0c5",
+  "checked_out_sha": "9fc0440d08b93f91c6e0d8ceea92945411adbd98",
+  "base_sha": "6b79b2ac23d7753e791af590104983cbd4cab65f",
+  "run_url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39252692698",
+  "scope": "Synthetic enrollment OS-process termination outside database transactions; no real provider, power-loss or production recovery validation.",
+  "local_tests_run": false,
+  "jobs": [
+    {
+      "platform": "ubuntu-24.04",
+      "job_id": 118060141305,
+      "python_tests": 139,
+      "python_seconds": 51.146,
+      "python_ok": true,
+      "js_tests": 5,
+      "js_pass": 5,
+      "js_fail": 0,
+      "js_skipped": 0,
+      "termination_cases": [
+        {
+          "check": "enrollment_process_termination",
+          "checkpoint": "completed",
+          "exitcode": -9,
+          "retained_state": "completed",
+          "integrity": "ok",
+          "replay_rejected": true,
+          "replay_adapter_calls": 0,
+          "fresh_enrollment_completed": true
+        },
+        {
+          "check": "enrollment_process_termination",
+          "checkpoint": "identity",
+          "exitcode": -9,
+          "retained_state": "processing",
+          "integrity": "ok",
+          "replay_rejected": true,
+          "replay_adapter_calls": 0,
+          "fresh_enrollment_completed": true
+        },
+        {
+          "check": "enrollment_process_termination",
+          "checkpoint": "reader",
+          "exitcode": -9,
+          "retained_state": "processing",
+          "integrity": "ok",
+          "replay_rejected": true,
+          "replay_adapter_calls": 0,
+          "fresh_enrollment_completed": true
+        }
+      ]
+    },
+    {
+      "platform": "windows-2022",
+      "job_id": 118060140808,
+      "python_tests": 139,
+      "python_seconds": 65.755,
+      "python_ok": true,
+      "js_tests": 5,
+      "js_pass": 5,
+      "js_fail": 0,
+      "js_skipped": 0,
+      "termination_cases": [
+        {
+          "check": "enrollment_process_termination",
+          "checkpoint": "completed",
+          "exitcode": -15,
+          "retained_state": "completed",
+          "integrity": "ok",
+          "replay_rejected": true,
+          "replay_adapter_calls": 0,
+          "fresh_enrollment_completed": true
+        },
+        {
+          "check": "enrollment_process_termination",
+          "checkpoint": "identity",
+          "exitcode": -15,
+          "retained_state": "processing",
+          "integrity": "ok",
+          "replay_rejected": true,
+          "replay_adapter_calls": 0,
+          "fresh_enrollment_completed": true
+        },
+        {
+          "check": "enrollment_process_termination",
+          "checkpoint": "reader",
+          "exitcode": -15,
+          "retained_state": "processing",
+          "integrity": "ok",
+          "replay_rejected": true,
+          "replay_adapter_calls": 0,
+          "fresh_enrollment_completed": true
+        }
+      ]
+    }
+  ],
+  "browser": {
+    "job_id": 118060141300,
+    "tests": 3,
+    "seconds": 5.728,
+    "result": "passed",
+    "browser": "Chromium 156.0.8078.4"
+  }
+}
