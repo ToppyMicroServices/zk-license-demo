@@ -12,7 +12,7 @@ explicitly. There is no fallback to another signature format.
 
 Sources:
 https://www.npa.go.jp/laws/notification/koutuu/menkyo/menkyo20240719_145.pdf
-https://cryptography.io/en/49.0.0/hazmat/primitives/asymmetric/rsa/
+https://cryptography.io/en/50.0.2/hazmat/primitives/asymmetric/rsa/
 """
 from __future__ import annotations
 
@@ -101,7 +101,8 @@ def _backend():
     except ImportError as exc:
         raise RuntimeError("Card signature backend unavailable; no verification performed") from exc
     if not hasattr(utils, "NoDigestInfo"):
-        raise RuntimeError("Card signature backend requires cryptography 49 NoDigestInfo support")
+        raise RuntimeError("Card signature backend requires NoDigestInfo support; "
+                           "install requirements-ingestion.txt")
     return serialization, rsa, padding, utils, exceptions
 
 

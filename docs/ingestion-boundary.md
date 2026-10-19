@@ -32,7 +32,7 @@
 一般的な `RSA/SHA-256` の検証APIがそのまま使えると判断しない。
 
 今回の実験モードは図に合わせた `npa-rsa2048-pkcs1v15-raw-sha256-experimental` のみ。
-[cryptography 49のRSA機能](https://cryptography.io/en/49.0.0/hazmat/primitives/asymmetric/rsa/)
+[cryptography 50.0.2のRSA機能](https://cryptography.io/en/50.0.2/hazmat/primitives/asymmetric/rsa/)
 で検証し、独自のRSA演算やパディング処理は実装していない。
 別方式への自動フォールバックはない。
 署名対象領域は図の長さを厳密に要求する。短いデータへの推測によるゼロ埋めや再符号化は行わない。
