@@ -131,3 +131,15 @@ The browser job used Playwright 1.64.0 and the existing AnonCreds dependencies;
 it checks UI regression, not the optional card-signature backend. These results
 do not establish macOS compatibility for this update or real-card compatibility.
 No test, dependency installation, build, demo or browser execution used the user's PC.
+
+The final reviewed head `5cc256e3891c8f0793696f666a63710c40dc97af` added only
+Beads and research/validation records. [Run 39454481570](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39454481570)
+passed 139 Python tests on Ubuntu (52.059 seconds) and Windows (77.463 seconds),
+five JS tests on each, and three Chromium scenarios (10.638 seconds). CodeQL
+checks passed. No blocking review finding remained.
+
+PR #8 merged as `66bdba61afe9efd8663dfd153bc2668fd25cf66d`; its tree matches the
+reviewed head. All three jobs in [main run 39455039366](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39455039366)
+also passed. Dependabot alert 1 for `GHSA-g6cj-pr64-35w5` changed to `fixed` at
+`2026-10-20T16:12:53Z`, with no dismissal. This completes the dependency-update
+scope of Beads `zkl-r99`; it does not resolve the real-card and provider limits.
