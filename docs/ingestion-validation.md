@@ -107,3 +107,27 @@ SQLite writes, real-provider reconciliation, issuance atomicity or production
 recovery. All execution took place on GitHub-hosted runners; no test, build, demo
 or browser execution used the user's PC. Beads `zkl-0wc` records this bounded
 validation; `zkl-9w9` remains open.
+
+## Dependency update, reviewed 2026-10-21
+
+Implementation: `8f2a74caa4368e66298a6715b5fc589836dd6e63`, [PR #8](https://github.com/ToppyMicroServices/zk-license-demo/pull/8).
+[Hosted run 39272174431](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39272174431)
+tested merge preview `043dbd185a2fba9fd79331466c63d7d5949ec098` against main
+`da32d08922f34f274398395e1755d7afcaa3adbb`.
+
+| Hosted environment | Checks | Result |
+| --- | --- | --- |
+| Ubuntu 24.04, Python 3.12.15 | 139 Python tests; 5 JS state tests | Passed; Python 55.838 seconds |
+| Windows Server 2022, Python 3.12.10 | 139 Python tests; 5 JS state tests | Passed; Python 76.132 seconds |
+| Ubuntu 24.04, Chromium 156.0.8078.4 | 3 browser scenarios | Passed; 6.092 seconds |
+
+Both matrix jobs installed cryptography 50.0.2, cffi 2.0.0, pycparser 3.0 and
+anoncreds 0.2.3 with `--require-hashes`. Their environment records now include the
+optional backend versions in both logs and artifacts. Both cryptographic backends
+were required, and Python warnings remained errors. Proof generation, independent
+verification, replay rejection and the serial benchmark also passed.
+
+The browser job used Playwright 1.64.0 and the existing AnonCreds dependencies;
+it checks UI regression, not the optional card-signature backend. These results
+do not establish macOS compatibility for this update or real-card compatibility.
+No test, dependency installation, build, demo or browser execution used the user's PC.

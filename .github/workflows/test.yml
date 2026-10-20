@@ -30,7 +30,7 @@ jobs:
       - name: Record environment
         run: |
           mkdir -p artifacts/validation
-          python -c 'import json, platform, sqlite3; from importlib.metadata import version; print(json.dumps(dict(python=platform.python_version(), platform=platform.platform(), machine=platform.machine(), sqlite=sqlite3.sqlite_version, anoncreds=version("anoncreds"))))' > artifacts/validation/environment.json
+          python -c 'import json, platform, sqlite3; from importlib.metadata import version; print(json.dumps(dict(python=platform.python_version(), platform=platform.platform(), machine=platform.machine(), sqlite=sqlite3.sqlite_version, anoncreds=version("anoncreds"), cryptography=version("cryptography"), cffi=version("cffi"), pycparser=version("pycparser"))))' | tee artifacts/validation/environment.json
       - name: Policy and real cryptographic tests (missing backend is an error)
         run: python -W error -m unittest discover -s tests -v 2>&1 | tee artifacts/validation/tests.log
       - name: Split Web state tests (mocked DOM and transport)
