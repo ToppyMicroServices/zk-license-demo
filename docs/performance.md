@@ -63,6 +63,10 @@ does not measure an OS-only performance effect. Thirty observations from one
 credential and one run do not establish stable tail latency or production
 throughput. This is a serial microbenchmark, not a concurrent service load test.
 
+The separate [split Web measurement protocol](split-service-performance.md)
+covers bounded concurrent HTTP flows through Wallet and verifier processes.
+Its conditions and latency boundary differ from this serial measurement.
+
 ## Retained evidence
 
 - [macOS measurements](evidence/2026-10-15/benchmark-macos.json)

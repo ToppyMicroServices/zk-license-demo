@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "id": 12311801637,
+      "name": "validation-ubuntu-24.04-bd4be4263d7b3a316fa9e5da43965fcfed713529",
+      "size_in_bytes": 25330,
+      "url": "https://api.github.com/repos/ToppyMicroServices/zk-license-demo/actions/artifacts/12311801637",
+      "archive_download_url": "https://api.github.com/repos/ToppyMicroServices/zk-license-demo/actions/artifacts/12311801637/zip",
+      "expired": false,
+      "created_at": "2026-10-21T00:40:35Z",
+      "expires_at": "2026-11-04T00:40:34Z",
+      "updated_at": "2026-10-21T00:40:35Z",
+      "digest": "sha256:27444811c7a57962c55b10343a708ca9c0922f1ab1b79db82c68ed32c99227e4",
+      "workflow_run": {
+        "id": 39522559331,
+        "repository_id": 1404437470,
+        "head_repository_id": 1404437470,
+        "head_branch": "perf/split-service-load-20261021",
+        "head_sha": "c5633efec62f576156af5a10f92c2d7c4da95340"
+      }
+    },
+    {
+      "id": 12311726818,
+      "name": "validation-windows-2022-bd4be4263d7b3a316fa9e5da43965fcfed713529",
+      "size_in_bytes": 25094,
+      "url": "https://api.github.com/repos/ToppyMicroServices/zk-license-demo/actions/artifacts/12311726818",
+      "archive_download_url": "https://api.github.com/repos/ToppyMicroServices/zk-license-demo/actions/artifacts/12311726818/zip",
+      "expired": false,
+      "created_at": "2026-10-21T00:40:29Z",
+      "expires_at": "2026-11-04T00:40:28Z",
+      "updated_at": "2026-10-21T00:40:29Z",
+      "digest": "sha256:c66944e2275e4f4db1df4949a7c73f3c8781419f9b7bd8fd5e8e07beefa78ba6",
+      "workflow_run": {
+        "id": 39522559331,
+        "repository_id": 1404437470,
+        "head_repository_id": 1404437470,
+        "head_branch": "perf/split-service-load-20261021",
+        "head_sha": "c5633efec62f576156af5a10f92c2d7c4da95340"
+      }
+    },
+    {
+      "id": 12311631581,
+      "name": "split-web-browser-bd4be4263d7b3a316fa9e5da43965fcfed713529",
+      "size_in_bytes": 1325353,
+      "url": "https://api.github.com/repos/ToppyMicroServices/zk-license-demo/actions/artifacts/12311631581",
+      "archive_download_url": "https://api.github.com/repos/ToppyMicroServices/zk-license-demo/actions/artifacts/12311631581/zip",
+      "expired": false,
+      "created_at": "2026-10-21T00:39:36Z",
+      "expires_at": "2026-11-04T00:39:35Z",
+      "updated_at": "2026-10-21T00:39:36Z",
+      "digest": "sha256:c7564731ade3a429fd894bbd23ec626c600fa4927346f1b313187414621805aa",
+      "workflow_run": {
+        "id": 39522559331,
+        "repository_id": 1404437470,
+        "head_repository_id": 1404437470,
+        "head_branch": "perf/split-service-load-20261021",
+        "head_sha": "c5633efec62f576156af5a10f92c2d7c4da95340"
+      }
+    }
+  ]
+}
