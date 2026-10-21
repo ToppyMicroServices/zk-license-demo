@@ -1,0 +1,6309 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "started_at": "2026-10-21T00:40:05.395462+00:00",
+  "protocol": {
+    "concurrency": [
+      1,
+      2,
+      4
+    ],
+    "warmup_flows": 4,
+    "measured_flows": 28,
+    "flows_per_batch": "one per concurrent worker",
+    "sessions_per_role": 4,
+    "session_assignment": "round-robin across all flows",
+    "service_day": "2030-06-01",
+    "credential_count_per_scenario": 1,
+    "wallet_processes_per_scenario": 1,
+    "verifier_processes_per_scenario": 1,
+    "http_timeout_seconds": 15,
+    "scenario_deadline_seconds": 180,
+    "fixture": "One issuer/key/credential setup; pristine copy and fresh processes/sessions per scenario",
+    "timing": "request/review/approve/verify including HTTP, JSON, lock wait and storage",
+    "excluded_from_flow_timing": [
+      "fixture and service setup",
+      "login",
+      "replay",
+      "denial"
+    ],
+    "batch_timing": "barrier release through all flow results; replay starts afterward",
+    "batch_rate": "Measured active batches only; excludes replay and gaps, not a sustained rate",
+    "p95_method": "nearest-rank: sorted[ceil(0.95 * n) - 1]",
+    "scope": "Four sessions share one synthetic account/Wallet/credential; bounded loopback batches, not sustained load or production capacity",
+    "rate_limits": "Existing 30 writes/session and 120 API calls/process per rolling 60s; no overrides",
+    "limits": [
+      "one synthetic credential",
+      "small sample counts",
+      "no TLS or remote network",
+      "no real identity or licence-status provider",
+      "no rate-window recovery measurement"
+    ]
+  },
+  "scenarios": [
+    {
+      "concurrency": 1,
+      "status": "PASSED",
+      "warmup_batches": [
+        {
+          "batch": 1,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.0109750000235636
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.869684999978972
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 156.56018499998936
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 157.45423499998878
+                }
+              ],
+              "flow_ms": 319.94251899999426,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6580439999813734,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 320.0384620000136,
+          "batch_completion_rate_per_second": 3.124624439671121
+        },
+        {
+          "batch": 2,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.5173289999997905
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9198280000173327
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 140.97887299999456
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.9492590000052
+                }
+              ],
+              "flow_ms": 289.42009100001087,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5997159999869837,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 289.52709499998264,
+          "batch_completion_rate_per_second": 3.4539081739484865
+        },
+        {
+          "batch": 3,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.735312999988082
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.633947000020953
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.19172299999627
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 141.93196200000102
+                }
+              ],
+              "flow_ms": 289.534964000012,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6513319999944542,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 289.6364970000036,
+          "batch_completion_rate_per_second": 3.4526035577622234
+        },
+        {
+          "batch": 4,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7863379999928384
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.8210950000016055
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.35933000000978
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.46651299998803
+                }
+              ],
+              "flow_ms": 291.47587500000327,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6243319999773576,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.5590239999801,
+          "batch_completion_rate_per_second": 3.429837246265676
+        }
+      ],
+      "measured_batches": [
+        {
+          "batch": 5,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7616419999958453
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.8145419999816568
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.02450799998678
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.18375900000524
+                }
+              ],
+              "flow_ms": 288.8266200000089,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.630172000005814,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 288.91867600000865,
+          "batch_completion_rate_per_second": 3.4611815817679092
+        },
+        {
+          "batch": 6,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7164379999931043
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.611175999987836
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.51884000000814
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.3271100000013
+                }
+              ],
+              "flow_ms": 291.2173649999943,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6188419999991766,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.31849800000964,
+          "batch_completion_rate_per_second": 3.432669078226426
+        },
+        {
+          "batch": 7,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.957054000006565
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7675059999978657
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.08376799998723
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.67974699999309
+                }
+              ],
+              "flow_ms": 290.5339300000094,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 2.0466979999866908,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 290.6396660000041,
+          "batch_completion_rate_per_second": 3.4406865854297597
+        },
+        {
+          "batch": 8,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9020329999980277
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.695531999989953
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.52383399999735
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.20917500000496
+                }
+              ],
+              "flow_ms": 289.3772209999952,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.620816000013292,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 289.46339600000215,
+          "batch_completion_rate_per_second": 3.454668237223309
+        },
+        {
+          "batch": 9,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.8876460000049065
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.910030000009556
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.20996099998706
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.06917199999702
+                }
+              ],
+              "flow_ms": 290.1201900000103,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6187520000130462,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 290.20998100000384,
+          "batch_completion_rate_per_second": 3.445780867199005
+        },
+        {
+          "batch": 10,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.280947999996897
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.6869929999975284
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.09763300001532
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.75418200000922
+                }
+              ],
+              "flow_ms": 290.8632580000017,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6268360000140092,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 290.9447650000061,
+          "batch_completion_rate_per_second": 3.437078512136072
+        },
+        {
+          "batch": 11,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.473471999996036
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7026550000073257
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 140.82044900001733
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.10754800001268
+                }
+              ],
+              "flow_ms": 289.14670399998954,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5661539999882734,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 289.23491200001195,
+          "batch_completion_rate_per_second": 3.457397286811485
+        },
+        {
+          "batch": 12,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.117522999986022
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7230729999985215
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.58728300001644
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.28503600000408
+                }
+              ],
+              "flow_ms": 291.75748799997336,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5993850000199927,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.8513179999991,
+          "batch_completion_rate_per_second": 3.4264022066194784
+        },
+        {
+          "batch": 13,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.0602070000043113
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.0729720000124416
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.05527500001358
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.62711199998535
+                }
+              ],
+              "flow_ms": 289.8566009999968,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5631379999945239,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 289.9422940000136,
+          "batch_completion_rate_per_second": 3.4489621579663474
+        },
+        {
+          "batch": 14,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.404425000013589
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9543220000221027
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.15474099998937
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.59558300000208
+                }
+              ],
+              "flow_ms": 292.14927499998566,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5297159999931864,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 292.23548999999593,
+          "batch_completion_rate_per_second": 3.421897867367218
+        },
+        {
+          "batch": 15,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.231194000022697
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7613029999997707
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.26987299999882
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.63365899998826
+                }
+              ],
+              "flow_ms": 290.9388590000219,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5757820000033007,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.033289000012,
+          "batch_completion_rate_per_second": 3.4360330511880335
+        },
+        {
+          "batch": 16,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.3631510000020626
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.8587340000001404
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.1260929999969
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.00308499998005
+                }
+              ],
+              "flow_ms": 291.39432300002,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.597602000003917,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.50518500000544,
+          "batch_completion_rate_per_second": 3.4304707135826122
+        },
+        {
+          "batch": 17,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.5380629999792745
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7501040000004195
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.67068699999663
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.13103300000785
+                }
+              ],
+              "flow_ms": 294.13166399999113,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6374960000007377,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 294.20913199999177,
+          "batch_completion_rate_per_second": 3.3989427629324163
+        },
+        {
+          "batch": 18,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.7966619999849627
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.990349000015158
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.3380390000043
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.11878900000374
+                }
+              ],
+              "flow_ms": 292.2854070000085,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.533964000003607,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 292.40677799998593,
+          "batch_completion_rate_per_second": 3.419893365125921
+        },
+        {
+          "batch": 19,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.44325700001491
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.6937479999844527
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.78547000000208
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.54506999998762
+                }
+              ],
+              "flow_ms": 291.50966299999936,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5529290000131368,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.5972509999847,
+          "batch_completion_rate_per_second": 3.429387611065142
+        },
+        {
+          "batch": 20,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.536711000009518
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.7987730000234023
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 144.15480400001002
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.86188500000208
+                }
+              ],
+              "flow_ms": 293.3952039999781,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5610550000246803,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 293.49005399998873,
+          "batch_completion_rate_per_second": 3.407270489650182
+        },
+        {
+          "batch": 21,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.759612000010293
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.0705880000141406
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.27769100000387
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.08780400000387
+                }
+              ],
+              "flow_ms": 292.23836400001346,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5521379999938745,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 292.3202940000067,
+          "batch_completion_rate_per_second": 3.420905152756781
+        },
+        {
+          "batch": 22,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.753945999989128
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9367690000015045
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.0586589999857
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.68487199999436
+                }
+              ],
+              "flow_ms": 292.4749930000132,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6167869999890172,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 292.5787129999833,
+          "batch_completion_rate_per_second": 3.4178836517065996
+        },
+        {
+          "batch": 23,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.752558000002182
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.87895200000321
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.0275970000091
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.25024600000802
+                }
+              ],
+              "flow_ms": 291.9500900000003,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6123700000036933,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 292.04474200000163,
+          "batch_completion_rate_per_second": 3.4241328679699166
+        },
+        {
+          "batch": 24,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.253418000018883
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9070450000006076
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.42376600000262
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.58912000000623
+                }
+              ],
+              "flow_ms": 293.2161180000037,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.542490000019825,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 293.3178150000231,
+          "batch_completion_rate_per_second": 3.409271271163401
+        },
+        {
+          "batch": 25,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.9312049999864485
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.8923479999889423
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.1915760000113
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.59742500002426
+                }
+              ],
+              "flow_ms": 291.68090999999663,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5949570000088897,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 291.7735180000136,
+          "batch_completion_rate_per_second": 3.4273158402262998
+        },
+        {
+          "batch": 26,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.940156999988176
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.1159520000016983
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.4293660000112
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.70484499997838
+                }
+              ],
+              "flow_ms": 293.23228799998446,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6291210000076717,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 293.318706000008,
+          "batch_completion_rate_per_second": 3.40926091498567
+        },
+        {
+          "batch": 27,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.069496999989042
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.020074999994904
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.06138000000124
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.77794100000096
+                }
+              ],
+              "flow_ms": 293.9708589999839,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6612100000088503,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 294.0564960000245,
+          "batch_completion_rate_per_second": 3.4007070532457027
+        },
+        {
+          "batch": 28,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.476792000019714
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.0637460000093597
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.81443100000024
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.70810600000073
+                }
+              ],
+              "flow_ms": 295.1049140000066,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6373760000192306,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 295.19801400002166,
+          "batch_completion_rate_per_second": 3.387556665607942
+        },
+        {
+          "batch": 29,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.239132000009249
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.1035789999975805
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.0383969999932
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.2663009999876
+                }
+              ],
+              "flow_ms": 293.6892259999979,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6540870000198993,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 293.7885480000091,
+          "batch_completion_rate_per_second": 3.403808646754907
+        },
+        {
+          "batch": 30,
+          "samples": [
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.339994000019942
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.113959000017985
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 144.81677200001286
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.49195500000656
+                }
+              ],
+              "flow_ms": 296.811009999999,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.694763000017474,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 296.901183000017,
+          "batch_completion_rate_per_second": 3.3681239996943453
+        },
+        {
+          "batch": 31,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.83806300002243
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.0657889999758936
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.90698899998233
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.37294900000097
+                }
+              ],
+              "flow_ms": 295.22663999998144,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6866670000013073,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 295.31867699998315,
+          "batch_completion_rate_per_second": 3.386172558263415
+        },
+        {
+          "batch": 32,
+          "samples": [
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.577899999986812
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9265409999936765
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.86238600001866
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.8049660000047
+                }
+              ],
+              "flow_ms": 294.214199999999,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5925620000132312,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 294.2951379999954,
+          "batch_completion_rate_per_second": 3.397949442168547
+        }
+      ],
+      "denials": [
+        {
+          "session": 1,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.439308000002029
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.935597000004009
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.71733299999255
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.6863539999812929,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 2,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.472208999999339
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 3.2211169999811773
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.5943740000116122
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.687245999984043,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 3,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.6801449999804845
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.707593999986102
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.520978000006835
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.6671179999955257,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 4,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.502795000007609
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.5811499999974785
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.677860000005694
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.6831780000027265,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        }
+      ],
+      "login_http": [
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 1.0729429999969398
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.8109419999868805
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.6992579999973714
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.687786000014512
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.6750020000083623
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.6421519999832981
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.668902000001026
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.6686309999963669
+        }
+      ],
+      "fixture_copy_ms": 1.2507309999989502,
+      "startup_http": [
+        {
+          "step": "verifier_config",
+          "http_status": 200,
+          "elapsed_ms": 3.0683810000198264
+        },
+        {
+          "step": "wallet_config",
+          "http_status": 200,
+          "elapsed_ms": 1.5020590000176526
+        }
+      ],
+      "process_ids": {
+        "verifier": 2796,
+        "wallet": 2799
+      },
+      "service_start_and_login_ms": 173.5363370000016,
+      "summary": {
+        "flow_ms": {
+          "count": 28,
+          "min": 288.8266200000089,
+          "median": 292.04968249999297,
+          "p95": 295.22663999998144,
+          "max": 296.811009999999,
+          "mean": 292.1897637142844
+        },
+        "batch_completion_ms": {
+          "count": 28,
+          "min": 288.91867600000865,
+          "median": 292.1401159999988,
+          "p95": 295.31867699998315,
+          "max": 296.901183000017,
+          "mean": 292.2825903214325
+        },
+        "batch_completion_rate_per_second": {
+          "count": 28,
+          "min": 3.3681239996943453,
+          "median": 3.423015367668567,
+          "p95": 3.457397286811485,
+          "max": 3.4611815817679092,
+          "mean": 3.4214932299583873
+        },
+        "steps_ms": {
+          "request": {
+            "count": 28,
+            "min": 2.7164379999931043,
+            "median": 3.5373869999943963,
+            "p95": 4.577899999986812,
+            "max": 4.83806300002243,
+            "mean": 3.621525000001822
+          },
+          "review": {
+            "count": 28,
+            "min": 2.611175999987836,
+            "median": 2.899696499994775,
+            "p95": 3.113959000017985,
+            "max": 3.1159520000016983,
+            "mean": 2.888826964286701
+          },
+          "approve": {
+            "count": 28,
+            "min": 140.82044900001733,
+            "median": 141.79995050000116,
+            "p95": 144.15480400001002,
+            "max": 144.81677200001286,
+            "mean": 142.0475095714307
+          },
+          "verify": {
+            "count": 28,
+            "min": 142.10754800001268,
+            "median": 143.65670299999067,
+            "p95": 144.77794100000096,
+            "max": 145.70810600000073,
+            "mean": 143.5881598214286
+          }
+        }
+      },
+      "scenario_wall_ms": 9653.908668000015
+    },
+    {
+      "concurrency": 2,
+      "status": "PASSED",
+      "warmup_batches": [
+        {
+          "batch": 1,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 5.908374999989974
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 4.007574000013392
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 299.7770479999815
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 156.00088599998685
+                }
+              ],
+              "flow_ms": 465.7616690000168,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.534338999997999
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.403609000002916
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 159.98764099998652
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 158.18208700000014
+                }
+              ],
+              "flow_ms": 325.15763899999683,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.7420220000019526,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3968620000071041,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 465.854314000012,
+          "batch_completion_rate_per_second": 4.293187676694883
+        },
+        {
+          "batch": 2,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 7.843375000021524
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 143.74844299999268
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.03135400001088
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.43272800001705
+                }
+              ],
+              "flow_ms": 436.1071650000099,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 2.9391840000130287
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 4.584858000015402
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.33648499998708
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.8984690000259
+                }
+              ],
+              "flow_ms": 294.79913099999067,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6705500000000484,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3723060000074838,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 436.4220369999998,
+          "batch_completion_rate_per_second": 4.582720005956071
+        }
+      ],
+      "measured_batches": [
+        {
+          "batch": 3,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 5.31853900000101
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.3953299999893716
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 282.9878130000054
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.83047199999055
+                }
+              ],
+              "flow_ms": 435.58149699998694,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.179209999984778
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.271708999989187
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 145.21692800002484
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.53794699999867
+                }
+              ],
+              "flow_ms": 295.24916299999404,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6547000000173284,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4207459999795446,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 435.8246079999901,
+          "batch_completion_rate_per_second": 4.589002005136996
+        },
+        {
+          "batch": 4,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.061428000009528
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.1142240000008314
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 281.65369999999257
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.0616809999824
+                }
+              ],
+              "flow_ms": 434.9380099999962,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.4272800000110237
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.2786790000045585
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.45032800000013
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.58186100000125
+                }
+              ],
+              "flow_ms": 293.7852649999968,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6748779999886665,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4229599999850961,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 435.2416860000119,
+          "batch_completion_rate_per_second": 4.595148085149053
+        },
+        {
+          "batch": 5,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.196117999991202
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.157616999999391
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 281.34683999999766
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.60756799999308
+                }
+              ],
+              "flow_ms": 434.349721000018,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.4747509999988324
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.204563999986476
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.61392099999648
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.72044099999925
+                }
+              ],
+              "flow_ms": 294.0632380000068,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6005180000036034,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4314889999980096,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 434.63990999998714,
+          "batch_completion_rate_per_second": 4.60151024787406
+        },
+        {
+          "batch": 6,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.5670570000263524
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.3611800000130643
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 144.04002800000626
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.50872999998887
+                }
+              ],
+              "flow_ms": 296.52029500002186,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.101882999985264
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.236007999987578
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 283.8022749999993
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.4647600000053
+                }
+              ],
+              "flow_ms": 437.6525529999924,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6609549999770934,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4151540000000296,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 437.8173439999955,
+          "batch_completion_rate_per_second": 4.568115053934502
+        },
+        {
+          "batch": 7,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.933156000002327
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.717378000004601
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 282.3146240000085
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.57334499999297
+                }
+              ],
+              "flow_ms": 436.58374700001445,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.841074999996863
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 4.221446000002516
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.22426000001087
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.18420900000228
+                }
+              ],
+              "flow_ms": 295.5161639999915,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.617382999995698,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.457762999990564,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 436.8311960000142,
+          "batch_completion_rate_per_second": 4.5784275901392695
+        },
+        {
+          "batch": 8,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.86853299998802
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.5919679999949494
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 285.93746699999656
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 147.24021699998957
+                }
+              ],
+              "flow_ms": 443.68478100000175,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 3.9588770000023032
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.568389000008665
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 147.593956999998
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.8324849999949
+                }
+              ],
+              "flow_ms": 300.00455999999076,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.831971000001431,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4165560000094501,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 444.02506500000527,
+          "batch_completion_rate_per_second": 4.504250227405465
+        },
+        {
+          "batch": 9,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 7.469705999994858
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.1887480000136748
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 284.0964399999848
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 147.2566939999922
+                }
+              ],
+              "flow_ms": 442.05974799999126,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.207238000020652
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.7143520000029184
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 145.89051799998742
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.40031800000952
+                }
+              ],
+              "flow_ms": 298.2634189999942,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6417189999913262,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4772190000087448,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 442.37657700000454,
+          "batch_completion_rate_per_second": 4.521035027584608
+        },
+        {
+          "batch": 10,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 7.703566999992972
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 143.41976699998327
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.4168899999927
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.9755410000032
+                }
+              ],
+              "flow_ms": 437.56294199999957,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.280762999997023
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.393651999999747
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.63321399999518
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.33721999997806
+                }
+              ],
+              "flow_ms": 292.68871200000035,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.762022000008301,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.563218000001143,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 437.8249660000222,
+          "batch_completion_rate_per_second": 4.568035528608706
+        },
+        {
+          "batch": 11,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 8.67158900001641
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.193836000008332
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 281.6265069999986
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.55479099999502
+                }
+              ],
+              "flow_ms": 439.0968060000091,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.926546999996617
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.70336199998178
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 144.2614009999943
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.44959200000085
+                }
+              ],
+              "flow_ms": 297.39229800000544,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6152999999974327,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4351599999997688,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 439.3964619999906,
+          "batch_completion_rate_per_second": 4.551698006162013
+        },
+        {
+          "batch": 12,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 7.533030999979928
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 143.74432899998624
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.3850929999967
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.57431799999176
+                }
+              ],
+              "flow_ms": 436.3090549999811,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.199634999991986
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.101485000001958
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.26397699999893
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.36736499999847
+                }
+              ],
+              "flow_ms": 294.98169500001836,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.7259899999828576,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4478090000125121,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 436.64383700001963,
+          "batch_completion_rate_per_second": 4.580392142348983
+        },
+        {
+          "batch": 13,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.209432999999763
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.2833030000176677
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.51204799999095
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.99130699999796
+                }
+              ],
+              "flow_ms": 296.04450100001145,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 7.909637000011571
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.3867740000021
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.67367099998773
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.88450600000624
+                }
+              ],
+              "flow_ms": 440.90062300000454,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.7035909999947307,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4652209999894694,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 441.0542959999759,
+          "batch_completion_rate_per_second": 4.534589092858783
+        },
+        {
+          "batch": 14,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.528314999987515
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.2109760000196275
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.7511240000049
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.1151869999876
+                }
+              ],
+              "flow_ms": 296.64614799997935,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 8.553589999991118
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.24615799999196
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.21131900001183
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.82155499998817
+                }
+              ],
+              "flow_ms": 439.8819129999936,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.701058999998395,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4151540000000296,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 440.0341630000071,
+          "batch_completion_rate_per_second": 4.545101649300734
+        },
+        {
+          "batch": 15,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.730338000001666
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.500836000000618
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.14309299999195
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.97105299998248
+                }
+              ],
+              "flow_ms": 297.39640500000064,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 8.794718999979523
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 144.70085400000698
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.25909100000445
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.74008899997648
+                }
+              ],
+              "flow_ms": 440.5459669999914,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.7560769999818149,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4166109999962373,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 440.70563399998264,
+          "batch_completion_rate_per_second": 4.5381766097414555
+        },
+        {
+          "batch": 16,
+          "samples": [
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.913090000002285
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.072551000002477
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 141.83913899998402
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.9514239999985
+                }
+              ],
+              "flow_ms": 294.8228399999948,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 9.083014999987427
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 142.8688819999877
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 140.8799970000132
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.0699860000052
+                }
+              ],
+              "flow_ms": 436.94682099999227,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6142230000184554,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.378961000000345,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 437.10760500002266,
+          "batch_completion_rate_per_second": 4.575532379492451
+        }
+      ],
+      "denials": [
+        {
+          "session": 1,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.358454999987771
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 3.0262180000022454
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 5.606821000014861
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.7437129999914305,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 2,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.555750999998054
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.5566369999978633
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.615684000005558
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.719341999996459,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 3,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.504509000014423
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.600047000015593
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.5257339999882333
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.7271910000099524,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 4,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.359647000001132
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.8768809999917266
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.518283000000565
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.7306239999991249,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        }
+      ],
+      "login_http": [
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 1.097208000004457
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.8286780000048566
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7230090000120981
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7156009999960133
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7258640000031846
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7019949999858
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.6906689999937043
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7183959999963463
+        }
+      ],
+      "fixture_copy_ms": 1.1495930000080534,
+      "startup_http": [
+        {
+          "step": "verifier_config",
+          "http_status": 200,
+          "elapsed_ms": 1.4583479999998872
+        },
+        {
+          "step": "wallet_config",
+          "http_status": 200,
+          "elapsed_ms": 1.4062619999890558
+        }
+      ],
+      "process_ids": {
+        "verifier": 2989,
+        "wallet": 2992
+      },
+      "service_start_and_login_ms": 168.96491800000035,
+      "summary": {
+        "flow_ms": {
+          "count": 28,
+          "min": 292.68871200000035,
+          "median": 367.1771405000044,
+          "p95": 442.05974799999126,
+          "max": 443.68478100000175,
+          "mean": 367.12388882142784
+        },
+        "batch_completion_ms": {
+          "count": 14,
+          "min": 434.63990999998714,
+          "median": 437.82115500000884,
+          "p95": 444.02506500000527,
+          "max": 444.02506500000527,
+          "mean": 438.53738207143067
+        },
+        "batch_completion_rate_per_second": {
+          "count": 14,
+          "min": 4.504250227405465,
+          "median": 4.5680752912716045,
+          "p95": 4.60151024787406,
+          "max": 4.60151024787406,
+          "mean": 4.56078668898122
+        },
+        "steps_ms": {
+          "request": {
+            "count": 28,
+            "min": 3.179209999984778,
+            "median": 5.122542999998814,
+            "p95": 8.794718999979523,
+            "max": 9.083014999987427,
+            "mean": 5.737218571426744
+          },
+          "review": {
+            "count": 28,
+            "min": 3.072551000002477,
+            "median": 3.3944909999945594,
+            "p95": 145.24615799999196,
+            "max": 145.3867740000021,
+            "mean": 33.56601274999958
+          },
+          "approve": {
+            "count": 28,
+            "min": 140.8799970000132,
+            "median": 143.7123974999963,
+            "p95": 284.0964399999848,
+            "max": 285.93746699999656,
+            "mean": 183.25091653571337
+          },
+          "verify": {
+            "count": 28,
+            "min": 143.33721999997806,
+            "median": 144.12709750000374,
+            "p95": 147.24021699998957,
+            "max": 147.2566939999922,
+            "mean": 144.52159507142323
+          }
+        }
+      },
+      "scenario_wall_ms": 7315.5583040000065
+    },
+    {
+      "concurrency": 4,
+      "status": "PASSED",
+      "warmup_batches": [
+        {
+          "batch": 1,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 11.570941000002222
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 161.45140899999433
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 311.28011699999547
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 158.97960500001318
+                }
+              ],
+              "flow_ms": 643.3396580000021,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 15.328291000002991
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 326.4351740000109
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 291.2655129999848
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 152.27265699999748
+                }
+              ],
+              "flow_ms": 785.3635489999817,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.496545000004517
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 5.3625299999850995
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 325.1018649999935
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 165.45451700000058
+                }
+              ],
+              "flow_ms": 502.47672099999363,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.20065399998748
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.3748219999836238
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 163.49556199998005
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 182.769535999995
+                }
+              ],
+              "flow_ms": 353.9216150000186,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.636953000001995,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4922590000026048,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4147549999847797,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3407679999772881,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 785.8493239999973,
+          "batch_completion_rate_per_second": 5.090034282449817
+        }
+      ],
+      "measured_batches": [
+        {
+          "batch": 2,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.010346000001164
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.8104380000163474
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 146.06608000002552
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 147.08421099999214
+                }
+              ],
+              "flow_ms": 301.022329999995,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.449239000005491
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 4.3520579999949405
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 289.33536400001003
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.9795830000037
+                }
+              ],
+              "flow_ms": 444.17482299999733,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 12.702983999986373
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 289.1031830000088
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 298.4416160000194
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 142.34711899999297
+                }
+              ],
+              "flow_ms": 742.6408080000044,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 9.96086899999682
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.9485910000069
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 287.7245410000171
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 155.93701800000304
+                }
+              ],
+              "flow_ms": 599.6272030000114,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6069099999924674,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5100820000100157,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4399819999937336,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.355245000013383,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 743.2014709999919,
+          "batch_completion_rate_per_second": 5.38212067128705
+        },
+        {
+          "batch": 3,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.233696000000009
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.7351050000040686
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 147.21733599998288
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 155.57931300000405
+                }
+              ],
+              "flow_ms": 310.8178070000065,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 10.120800000009922
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 146.72742400000516
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 309.19301499997687
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.63510399999768
+                }
+              ],
+              "flow_ms": 609.7619009999846,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 13.938737000017909
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 300.5596369999921
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 294.0995030000124
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.90570099999422
+                }
+              ],
+              "flow_ms": 752.5616249999985,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 6.961300000000392
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 6.473929999998518
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 299.1523880000102
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 155.60412799999312
+                }
+              ],
+              "flow_ms": 468.2490939999866,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.7207150000047022,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.456522999973231,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4193330000011883,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3700019999873803,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 753.0675710000025,
+          "batch_completion_rate_per_second": 5.311608352339987
+        },
+        {
+          "batch": 4,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 14.537835999988147
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 287.95969400002264
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 290.30027999999675
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.66225899999563
+                }
+              ],
+              "flow_ms": 736.5123360000041,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 4.333782000003339
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.5582760000067992
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 146.91757200000666
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.02192399998148
+                }
+              ],
+              "flow_ms": 297.87839900001245,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 7.6333519999991495
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 4.7547599999973045
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 287.97460699999533
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 151.50916199999642
+                }
+              ],
+              "flow_ms": 451.91880799998785,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 11.476145000017368
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.7065630000045
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 294.138533999984
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.10377099999982
+                }
+              ],
+              "flow_ms": 594.4745439999792,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.7786580000063168,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3725800000088384,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3719630000252891,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3399489999983416,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 736.8971550000083,
+          "batch_completion_rate_per_second": 5.428165888359217
+        },
+        {
+          "batch": 5,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 15.803336999994144
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 144.69396599997708
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 434.5089099999768
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.8355150000159
+                }
+              ],
+              "flow_ms": 740.8968800000082,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 8.609833000008393
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 146.05125500000327
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 156.67114799998672
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 143.96923600000378
+                }
+              ],
+              "flow_ms": 455.35652500001333,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 12.082565000014256
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.6226789999846
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 296.45132600001034
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.27894400000696
+                }
+              ],
+              "flow_ms": 598.491939000013,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 5.091018999991093
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.1089489999942543
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 143.47436799999969
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 153.62169499999823
+                }
+              ],
+              "flow_ms": 305.3463939999972,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5798489999951926,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4817189999973834,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3655039999775909,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3781670000128088,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 741.6287329999989,
+          "batch_completion_rate_per_second": 5.393534287458636
+        },
+        {
+          "batch": 6,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 12.774465000006785
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 143.50732200000493
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 287.7853760000164
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 147.200085999998
+                }
+              ],
+              "flow_ms": 591.3523860000112,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 16.19980099999907
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 142.6874829999747
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 429.12274099998626
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.70406999998886
+                }
+              ],
+              "flow_ms": 732.7622120000115,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 9.23940699999548
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 144.1182920000017
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 148.06792899997845
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.256551999978
+                }
+              ],
+              "flow_ms": 446.7412410000122,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 5.514544999982718
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.3576399999901696
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 142.76907100000358
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 146.6736200000014
+                }
+              ],
+              "flow_ms": 298.36641200000713,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.678231999989066,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3688909999984844,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.370715999996719,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3332309999896097,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 733.5297879999985,
+          "batch_completion_rate_per_second": 5.453084612836484
+        },
+        {
+          "batch": 7,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 10.870770999986235
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 146.8621340000027
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 150.9984040000063
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.17674099999545
+                }
+              ],
+              "flow_ms": 452.95984599999883,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 14.422080999992204
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.7383279999931
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 293.117776999992
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 147.0808800000043
+                }
+              ],
+              "flow_ms": 600.4099019999956,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 18.13140500001964
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 144.58492599999317
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 434.2630209999925
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 146.0237040000152
+                }
+              ],
+              "flow_ms": 743.0749979999973,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 5.170429000003196
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 5.389871000005542
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 145.26211000000444
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 148.3122650000155
+                }
+              ],
+              "flow_ms": 304.1883650000159,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.6929840000159402,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4138309999793819,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4297150000004422,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.4019489999839152,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 743.8504140000077,
+          "batch_completion_rate_per_second": 5.3774252520614425
+        },
+        {
+          "batch": 8,
+          "samples": [
+            {
+              "session": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 9.918873000003714
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 145.7896820000144
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 148.432004
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 145.20392200000742
+                }
+              ],
+              "flow_ms": 449.3952159999992,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 18.858547000007775
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 142.70116999998095
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 428.19347099998595
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.9971349999828
+                }
+              ],
+              "flow_ms": 734.8063969999998,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 5.577828000014051
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 3.3683300000006966
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 144.4967219999853
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 146.42826399997944
+                }
+              ],
+              "flow_ms": 299.91529599999467,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            },
+            {
+              "session": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "request",
+                  "http_status": 200,
+                  "elapsed_ms": 14.04840800000784
+                },
+                {
+                  "step": "review",
+                  "http_status": 200,
+                  "elapsed_ms": 144.78004200000782
+                },
+                {
+                  "step": "approve",
+                  "http_status": 200,
+                  "elapsed_ms": 287.67480799999134
+                },
+                {
+                  "step": "verify",
+                  "http_status": 200,
+                  "elapsed_ms": 144.63534199998662
+                }
+              ],
+              "flow_ms": 591.1931219999929,
+              "accepted": true,
+              "synthetic_revocation_checked": true,
+              "live_licence_status_checked": false
+            }
+          ],
+          "replay_http": [
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.5471159999833617,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3905100000215498,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3633190000064133,
+              "expected_error": "already_used"
+            },
+            {
+              "step": "replay",
+              "http_status": 409,
+              "elapsed_ms": 1.3523800000143638,
+              "expected_error": "already_used"
+            }
+          ],
+          "completion_ms": 735.4177499999821,
+          "batch_completion_rate_per_second": 5.439085472168842
+        }
+      ],
+      "denials": [
+        {
+          "session": 1,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.384966000003487
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.931375000002845
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.609707000004846
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.6805980000024192,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 2,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.37007399997924
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.6900269999998727
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.620358000001488
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.6451719999915895,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 3,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.516074999997954
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.6207880000015393
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.5082999999881395
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.736119000009694,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        },
+        {
+          "session": 4,
+          "steps": [
+            {
+              "step": "request",
+              "http_status": 200,
+              "elapsed_ms": 4.347035999984428
+            },
+            {
+              "step": "review",
+              "http_status": 200,
+              "elapsed_ms": 2.571291999998948
+            },
+            {
+              "step": "deny",
+              "http_status": 200,
+              "elapsed_ms": 2.7165810000155943
+            },
+            {
+              "step": "approve_after_deny",
+              "http_status": 409,
+              "elapsed_ms": 0.7226890000140429,
+              "expected_error": "decision_already_recorded"
+            }
+          ],
+          "no_presentation": true,
+          "verifier_submissions": 0
+        }
+      ],
+      "login_http": [
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 1.122205000001486
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.8550139999954354
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7706519999999273
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7475350000163417
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.6992299999808438
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7069700000101875
+        },
+        {
+          "step": "verifier_login",
+          "http_status": 200,
+          "elapsed_ms": 0.724106000006941
+        },
+        {
+          "step": "wallet_login",
+          "http_status": 200,
+          "elapsed_ms": 0.7005470000081004
+        }
+      ],
+      "fixture_copy_ms": 1.2050859999988006,
+      "startup_http": [
+        {
+          "step": "verifier_config",
+          "http_status": 200,
+          "elapsed_ms": 1.4341340000214586
+        },
+        {
+          "step": "wallet_config",
+          "http_status": 200,
+          "elapsed_ms": 1.4759869999920738
+        }
+      ],
+      "process_ids": {
+        "verifier": 3181,
+        "wallet": 3184
+      },
+      "service_start_and_login_ms": 167.95272199999545,
+      "summary": {
+        "flow_ms": {
+          "count": 28,
+          "min": 297.87839900001245,
+          "median": 529.7211079999897,
+          "p95": 743.0749979999973,
+          "max": 752.5616249999985,
+          "mean": 523.3891717500013
+        },
+        "batch_completion_ms": {
+          "count": 7,
+          "min": 733.5297879999985,
+          "median": 741.6287329999989,
+          "p95": 753.0675710000025,
+          "max": 753.0675710000025,
+          "mean": 741.0846974285699
+        },
+        "batch_completion_rate_per_second": {
+          "count": 7,
+          "min": 5.311608352339987,
+          "median": 5.393534287458636,
+          "p95": 5.453084612836484,
+          "max": 5.453084612836484,
+          "mean": 5.397860648073094
+        },
+        "steps_ms": {
+          "request": {
+            "count": 28,
+            "min": 4.010346000001164,
+            "median": 10.04083450000337,
+            "p95": 18.13140500001964,
+            "max": 18.858547000007775,
+            "mean": 10.309728571430453
+          },
+          "review": {
+            "count": 28,
+            "min": 3.1089489999942543,
+            "median": 144.35160899999744,
+            "p95": 289.1031830000088,
+            "max": 300.5596369999921,
+            "mean": 110.53756171428526
+          },
+          "approve": {
+            "count": 28,
+            "min": 142.76907100000358,
+            "median": 287.8799915000059,
+            "p95": 434.2630209999925,
+            "max": 434.5089099999768,
+            "mean": 255.78035792856977
+          },
+          "verify": {
+            "count": 28,
+            "min": 142.34711899999297,
+            "median": 145.2302369999927,
+            "p95": 155.60412799999312,
+            "max": 155.93701800000304,
+            "mean": 146.7059737142833
+          }
+        }
+      },
+      "scenario_wall_ms": 6239.551913000014
+    }
+  ],
+  "rate_limits": [
+    {
+      "kind": "session_writes",
+      "status": "PASSED",
+      "roles": [
+        {
+          "role": "verifier",
+          "steps": [
+            {
+              "step": "verifier_login",
+              "http_status": 200,
+              "elapsed_ms": 1.1276420000001508
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.9553269999951226
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.296290999993289
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.3414249999973435
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.7168309999865414
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.707654999994702
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.446509999998625
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.8255130000047757
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.859575999991648
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.6564690000157043
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.9978700000015124
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.1205230000068696
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.958667000001469
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 2.9201510000120834
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.402631000000156
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.3719799999971656
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.1832840000163287
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.377529999994522
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.481347999979789
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.3758029999878545
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.374088000015263
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.241141999983711
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.752319999989595
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.536580999996431
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.790100000003349
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.039638999984163
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.665408999978581
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 3.8635620000206927
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.1171169999927315
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.143542000008438
+            },
+            {
+              "step": "write",
+              "http_status": 200,
+              "elapsed_ms": 4.063807999983737
+            },
+            {
+              "step": "write_over_limit",
+              "http_status": 429,
+              "elapsed_ms": 0.6973969999819474,
+              "expected_error": "rate_limited",
+              "retry_after_seconds": 60
+            },
+            {
+              "step": "logout_after_limit",
+              "http_status": 200,
+              "elapsed_ms": 0.6814719999965746
+            },
+            {
+              "step": "logout_again",
+              "http_status": 401,
+              "elapsed_ms": 0.6831999999974414,
+              "expected_error": "authentication_required"
+            }
+          ],
+          "accepted_writes": 30,
+          "elapsed_ms": 104.06331299998328
+        }
+      ],
+      "startup_http": [
+        {
+          "step": "verifier_config",
+          "http_status": 200,
+          "elapsed_ms": 1.4022750000037831
+        },
+        {
+          "step": "wallet_config",
+          "http_status": 200,
+          "elapsed_ms": 1.3774839999882715
+        }
+      ],
+      "process_ids": {
+        "verifier": 3377,
+        "wallet": 3380
+      }
+    },
+    {
+      "kind": "process_calls",
+      "status": "PASSED",
+      "roles": [
+        {
+          "role": "verifier",
+          "steps": [
+            {
+              "step": "verifier_login",
+              "http_status": 200,
+              "elapsed_ms": 1.0871750000092106
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.7798700000023473
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6592599999919457
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6258940000236635
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6354870000109258
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6299920000003567
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6047789999854558
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6255929999952059
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6048500000019885
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6484649999833891
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6230639999955656
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6032520000189834
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6234950000134631
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6210850000059054
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5977769999958582
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.621545999990758
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5890710000073796
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.608652000011034
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6121030000088012
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.593925000003992
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6363279999845872
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5923610000024837
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6222320000119907
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6239699999923687
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5938000000185184
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6223179999835793
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6169520000014472
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5929029999833801
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6583390000116651
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5963490000056026
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6022649999977148
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6187099999976908
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5993089999947188
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6239500000049247
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6096179999985907
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6250320000162901
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6392939999955161
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.583234999993465
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5893609999816363
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.620753999982071
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5856540000195309
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6044749999887244
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5823580000026141
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6156350000026123
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6388630000060402
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5953570000087893
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6188449999910972
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5871220000130961
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6206289999965975
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6187410000109139
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5827889999920899
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6380959999887637
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6334020000053897
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5902480000088417
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.617382999990923
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5979720000084399
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6123439999896618
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6241709999983414
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5917959999806044
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6702559999780533
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6385819999934483
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5865509999978258
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6112210000139839
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5963490000056026
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5980569999906038
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6114179999769931
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6025550000003932
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6824490000099104
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5889810000212492
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6212250000032782
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6183239999870693
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5887449999875116
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6074350000062623
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6100939999953425
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5917150000129823
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.635141000003614
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5953520000048229
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.596297000015511
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6371149999893078
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5916750000096727
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.627206000018532
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5984379999972589
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6518819999996595
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6398049999916111
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5988940000065668
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5982879999919533
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6655669999986458
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5919060000110221
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6221170000060283
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5872270000111257
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6225779999908809
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6078250000030039
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5991250000079162
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6115019999981541
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6171080000001439
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6175030000008519
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6172080000226288
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5780600000093727
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5993449999834866
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6586099999879025
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5895459999862851
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6210500000065622
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5959180000161268
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6146769999872959
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.611848000005466
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5851129999996374
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6247919999964324
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6244859999924302
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5951569999922413
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6085859999984677
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5832950000126402
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5982080000137557
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6992200000013327
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5911640000135776
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6483160000243515
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5894219999902361
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6200829999727375
+            },
+            {
+              "step": "logout_after_limit",
+              "http_status": 200,
+              "elapsed_ms": 0.7424349999780588
+            },
+            {
+              "step": "logout_again",
+              "http_status": 401,
+              "elapsed_ms": 0.6917569999984607,
+              "expected_error": "authentication_required"
+            }
+          ],
+          "concurrent_boundary": [
+            {
+              "worker": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 200,
+                  "elapsed_ms": 1.0077000000023872
+                }
+              ],
+              "elapsed_ms": 1.4667650000035337
+            },
+            {
+              "worker": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 429,
+                  "elapsed_ms": 2.136720000009973,
+                  "expected_error": "rate_limited",
+                  "retry_after_seconds": 60
+                }
+              ],
+              "elapsed_ms": 2.600477999976647
+            },
+            {
+              "worker": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 429,
+                  "elapsed_ms": 1.6129379999938465,
+                  "expected_error": "rate_limited",
+                  "retry_after_seconds": 60
+                }
+              ],
+              "elapsed_ms": 2.128952999981948
+            },
+            {
+              "worker": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 200,
+                  "elapsed_ms": 1.465141000011272
+                }
+              ],
+              "elapsed_ms": 1.4915900000005422
+            }
+          ],
+          "accepted_process_calls_including_config_and_login": 120,
+          "elapsed_ms": 77.59513700000298
+        },
+        {
+          "role": "wallet",
+          "steps": [
+            {
+              "step": "wallet_login",
+              "http_status": 200,
+              "elapsed_ms": 1.0212920000185477
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.7284550000008494
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.679488000002948
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6312640000203373
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6080359999884877
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5963069999950221
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6423250000011649
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6047889999933886
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6325360000118962
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6065629999909561
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6094630000177403
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6164410000053522
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5948460000126943
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6497929999795815
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6458809999969617
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6008629999882942
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6297210000241193
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6173730000114119
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.630272000023524
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6319700000005923
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6019090000108918
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.602125000000342
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6162470000106168
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5963339999937034
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6251730000030875
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5987790000006044
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6342599999982212
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6314190000011877
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5990239999960068
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6206289999965975
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6314449999820226
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5933280000078867
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6333979999908479
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6008820000147352
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6321549999768195
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.608807999981309
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5940949999967415
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6315200000130972
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6349509999949987
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6040979999966112
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6254729999852771
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5875379999906727
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.622318000012001
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.624786999992466
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5875129999992623
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6610840000007556
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6214450000072702
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.590532999979132
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6323560000112138
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5875170000138041
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5939350000119248
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6167120000100113
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5941850000112936
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6829870000046867
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6268699999907312
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5953579999982139
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6217609999907836
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5856690000030085
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5942599999855247
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6271659999868007
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6043289999979606
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6266049999794632
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5956519999870125
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.620533999978079
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6204579999860016
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.593022999993309
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6204589999754262
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6244710000089526
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5960629999890443
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6085520000169709
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5841009999869584
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6119679999869732
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6536999999866566
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5898969999975634
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6176439999876493
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.588704999984202
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6139569999845662
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6179190000068502
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.583519999992177
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6147429999998621
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5960740000148235
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6151339999860284
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6093379999754234
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5838060000087353
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6319899999880363
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6658080000079281
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6025550000003932
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.640080000010812
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5871070000011969
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.7053389999782667
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6796239999857789
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5918660000077125
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6231079999849953
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.624586000014915
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5912000000023454
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6331419999980881
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6268959999999879
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5829689999927723
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6328370000119321
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5812560000038047
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5948470000021189
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6155899999953363
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5827839999881235
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.615038000006507
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5833849999987706
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6160499999907643
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6063279999750648
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5792620000022453
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6169079999835958
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5827779999947325
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6314739999879748
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6224620000239156
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5949359999988246
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.60706400000754
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.5814110000130768
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6160099999874546
+            },
+            {
+              "step": "session_read",
+              "http_status": 200,
+              "elapsed_ms": 0.6123089999903186
+            },
+            {
+              "step": "logout_after_limit",
+              "http_status": 200,
+              "elapsed_ms": 0.6835579999915353
+            },
+            {
+              "step": "logout_again",
+              "http_status": 401,
+              "elapsed_ms": 0.6072159999916948,
+              "expected_error": "authentication_required"
+            }
+          ],
+          "concurrent_boundary": [
+            {
+              "worker": 1,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 429,
+                  "elapsed_ms": 2.3426770000014585,
+                  "expected_error": "rate_limited",
+                  "retry_after_seconds": 60
+                }
+              ],
+              "elapsed_ms": 2.748332000010123
+            },
+            {
+              "worker": 2,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 429,
+                  "elapsed_ms": 1.8090110000059667,
+                  "expected_error": "rate_limited",
+                  "retry_after_seconds": 60
+                }
+              ],
+              "elapsed_ms": 2.315971000001582
+            },
+            {
+              "worker": 3,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 200,
+                  "elapsed_ms": 1.242279999985385
+                }
+              ],
+              "elapsed_ms": 1.529868000005763
+            },
+            {
+              "worker": 4,
+              "status": "PASSED",
+              "steps": [
+                {
+                  "step": "process_limit_boundary",
+                  "http_status": 200,
+                  "elapsed_ms": 1.4599369999928058
+                }
+              ],
+              "elapsed_ms": 1.4849240000103237
+            }
+          ],
+          "accepted_process_calls_including_config_and_login": 120,
+          "elapsed_ms": 77.51104100000816
+        }
+      ],
+      "startup_http": [
+        {
+          "step": "verifier_config",
+          "http_status": 200,
+          "elapsed_ms": 1.5692099999853326
+        },
+        {
+          "step": "wallet_config",
+          "http_status": 200,
+          "elapsed_ms": 1.390673000003062
+        }
+      ],
+      "process_ids": {
+        "verifier": 3417,
+        "wallet": 3420
+      }
+    }
+  ],
+  "source": {
+    "sha256": {
+      "split_benchmark.py": "fef8067298afef9b778a5aa28b2d9ff56c26eb3897590adc661814c83535382f",
+      "benchmark.py": "4ea36e94a11d7d7b35cf7f225d91d8a63f9f9d4b03d6d48a1442a8ca49268766",
+      "split_service.py": "4aa91a0b0320f21204d5b80f5ed66c6b7f38130972cfc6efb117f0700628761e",
+      "service.py": "9fcfd92ae4fe3f579450eff1d10f672620348e91061b7027d1bfc15e9fc3f1f6",
+      "split_wallet.py": "93743314d4654218cd0291c1b5c1f986e71d001748e1b52cd648e6884d3ae176",
+      "lifecycle.py": "3b74ecbf28334c715cd9208a6d48ea43c1b545f71bb5bb5d45109c13cb7bd22d",
+      "request_store.py": "f0e75d7e003874e04ac2422931ec3fe63b9631a5c0920b88b89befa945f82386",
+      "zk_license.py": "04f3eb89037757bba1deaec02625f37f4f54e3e10d99c496c102f6e61cae3891",
+      "requirements.txt": "6ec73e31c4fb865df59038d81dd6d311cbd5bb803ae60654523f4d9ea8d021e5",
+      "requirements-ingestion.txt": "a1c9b27799565fdb16d47fbe67bdaf1db00e7b68e4f4f0b07ce8a69d39387c5c",
+      ".github/workflows/test.yml": "e3093a0e56fc114358f7b56f48bc0b5516841370460a1d1464ac3c471ad9229a"
+    },
+    "git_commit": "bd4be4263d7b3a316fa9e5da43965fcfed713529",
+    "source_dirty": false
+  },
+  "environment": {
+    "python": "3.12.15",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "logical_cpus": 4,
+    "sqlite": "3.45.1",
+    "anoncreds": "0.2.3",
+    "github_run_id": "39522559331",
+    "checked_out_sha": "bd4be4263d7b3a316fa9e5da43965fcfed713529",
+    "source_head_sha": "c5633efec62f576156af5a10f92c2d7c4da95340",
+    "runner_os": "Linux"
+  },
+  "fixture_setup": {
+    "key_generation_and_registry_ms": 5178.750026999978,
+    "wallet_setup_enrollment_issuance_ms": 137.09049700000264,
+    "total_ms": 5315.841116000001
+  },
+  "finished_at": "2026-10-21T00:40:34.538138+00:00"
+}
