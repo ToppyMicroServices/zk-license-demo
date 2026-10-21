@@ -36,10 +36,35 @@ and the [read-only recovery error](https://www.sqlite.org/rescode.html#readonly_
 
 ## Evidence and limits
 
-Validation of the revised fixture is pending. No test, installation, demo, build or browser
-execution for this work has used the user's PC. Ubuntu and Windows run the new
-cases through the existing CI test discovery; runtime code and dependencies
-are unchanged.
+[Hosted run 39584906748](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39584906748)
+passed source `a25dc3c986b1630b4c5da642ab0070653b08df10`, checked out as merge
+preview `d83b70f83a277147fd18bb6a9a3a867fc880902b` against main
+`d88d4313f90f2532c83d8422ccd1f99a5c13cc9e` in [PR #10](https://github.com/ToppyMicroServices/zk-license-demo/pull/10).
+
+| Hosted environment | Checks | Result |
+| --- | --- | --- |
+| Ubuntu 24.04, Python 3.12.15, SQLite 3.45.1 | 146 Python tests; 5 JS tests | Passed; Python 69.383 seconds |
+| Windows Server 2022, Python 3.12.10, SQLite 3.49.1 | 146 Python tests; 5 JS tests | Passed; Python 97.327 seconds |
+| Ubuntu, Chromium | 3 browser scenarios | Passed; 9.046 seconds |
+
+Both OS jobs completed all three termination cases. The first-save case retained
+an issuer journal; the second-save case retained journals for both databases.
+The saved stores returned to their full baseline state in both uncommitted
+cases. The committed case had no remaining rollback journals and rejected the
+old enrollment. Fresh issuance used index 2, with proof acceptance and replay
+rejection in every case. Both databases passed their integrity checks. Process
+exit codes were -9 on Ubuntu and -15 on Windows; the latter is Python's reported
+Windows termination code, not a POSIX signal.
+
+The same run passed the existing proof/replay checks and serial/concurrent
+measurements. CodeQL also passed. Raw [Ubuntu test logs](evidence/2026-10-21-issuer-recovery/ubuntu-tests.log),
+[Windows test logs](evidence/2026-10-21-issuer-recovery/windows-tests.log), environments,
+[artifact metadata](evidence/2026-10-21-issuer-recovery/artifacts.json) and an
+[extracted evidence manifest](evidence/2026-10-21-issuer-recovery/manifest.json)
+are retained in the repository. The downloaded archive hashes matched GitHub's
+artifact digests. The manifest records the retained files' SHA-256 hashes.
+No test, installation, demo, build or browser execution used the user's PC.
+Runtime code, dependencies and default cache settings are unchanged.
 
 The initial [hosted attempt](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39584401882)
 at `c8ab08fb618ed0310d73290d6d661c6d1e2ecfa3` failed the file-change assertion in
@@ -50,7 +75,7 @@ assertions, and emits sanitized checkpoint observations before assertions so a
 failure preserves its evidence. This initial run does not establish recovery
 success at the second-save checkpoint.
 
-The retained evidence will identify each checkpoint, process exit code, journal
+The retained evidence identifies each checkpoint, process exit code, journal
 observations and recovered state. Private database snapshots, keys, credentials
 and proofs must not enter the evidence or repository. Changed file bytes and
 journal records show writes visible to this process; they do not prove that a
