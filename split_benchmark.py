@@ -299,6 +299,40 @@ def concurrency_case(source, root, key, concurrency, warmups, flows, report):
     case["status"] = "PASSED"
 
 
+def concurrent_rate_boundary(client, evidence):
+    probes = [{"worker": worker, "status": "FAILED", "steps": []}
+              for worker in range(1, 5)]
+    evidence["concurrent_boundary"] = probes
+    barrier = threading.Barrier(4)
+
+    def boundary(probe):
+        started = time.perf_counter()
+        try:
+            barrier.wait(timeout=10)
+            client.call(probe["steps"], "process_limit_boundary", "/api/session",
+                        status=(200, 429), error="rate_limited")
+            probe["status"] = "PASSED"
+        except Exception:
+            # Keep the HTTP observations, but never export exception messages.
+            probe["failure"] = "quota_probe_failed"
+        finally:
+            probe["elapsed_ms"] = (time.perf_counter() - started) * 1000
+
+    failed_futures = []
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = [(probe, pool.submit(boundary, probe)) for probe in probes]
+        for probe, future in futures:
+            try:
+                future.result(timeout=HTTP_TIMEOUT + 15)
+            except Exception:
+                failed_futures.append(probe)
+    for probe in failed_futures:
+        probe.update(status="FAILED", failure="quota_probe_worker_failed")
+    require(all(probe["status"] == "PASSED" for probe in probes), "concurrent_quota_probe_failed")
+    statuses = sorted(probe["steps"][0]["http_status"] for probe in probes)
+    require(statuses == [200, 200, 429, 429], "incorrect_concurrent_quota_boundary")
+
+
 def rate_case(source, root, key, kind, report):
     case = {"kind": kind, "status": "FAILED", "roles": []}
     report["rate_limits"].append(case)
@@ -319,20 +353,7 @@ def rate_case(source, root, key, kind, report):
                 # One startup config and this login already consumed two calls.
                 for _ in range(116):
                     client.call(evidence["steps"], "session_read", "/api/session")
-                barrier = threading.Barrier(4)
-
-                def boundary(worker):
-                    probe = {"worker": worker, "steps": []}
-                    barrier.wait(timeout=10)
-                    client.call(probe["steps"], "process_limit_boundary", "/api/session",
-                                status=(200, 429), error="rate_limited")
-                    return probe
-
-                with ThreadPoolExecutor(max_workers=4) as pool:
-                    evidence["concurrent_boundary"] = list(pool.map(boundary, range(1, 5)))
-                statuses = sorted(probe["steps"][0]["http_status"]
-                                  for probe in evidence["concurrent_boundary"])
-                require(statuses == [200, 200, 429, 429], "incorrect_concurrent_quota_boundary")
+                concurrent_rate_boundary(client, evidence)
                 evidence["accepted_process_calls_including_config_and_login"] = 120
             require(time.perf_counter() - started < 60, "quota_window_elapsed")
             result = client.call(evidence["steps"], "logout_after_limit", "/api/logout", {})

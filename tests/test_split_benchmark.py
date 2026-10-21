@@ -2,10 +2,11 @@
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import threading
 import unittest
 from unittest.mock import patch
 
-from split_benchmark import MeasurementFailure, run
+from split_benchmark import MeasurementFailure, concurrent_rate_boundary, run
 
 
 class SplitBenchmarkEvidenceTests(unittest.TestCase):
@@ -46,3 +47,29 @@ class SplitBenchmarkEvidenceTests(unittest.TestCase):
             result = run(Path(temporary) / "result.json")
             self.assertEqual(result["status"], "FAILED")
             self.assertEqual(result["failure"], "flow_failed")
+
+    def test_one_failed_quota_probe_preserves_all_probe_observations(self):
+        class FailingClient:
+            def __init__(self):
+                self.calls = 0
+                self.lock = threading.Lock()
+
+            def call(self, steps, *_args, **_kwargs):
+                with self.lock:
+                    self.calls += 1
+                    ordinal = self.calls
+                steps.append({"http_status": None if ordinal == 1 else 200,
+                              "elapsed_ms": 1.0})
+                if ordinal == 1:
+                    raise RuntimeError("Bearer never-publish-this")
+
+        client, evidence = FailingClient(), {}
+        with self.assertRaisesRegex(MeasurementFailure, "concurrent_quota_probe_failed"):
+            concurrent_rate_boundary(client, evidence)
+        self.assertEqual(client.calls, 4)
+        probes = evidence["concurrent_boundary"]
+        self.assertEqual(len(probes), 4)
+        self.assertEqual(sum(probe["status"] == "FAILED" for probe in probes), 1)
+        self.assertTrue(all(len(probe["steps"]) == 1 for probe in probes))
+        self.assertTrue(all(probe["elapsed_ms"] >= 0 for probe in probes))
+        self.assertNotIn("never-publish-this", json.dumps(evidence))
