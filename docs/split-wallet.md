@@ -124,7 +124,9 @@ Webプロセスは起動したまま更新後のDBを読む。検証者画面の
 公開の失効情報、鍵の停止、番号の割当ては復旧時に戻さない。バックアップにない新鍵は復旧できず、
 新鍵生成まで発行を拒否する。公開レジストリまで失った場合の復旧や鍵漏えいの自動検出は扱わない。
 秘密鍵と公開状態は、同じローカルディスクのSQLite ATTACH・rollback journalで一緒に更新する。
-クラッシュ注入やネットワークファイルシステムでの耐障害性は未検証である。
+試験用の書込み条件で、SQL更新後・commit後のプロセス強制終了と明示的なrw接続による復旧を
+[Windows／Ubuntuで検証した](issuer-recovery-validation.md)。commit内部の中断、電源断、
+ネットワークファイルシステムでの耐障害性、読取り専用の利用側による自動復旧は未検証である。
 
 失効にはAnonCredsのaccumulatorと非失効証明を使う。upstreamの
 [Python例](https://github.com/anoncreds/anoncreds-rs/blob/main/wrappers/python/demo/test.py)と同じ
