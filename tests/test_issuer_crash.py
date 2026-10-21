@@ -1,7 +1,8 @@
 """Process-kill recovery after issuer SQL writes, not mid-COMMIT or power loss.
 
-The fixture adds inert state padding and the child uses a small spilling cache
-to require evidence of database-file writes before each uncommitted checkpoint.
+The fixture adds inert state padding. The child changes that padding before
+each real SQL save and uses a small spilling cache to require evidence of
+database-file writes before each uncommitted checkpoint.
 Recovery explicitly opens both databases read/write with ATTACH. This does not
 establish that a read-only application startup can recover a hot journal.
 """
@@ -82,6 +83,8 @@ def issuer_worker(private, registry, enrollment, checkpoint, baseline_hashes, co
     def saved(con, role, data, db="main"):
         # Test-only cache pressure. PRAGMA cache_spill allows dirty pages to be
         # written before COMMIT; the checkpoint verifies this actually happened.
+        # Unchanged padding need not dirty pages: replace its contents as part
+        # of the real UPDATE so both databases have a large synthetic change.
         # https://www.sqlite.org/pragma.html#pragma_cache_spill
         con.execute("PRAGMA cache_spill=ON")
         con.execute(f"PRAGMA {db}.cache_size=1")
@@ -92,7 +95,8 @@ def issuer_worker(private, registry, enrollment, checkpoint, baseline_hashes, co
             "journal_mode": con.execute(f"PRAGMA {db}.journal_mode").fetchone()[0],
             "synchronous": con.execute(f"PRAGMA {db}.synchronous").fetchone()[0],
         }
-        actual_save(con, role, data, db)
+        padded = dict(data, crash_fixture_padding="y" * PADDING_BYTES)
+        actual_save(con, role, padded, db)
         completed_saves.append(role)
         stage = "after_issuer_save" if role == "issuer" else "after_registry_save"
         if checkpoint == stage:
@@ -184,6 +188,13 @@ class IssuerCrashTests(unittest.TestCase):
             child.close()
             self.assertTrue(parent.poll(60), "issuer child did not reach checkpoint")
             observed = parent.recv()
+            # The worker sends only bounded diagnostics, never state or secrets.
+            # Emit before assertions so a failed spill check retains its evidence.
+            print(json.dumps({"check": "issuer_transaction_checkpoint",
+                              "requested_checkpoint": checkpoint,
+                              "sqlite": sqlite3.sqlite_version,
+                              "padding_bytes_per_state": PADDING_BYTES,
+                              "padding_changed_before_save": True, **observed}), flush=True)
             self.assertEqual(observed["checkpoint"], checkpoint,
                              "issuer child reported an unexpected checkpoint")
             self.assertEqual(observed["pid"], process.pid)
@@ -198,11 +209,12 @@ class IssuerCrashTests(unittest.TestCase):
                 self.assertGreater(settings["cache_spill"], 0)
                 self.assertEqual(settings["journal_mode"], "delete")
                 self.assertEqual(settings["synchronous"], 2)
-                self.assertTrue(observed["database_files_changed"][role], "no database-file spill observed")
+                self.assertTrue(observed["database_files_changed"][role],
+                                f"no {role} database-file spill observed")
                 if not committed:
                     journal = observed["journals"][role]
                     self.assertTrue(journal["valid_header"] and journal["has_page_record"],
-                                    "no valid rollback-journal page record observed")
+                                    f"no valid {role} rollback-journal page record observed")
                     self.assertGreater(journal["page_records"], 0)
             if committed:
                 self.assertIs(observed["connection_closed"], True)
@@ -244,7 +256,10 @@ class IssuerCrashTests(unittest.TestCase):
         else:
             expected_issuer = deepcopy(baseline["issuer"])
             del expected_issuer["offers"][enrollment["offer_id"]]
+            expected_issuer["crash_fixture_padding"] = "y" * PADDING_BYTES
             self.assertTrue(recovered["issuer"] == expected_issuer, "committed issuer state mismatch")
+            self.assertTrue(recovered["registry"]["crash_fixture_padding"] == "y" * PADDING_BYTES,
+                            "committed registry padding mismatch")
             key = recovered["registry"]["keys"][self.key]
             self.assertEqual(recovered["registry"]["revision"], initial_revision + 1)
             self.assertEqual(key["next_index"], initial_index + 1)
@@ -266,6 +281,7 @@ class IssuerCrashTests(unittest.TestCase):
                           "transaction_observed_at": observed["transaction_observed_at"],
                           "completed_saves": expected_saves, "settings": observed["settings"],
                           "padding_bytes_per_state": PADDING_BYTES,
+                          "padding_changed_before_save": True,
                           "database_files_changed": observed["database_files_changed"],
                           "journals_after_kill": after_kill_journals, "integrity": "ok",
                           "uncommitted_state_matches_baseline": None if committed else True,

@@ -14,8 +14,9 @@ committed. The parent verifies the checkpoint and child PID, then forcibly
 terminates the child. It does not release an ordinary exception path.
 
 Each fixture state includes 256 KiB of inert padding, added before Wallet trust
-checkpoints are created. The child sets a one-page cache target with spilling
-enabled before each real UPDATE. The test requires changed database-file bytes
+checkpoints are created. Before each real UPDATE the child changes that test-only
+padding from `x` to `y` and sets a one-page cache target with spilling enabled.
+The test requires changed database-file bytes
 and a rollback journal with a valid header and page record at each uncommitted
 save checkpoint. These are test-only conditions for observing writes before
 COMMIT, not the application's default cache or data-size configuration.
@@ -35,10 +36,19 @@ and the [read-only recovery error](https://www.sqlite.org/rescode.html#readonly_
 
 ## Evidence and limits
 
-Hosted execution is pending. No test, installation, demo, build or browser
+Validation of the revised fixture is pending. No test, installation, demo, build or browser
 execution for this work has used the user's PC. Ubuntu and Windows run the new
 cases through the existing CI test discovery; runtime code and dependencies
 are unchanged.
+
+The initial [hosted attempt](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39584401882)
+at `c8ab08fb618ed0310d73290d6d661c6d1e2ecfa3` failed the file-change assertion in
+the second-save case on both systems. Fixed padding and a small cache did not
+establish writes to both database files before COMMIT. The other two cases
+passed. The fixture now changes the padding during each save, retains the write
+assertions, and emits sanitized checkpoint observations before assertions so a
+failure preserves its evidence. This initial run does not establish recovery
+success at the second-save checkpoint.
 
 The retained evidence will identify each checkpoint, process exit code, journal
 observations and recovered state. Private database snapshots, keys, credentials
