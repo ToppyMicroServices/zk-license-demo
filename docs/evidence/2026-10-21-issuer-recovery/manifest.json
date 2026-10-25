@@ -1,0 +1,720 @@
+{
+  "date": "2026-10-21",
+  "source_head_sha": "a25dc3c986b1630b4c5da642ab0070653b08df10",
+  "checked_out_sha": "d83b70f83a277147fd18bb6a9a3a867fc880902b",
+  "base_sha": "d88d4313f90f2532c83d8422ccd1f99a5c13cc9e",
+  "run_url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39584906748",
+  "local_tests_run": false,
+  "scope": "Synthetic issuance process termination after completed SQL saves or after commit, with changed 256KiB fixture padding and one-page cache; explicit in-place rw ATTACH recovery. Not power-loss or production validation.",
+  "jobs": [
+    {
+      "platform": "ubuntu",
+      "job_id": 119171298907,
+      "environment": {
+        "python": "3.12.15",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "machine": "x86_64",
+        "sqlite": "3.45.1",
+        "anoncreds": "0.2.3",
+        "cryptography": "50.0.2",
+        "cffi": "2.0.0",
+        "pycparser": "3.0"
+      },
+      "python_tests": 146,
+      "python_seconds": 69.383,
+      "python_ok": true,
+      "js_pass": 5,
+      "js_fail": 0,
+      "artifact_id": 12338523574,
+      "archive_sha256": "06d37afdfcf90d72ad411a294ac6dc297af666d04f1398c0fd4df02c02c89483",
+      "retained_files": {
+        "ubuntu-tests.log": {
+          "sha256": "d794b72d29c64a2b1944889b8d1639efa3beeb1bf3ae3a920fb7c49d4482412b",
+          "bytes": 26104,
+          "archive_member": "validation/tests.log"
+        },
+        "ubuntu-environment.json": {
+          "sha256": "2da298b6953a185874131f69dce4025a3db5e32ce3c2e04c52e710328202fe5c",
+          "bytes": 209,
+          "archive_member": "validation/environment.json"
+        }
+      },
+      "checkpoints": [
+        {
+          "check": "issuer_transaction_checkpoint",
+          "requested_checkpoint": "after_registry_save",
+          "sqlite": "3.45.1",
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "checkpoint": "after_registry_save",
+          "pid": 2226,
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "connection_closed": false,
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "journals": {
+            "issuer": {
+              "exists": true,
+              "bytes": 310792,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": true,
+              "bytes": 336392,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            }
+          },
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "issued_index": null
+        },
+        {
+          "check": "issuer_transaction_checkpoint",
+          "requested_checkpoint": "after_commit",
+          "sqlite": "3.45.1",
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "checkpoint": "after_commit",
+          "pid": 2227,
+          "in_transaction": false,
+          "transaction_observed_at": "connection_close",
+          "connection_closed": true,
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "journals": {
+            "issuer": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "issued_index": 1
+        },
+        {
+          "check": "issuer_transaction_checkpoint",
+          "requested_checkpoint": "after_issuer_save",
+          "sqlite": "3.45.1",
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "checkpoint": "after_issuer_save",
+          "pid": 2228,
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "connection_closed": false,
+          "completed_saves": [
+            "issuer"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "journals": {
+            "issuer": {
+              "exists": true,
+              "bytes": 310792,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "database_files_changed": {
+            "issuer": true,
+            "registry": false
+          },
+          "issued_index": null
+        }
+      ],
+      "termination_cases": [
+        {
+          "check": "issuer_transaction_process_termination",
+          "checkpoint": "after_registry_save",
+          "pid": 2226,
+          "exitcode": -9,
+          "sqlite": "3.45.1",
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "journals_after_kill": {
+            "issuer": {
+              "exists": true,
+              "bytes": 310792,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": true,
+              "bytes": 336392,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            }
+          },
+          "integrity": "ok",
+          "uncommitted_state_matches_baseline": true,
+          "original_enrollment_retry": "issued_original_index",
+          "fresh_index": 2,
+          "fresh_proof_accepted": true,
+          "proof_replay_rejected": true,
+          "recovery": "in_place_rw_attach",
+          "power_loss_tested": false
+        },
+        {
+          "check": "issuer_transaction_process_termination",
+          "checkpoint": "after_commit",
+          "pid": 2227,
+          "exitcode": -9,
+          "sqlite": "3.45.1",
+          "in_transaction": false,
+          "transaction_observed_at": "connection_close",
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "journals_after_kill": {
+            "issuer": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "integrity": "ok",
+          "uncommitted_state_matches_baseline": null,
+          "original_enrollment_retry": "unknown_offer",
+          "fresh_index": 2,
+          "fresh_proof_accepted": true,
+          "proof_replay_rejected": true,
+          "recovery": "in_place_rw_attach",
+          "power_loss_tested": false
+        },
+        {
+          "check": "issuer_transaction_process_termination",
+          "checkpoint": "after_issuer_save",
+          "pid": 2228,
+          "exitcode": -9,
+          "sqlite": "3.45.1",
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "completed_saves": [
+            "issuer"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "database_files_changed": {
+            "issuer": true,
+            "registry": false
+          },
+          "journals_after_kill": {
+            "issuer": {
+              "exists": true,
+              "bytes": 310792,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "integrity": "ok",
+          "uncommitted_state_matches_baseline": true,
+          "original_enrollment_retry": "issued_original_index",
+          "fresh_index": 2,
+          "fresh_proof_accepted": true,
+          "proof_replay_rejected": true,
+          "recovery": "in_place_rw_attach",
+          "power_loss_tested": false
+        }
+      ]
+    },
+    {
+      "platform": "windows",
+      "job_id": 119171298365,
+      "environment": {
+        "python": "3.12.10",
+        "platform": "Windows-2022Server-10.0.20348-SP0",
+        "machine": "AMD64",
+        "sqlite": "3.49.1",
+        "anoncreds": "0.2.3",
+        "cryptography": "50.0.2",
+        "cffi": "2.0.0",
+        "pycparser": "3.0"
+      },
+      "python_tests": 146,
+      "python_seconds": 97.327,
+      "python_ok": true,
+      "js_pass": 5,
+      "js_fail": 0,
+      "artifact_id": 12338913769,
+      "archive_sha256": "077bcb89d8089f182c5db992ba99c96630a027b0a23991a2f9d6c44f04c406a2",
+      "retained_files": {
+        "windows-tests.log": {
+          "sha256": "e6844daf65df663c374d36a3d6bd51a5edae8107684bb1815c399679e807f965",
+          "bytes": 26264,
+          "archive_member": "validation/tests.log"
+        },
+        "windows-environment.json": {
+          "sha256": "6904a6a472672f9f5ac38d99f8462896f049978dcfe615d082f52658b3046a95",
+          "bytes": 197,
+          "archive_member": "validation/environment.json"
+        }
+      },
+      "checkpoints": [
+        {
+          "check": "issuer_transaction_checkpoint",
+          "requested_checkpoint": "after_registry_save",
+          "sqlite": "3.49.1",
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "checkpoint": "after_registry_save",
+          "pid": 1840,
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "connection_closed": false,
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "journals": {
+            "issuer": {
+              "exists": true,
+              "bytes": 18944,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": true,
+              "bytes": 336392,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            }
+          },
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "issued_index": null
+        },
+        {
+          "check": "issuer_transaction_checkpoint",
+          "requested_checkpoint": "after_commit",
+          "sqlite": "3.49.1",
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "checkpoint": "after_commit",
+          "pid": 356,
+          "in_transaction": false,
+          "transaction_observed_at": "connection_close",
+          "connection_closed": true,
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "journals": {
+            "issuer": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "issued_index": 1
+        },
+        {
+          "check": "issuer_transaction_checkpoint",
+          "requested_checkpoint": "after_issuer_save",
+          "sqlite": "3.49.1",
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "checkpoint": "after_issuer_save",
+          "pid": 3904,
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "connection_closed": false,
+          "completed_saves": [
+            "issuer"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "journals": {
+            "issuer": {
+              "exists": true,
+              "bytes": 18944,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "database_files_changed": {
+            "issuer": true,
+            "registry": false
+          },
+          "issued_index": null
+        }
+      ],
+      "termination_cases": [
+        {
+          "check": "issuer_transaction_process_termination",
+          "checkpoint": "after_registry_save",
+          "pid": 1840,
+          "exitcode": -15,
+          "sqlite": "3.49.1",
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "journals_after_kill": {
+            "issuer": {
+              "exists": true,
+              "bytes": 18944,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": true,
+              "bytes": 336392,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            }
+          },
+          "integrity": "ok",
+          "uncommitted_state_matches_baseline": true,
+          "original_enrollment_retry": "issued_original_index",
+          "fresh_index": 2,
+          "fresh_proof_accepted": true,
+          "proof_replay_rejected": true,
+          "recovery": "in_place_rw_attach",
+          "power_loss_tested": false
+        },
+        {
+          "check": "issuer_transaction_process_termination",
+          "checkpoint": "after_commit",
+          "pid": 356,
+          "exitcode": -15,
+          "sqlite": "3.49.1",
+          "in_transaction": false,
+          "transaction_observed_at": "connection_close",
+          "completed_saves": [
+            "issuer",
+            "registry"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            },
+            "registry": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "database_files_changed": {
+            "issuer": true,
+            "registry": true
+          },
+          "journals_after_kill": {
+            "issuer": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "integrity": "ok",
+          "uncommitted_state_matches_baseline": null,
+          "original_enrollment_retry": "unknown_offer",
+          "fresh_index": 2,
+          "fresh_proof_accepted": true,
+          "proof_replay_rejected": true,
+          "recovery": "in_place_rw_attach",
+          "power_loss_tested": false
+        },
+        {
+          "check": "issuer_transaction_process_termination",
+          "checkpoint": "after_issuer_save",
+          "pid": 3904,
+          "exitcode": -15,
+          "sqlite": "3.49.1",
+          "in_transaction": true,
+          "transaction_observed_at": "checkpoint",
+          "completed_saves": [
+            "issuer"
+          ],
+          "settings": {
+            "issuer": {
+              "cache_size": 1,
+              "cache_spill": 1,
+              "journal_mode": "delete",
+              "synchronous": 2
+            }
+          },
+          "padding_bytes_per_state": 262144,
+          "padding_changed_before_save": true,
+          "database_files_changed": {
+            "issuer": true,
+            "registry": false
+          },
+          "journals_after_kill": {
+            "issuer": {
+              "exists": true,
+              "bytes": 18944,
+              "valid_header": true,
+              "page_records": 2,
+              "has_page_record": true
+            },
+            "registry": {
+              "exists": false,
+              "bytes": 0,
+              "valid_header": false,
+              "page_records": 0,
+              "has_page_record": false
+            }
+          },
+          "integrity": "ok",
+          "uncommitted_state_matches_baseline": true,
+          "original_enrollment_retry": "issued_original_index",
+          "fresh_index": 2,
+          "fresh_proof_accepted": true,
+          "proof_replay_rejected": true,
+          "recovery": "in_place_rw_attach",
+          "power_loss_tested": false
+        }
+      ]
+    }
+  ],
+  "browser": {
+    "job_id": 119171298374,
+    "tests": 3,
+    "seconds": 9.046,
+    "result": "passed"
+  },
+  "initial_attempt": {
+    "source_head_sha": "c8ab08fb618ed0310d73290d6d661c6d1e2ecfa3",
+    "run_url": "https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39584401882",
+    "result": "failed",
+    "failure": "Second-save checkpoint failed no database-file spill observed on both OS; the failing role was not recorded. No recovery-success claim for that case.",
+    "python_tests_per_os": 146,
+    "failures_per_os": 1,
+    "next_change": "Change test-only padding during each save; retain write assertions and emit safe checkpoint metadata before assertions."
+  }
+}

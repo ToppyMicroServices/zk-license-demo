@@ -1,0 +1,160 @@
+test_existing_evidence_and_invalid_counts_fail_before_measurement (test_benchmark.BenchmarkTests.test_existing_evidence_and_invalid_counts_fail_before_measurement) ... ok
+test_failed_measurement_does_not_write_success_report (test_benchmark.BenchmarkTests.test_failed_measurement_does_not_write_success_report) ... ok
+test_invalid_samples_rejected (test_benchmark.BenchmarkTests.test_invalid_samples_rejected) ... ok
+test_nearest_rank_and_median (test_benchmark.BenchmarkTests.test_nearest_rank_and_median) ... ok
+test_a_key_for_another_profile_is_not_trusted (test_card_signature.CardSignatureCryptoTests.test_a_key_for_another_profile_is_not_trusted) ... ok
+test_both_profiles_verify_real_backend_signatures (test_card_signature.CardSignatureCryptoTests.test_both_profiles_verify_real_backend_signatures) ... ok
+test_client_cannot_add_keys_algorithms_or_verified_flags (test_card_signature.CardSignatureCryptoTests.test_client_cannot_add_keys_algorithms_or_verified_flags) ... ok
+test_conventional_digestinfo_signature_has_no_fallback (test_card_signature.CardSignatureCryptoTests.test_conventional_digestinfo_signature_has_no_fallback) ... ok
+test_every_signed_file_is_covered (test_card_signature.CardSignatureCryptoTests.test_every_signed_file_is_covered) ... ok
+test_evidence_digest_binds_the_operator_key_label (test_card_signature.CardSignatureCryptoTests.test_evidence_digest_binds_the_operator_key_label) ... ok
+test_input_mapping_order_does_not_change_signed_region_order (test_card_signature.CardSignatureCryptoTests.test_input_mapping_order_does_not_change_signed_region_order) ... ok
+test_invalid_provisioned_key_fails_closed (test_card_signature.CardSignatureCryptoTests.test_invalid_provisioned_key_fails_closed) ... ok
+test_myna_signed_region_tampering_is_rejected (test_card_signature.CardSignatureCryptoTests.test_myna_signed_region_tampering_is_rejected) ... ok
+test_other_signing_key_is_rejected (test_card_signature.CardSignatureCryptoTests.test_other_signing_key_is_rejected) ... ok
+test_signature_tampering_is_rejected (test_card_signature.CardSignatureCryptoTests.test_signature_tampering_is_rejected) ... ok
+test_verified_record_has_only_immutable_digests_and_configuration (test_card_signature.CardSignatureCryptoTests.test_verified_record_has_only_immutable_digests_and_configuration) ... ok
+test_wrong_hash_has_no_fallback (test_card_signature.CardSignatureCryptoTests.test_wrong_hash_has_no_fallback) ... ok
+test_wrong_rsa_size_and_non_rsa_key_are_rejected (test_card_signature.CardSignatureCryptoTests.test_wrong_rsa_size_and_non_rsa_key_are_rejected) ... ok
+test_duplicate_trust_entries_are_rejected (test_card_signature.CardSignatureInputTests.test_duplicate_trust_entries_are_rejected) ... ok
+test_empty_allowlist_and_unknown_key_fail_closed (test_card_signature.CardSignatureInputTests.test_empty_allowlist_and_unknown_key_fail_closed) ... ok
+test_exact_regions_and_byte_types_are_checked_before_backend (test_card_signature.CardSignatureInputTests.test_exact_regions_and_byte_types_are_checked_before_backend) ... ok
+test_invalid_trust_configuration_is_rejected (test_card_signature.CardSignatureInputTests.test_invalid_trust_configuration_is_rejected) ... ok
+test_missing_backend_is_hard_failure (test_card_signature.CardSignatureInputTests.test_missing_backend_is_hard_failure) ... ok
+test_module_import_does_not_import_crypto (test_card_signature.CardSignatureInputTests.test_module_import_does_not_import_crypto) ... ok
+test_signature_mode_requires_explicit_operator_choice (test_card_signature.CardSignatureInputTests.test_signature_mode_requires_explicit_operator_choice) ... ok
+test_signature_must_be_immutable_256_byte_value (test_card_signature.CardSignatureInputTests.test_signature_must_be_immutable_256_byte_value) ... ok
+test_trust_records_and_allowlist_are_immutable (test_card_signature.CardSignatureInputTests.test_trust_records_and_allowlist_are_immutable) ... ok
+test_unknown_profile_is_rejected (test_card_signature.CardSignatureInputTests.test_unknown_profile_is_rejected) ... ok
+test_changed_nonce_rejected (test_crypto.CryptoTests.test_changed_nonce_rejected) ... ok
+test_different_predicate_attribute_rejected (test_crypto.CryptoTests.test_different_predicate_attribute_rejected) ... ok
+test_different_predicate_operator_rejected (test_crypto.CryptoTests.test_different_predicate_operator_rejected) ... ok
+test_expired_credential_with_weaker_request_rejected (test_crypto.CryptoTests.test_expired_credential_with_weaker_request_rejected) ... ok
+test_hidden_identity_strings_not_in_presentation (test_crypto.CryptoTests.test_hidden_identity_strings_not_in_presentation) ... ok
+test_issuer_name_is_not_enough_key_is_pinned (test_crypto.CryptoTests.test_issuer_name_is_not_enough_key_is_pinned) ... ok
+test_missing_entitlement_with_weaker_request_rejected (test_crypto.CryptoTests.test_missing_entitlement_with_weaker_request_rejected) ... ok
+test_modified_proof_rejected (test_crypto.CryptoTests.test_modified_proof_rejected) ... ok
+test_new_proofs_are_not_identical (test_crypto.CryptoTests.test_new_proofs_are_not_identical) ... ok
+test_real_signature_and_hidden_predicates (test_crypto.CryptoTests.test_real_signature_and_hidden_predicates) ... ok
+test_relabelled_weaker_entitlement_proof_rejected (test_crypto.CryptoTests.test_relabelled_weaker_entitlement_proof_rejected) ... ok
+test_relabelled_weaker_expiry_proof_rejected (test_crypto.CryptoTests.test_relabelled_weaker_expiry_proof_rejected) ... ok
+test_removed_predicate_rejected (test_crypto.CryptoTests.test_removed_predicate_rejected) ... ok
+test_run_and_independent_verifier_process (test_crypto.CryptoTests.test_run_and_independent_verifier_process) ... ok
+test_signed_expiry_tampering_rejected (test_crypto.CryptoTests.test_signed_expiry_tampering_rejected) ... ok
+test_untrusted_issuer_rejected (test_crypto.CryptoTests.test_untrusted_issuer_rejected) ... ok
+test_completed_claim_survives_process_termination (test_enrollment_crash.EnrollmentCrashTests.test_completed_claim_survives_process_termination) ... {"check": "enrollment_process_termination", "checkpoint": "completed", "exitcode": -15, "retained_state": "completed", "integrity": "ok", "replay_rejected": true, "replay_adapter_calls": 0, "fresh_enrollment_completed": true}
+ok
+test_killed_identity_claim_survives_restart (test_enrollment_crash.EnrollmentCrashTests.test_killed_identity_claim_survives_restart) ... {"check": "enrollment_process_termination", "checkpoint": "identity", "exitcode": -15, "retained_state": "processing", "integrity": "ok", "replay_rejected": true, "replay_adapter_calls": 0, "fresh_enrollment_completed": true}
+ok
+test_killed_reader_claim_survives_restart (test_enrollment_crash.EnrollmentCrashTests.test_killed_reader_claim_survives_restart) ... {"check": "enrollment_process_termination", "checkpoint": "reader", "exitcode": -15, "retained_state": "processing", "integrity": "ok", "replay_rejected": true, "replay_adapter_calls": 0, "fresh_enrollment_completed": true}
+ok
+test_concurrent_completion_is_single_use (test_enrollment_gate.EnrollmentGateTests.test_concurrent_completion_is_single_use) ... ok
+test_crypto_backed_local_orchestration_and_restart_replay (test_enrollment_gate.EnrollmentGateTests.test_crypto_backed_local_orchestration_and_restart_replay) ... ok
+test_denial_is_final_and_does_not_contact_adapters (test_enrollment_gate.EnrollmentGateTests.test_denial_is_final_and_does_not_contact_adapters) ... ok
+test_expiry_rechecked_after_adapter_work (test_enrollment_gate.EnrollmentGateTests.test_expiry_rechecked_after_adapter_work) ... ok
+test_identity_provider_card_and_wallet_substitutions (test_enrollment_gate.EnrollmentGateTests.test_identity_provider_card_and_wallet_substitutions) ... ok
+test_interrupted_adapter_claim_is_not_replayed_after_restart (test_enrollment_gate.EnrollmentGateTests.test_interrupted_adapter_claim_is_not_replayed_after_restart) ... ok
+test_owner_wallet_audience_and_expiry_before_provider (test_enrollment_gate.EnrollmentGateTests.test_owner_wallet_audience_and_expiry_before_provider) ... ok
+test_provider_error_does_not_create_receipt (test_enrollment_gate.EnrollmentGateTests.test_provider_error_does_not_create_receipt) ... ok
+test_reopening_cannot_bypass_audience_validation (test_enrollment_gate.EnrollmentGateTests.test_reopening_cannot_bypass_audience_validation) ... ok
+test_slow_adapters_do_not_block_other_enrollments (test_enrollment_gate.EnrollmentGateTests.test_slow_adapters_do_not_block_other_enrollments) ... ok
+test_store_and_receipt_do_not_contain_raw_card_or_provider_subject (test_enrollment_gate.EnrollmentGateTests.test_store_and_receipt_do_not_contain_raw_card_or_provider_subject) ... ok
+test_store_creation_does_not_overwrite_and_context_is_bounded (test_enrollment_gate.EnrollmentGateTests.test_store_creation_does_not_overwrite_and_context_is_bounded) ... ok
+test_tampered_card_never_reaches_identity_adapter (test_enrollment_gate.EnrollmentGateTests.test_tampered_card_never_reaches_identity_adapter) ... ok
+test_unconfigured_providers_fail_closed (test_enrollment_gate.EnrollmentGateTests.test_unconfigured_providers_fail_closed) ... ok
+test_both_saves_are_rolled_back_before_commit_after_process_kill (test_issuer_crash.IssuerCrashTests.test_both_saves_are_rolled_back_before_commit_after_process_kill) ... {"check": "issuer_transaction_checkpoint", "requested_checkpoint": "after_registry_save", "sqlite": "3.49.1", "padding_bytes_per_state": 262144, "padding_changed_before_save": true, "checkpoint": "after_registry_save", "pid": 1840, "in_transaction": true, "transaction_observed_at": "checkpoint", "connection_closed": false, "completed_saves": ["issuer", "registry"], "settings": {"issuer": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}, "registry": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}}, "journals": {"issuer": {"exists": true, "bytes": 18944, "valid_header": true, "page_records": 2, "has_page_record": true}, "registry": {"exists": true, "bytes": 336392, "valid_header": true, "page_records": 2, "has_page_record": true}}, "database_files_changed": {"issuer": true, "registry": true}, "issued_index": null}
+{"check": "issuer_transaction_process_termination", "checkpoint": "after_registry_save", "pid": 1840, "exitcode": -15, "sqlite": "3.49.1", "in_transaction": true, "transaction_observed_at": "checkpoint", "completed_saves": ["issuer", "registry"], "settings": {"issuer": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}, "registry": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}}, "padding_bytes_per_state": 262144, "padding_changed_before_save": true, "database_files_changed": {"issuer": true, "registry": true}, "journals_after_kill": {"issuer": {"exists": true, "bytes": 18944, "valid_header": true, "page_records": 2, "has_page_record": true}, "registry": {"exists": true, "bytes": 336392, "valid_header": true, "page_records": 2, "has_page_record": true}}, "integrity": "ok", "uncommitted_state_matches_baseline": true, "original_enrollment_retry": "issued_original_index", "fresh_index": 2, "fresh_proof_accepted": true, "proof_replay_rejected": true, "recovery": "in_place_rw_attach", "power_loss_tested": false}
+ok
+test_committed_issuance_survives_process_kill_without_reusing_index (test_issuer_crash.IssuerCrashTests.test_committed_issuance_survives_process_kill_without_reusing_index) ... {"check": "issuer_transaction_checkpoint", "requested_checkpoint": "after_commit", "sqlite": "3.49.1", "padding_bytes_per_state": 262144, "padding_changed_before_save": true, "checkpoint": "after_commit", "pid": 356, "in_transaction": false, "transaction_observed_at": "connection_close", "connection_closed": true, "completed_saves": ["issuer", "registry"], "settings": {"issuer": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}, "registry": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}}, "journals": {"issuer": {"exists": false, "bytes": 0, "valid_header": false, "page_records": 0, "has_page_record": false}, "registry": {"exists": false, "bytes": 0, "valid_header": false, "page_records": 0, "has_page_record": false}}, "database_files_changed": {"issuer": true, "registry": true}, "issued_index": 1}
+{"check": "issuer_transaction_process_termination", "checkpoint": "after_commit", "pid": 356, "exitcode": -15, "sqlite": "3.49.1", "in_transaction": false, "transaction_observed_at": "connection_close", "completed_saves": ["issuer", "registry"], "settings": {"issuer": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}, "registry": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}}, "padding_bytes_per_state": 262144, "padding_changed_before_save": true, "database_files_changed": {"issuer": true, "registry": true}, "journals_after_kill": {"issuer": {"exists": false, "bytes": 0, "valid_header": false, "page_records": 0, "has_page_record": false}, "registry": {"exists": false, "bytes": 0, "valid_header": false, "page_records": 0, "has_page_record": false}}, "integrity": "ok", "uncommitted_state_matches_baseline": null, "original_enrollment_retry": "unknown_offer", "fresh_index": 2, "fresh_proof_accepted": true, "proof_replay_rejected": true, "recovery": "in_place_rw_attach", "power_loss_tested": false}
+ok
+test_issuer_save_is_rolled_back_after_process_kill (test_issuer_crash.IssuerCrashTests.test_issuer_save_is_rolled_back_after_process_kill) ... {"check": "issuer_transaction_checkpoint", "requested_checkpoint": "after_issuer_save", "sqlite": "3.49.1", "padding_bytes_per_state": 262144, "padding_changed_before_save": true, "checkpoint": "after_issuer_save", "pid": 3904, "in_transaction": true, "transaction_observed_at": "checkpoint", "connection_closed": false, "completed_saves": ["issuer"], "settings": {"issuer": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}}, "journals": {"issuer": {"exists": true, "bytes": 18944, "valid_header": true, "page_records": 2, "has_page_record": true}, "registry": {"exists": false, "bytes": 0, "valid_header": false, "page_records": 0, "has_page_record": false}}, "database_files_changed": {"issuer": true, "registry": false}, "issued_index": null}
+{"check": "issuer_transaction_process_termination", "checkpoint": "after_issuer_save", "pid": 3904, "exitcode": -15, "sqlite": "3.49.1", "in_transaction": true, "transaction_observed_at": "checkpoint", "completed_saves": ["issuer"], "settings": {"issuer": {"cache_size": 1, "cache_spill": 1, "journal_mode": "delete", "synchronous": 2}}, "padding_bytes_per_state": 262144, "padding_changed_before_save": true, "database_files_changed": {"issuer": true, "registry": false}, "journals_after_kill": {"issuer": {"exists": true, "bytes": 18944, "valid_header": true, "page_records": 2, "has_page_record": true}, "registry": {"exists": false, "bytes": 0, "valid_header": false, "page_records": 0, "has_page_record": false}}, "integrity": "ok", "uncommitted_state_matches_baseline": true, "original_enrollment_retry": "issued_original_index", "fresh_index": 2, "fresh_proof_accepted": true, "proof_replay_rejected": true, "recovery": "in_place_rw_attach", "power_loss_tested": false}
+ok
+test_duplicate_json_rejected (test_policy.InputTests.test_duplicate_json_rejected) ... ok
+test_json_must_be_object (test_policy.InputTests.test_json_must_be_object) ... ok
+test_json_size_limit (test_policy.InputTests.test_json_size_limit) ... ok
+test_nonfinite_json_rejected (test_policy.InputTests.test_nonfinite_json_rejected) ... ok
+test_accept_then_reject_replay (test_policy.PolicyTests.test_accept_then_reject_replay) ... ok
+test_backwards_clock_is_rejected (test_policy.PolicyTests.test_backwards_clock_is_rejected) ... ok
+test_bad_proof_does_not_consume (test_policy.PolicyTests.test_bad_proof_does_not_consume) ... ok
+test_callback_exception_rolls_back (test_policy.PolicyTests.test_callback_exception_rolls_back) ... ok
+test_challenges_are_distinct (test_policy.PolicyTests.test_challenges_are_distinct) ... ok
+test_concurrent_replay_only_one_acceptance (test_policy.PolicyTests.test_concurrent_replay_only_one_acceptance) ... ok
+test_date_encoding (test_policy.PolicyTests.test_date_encoding) ... ok
+test_exact_deadline_is_expired (test_policy.PolicyTests.test_exact_deadline_is_expired) ... ok
+test_invalid_ttl (test_policy.PolicyTests.test_invalid_ttl) ... ok
+test_policy_has_two_pinned_predicates (test_policy.PolicyTests.test_policy_has_two_pinned_predicates) ... ok
+test_replay_state_survives_restart (test_policy.PolicyTests.test_replay_state_survives_restart) ... ok
+test_truthy_non_boolean_callback_rejected (test_policy.PolicyTests.test_truthy_non_boolean_callback_rejected) ... ok
+test_unknown_request (test_policy.PolicyTests.test_unknown_request) ... ok
+test_wrong_audience_does_not_consume (test_policy.PolicyTests.test_wrong_audience_does_not_consume) ... ok
+test_wrong_context_prevents_crypto_callback (test_policy.PolicyTests.test_wrong_context_prevents_crypto_callback) ... ok
+test_wrong_session_does_not_consume (test_policy.PolicyTests.test_wrong_session_does_not_consume) ... ok
+test_additional_identity_value_rejected (test_policy.ShapeTests.test_additional_identity_value_rejected) ... ok
+test_boolean_index_rejected (test_policy.ShapeTests.test_boolean_index_rejected) ... ok
+test_extra_envelope_field_rejected (test_policy.ShapeTests.test_extra_envelope_field_rejected) ... ok
+test_malformed_input_rejected (test_policy.ShapeTests.test_malformed_input_rejected) ... ok
+test_minimal_shape_only (test_policy.ShapeTests.test_minimal_shape_only) ... ok
+test_missing_predicate_rejected (test_policy.ShapeTests.test_missing_predicate_rejected) ... ok
+test_mixed_credentials_rejected (test_policy.ShapeTests.test_mixed_credentials_rejected) ... ok
+test_revocation_not_silently_supported (test_policy.ShapeTests.test_revocation_not_silently_supported) ... ok
+test_self_attestation_rejected (test_policy.ShapeTests.test_self_attestation_rejected) ... ok
+test_unknown_issuer (test_policy.ShapeTests.test_unknown_issuer) ... ok
+test_authentication_and_cookie_flags (test_service.ServiceTests.test_authentication_and_cookie_flags) ... ok
+test_client_cannot_override_policy_session_or_issuer (test_service.ServiceTests.test_client_cannot_override_policy_session_or_issuer) ... ok
+test_concurrent_replay_has_exactly_one_success (test_service.ServiceTests.test_concurrent_replay_has_exactly_one_success) ... ok
+test_consent_is_bound_to_exact_request (test_service.ServiceTests.test_consent_is_bound_to_exact_request) ... ok
+test_consent_required_even_for_externally_created_valid_proof (test_service.ServiceTests.test_consent_required_even_for_externally_created_valid_proof) ... ok
+test_cross_session_request_and_proof_rejected (test_service.ServiceTests.test_cross_session_request_and_proof_rejected) ... ok
+test_csrf_origin_and_host_rejection (test_service.ServiceTests.test_csrf_origin_and_host_rejection) ... ok
+test_expired_request_is_removed_from_memory_and_database (test_service.ServiceTests.test_expired_request_is_removed_from_memory_and_database) ... ok
+test_login_and_session_quotas (test_service.ServiceTests.test_login_and_session_quotas) ... ok
+test_login_rotation_and_logout_invalidate_old_requests (test_service.ServiceTests.test_login_rotation_and_logout_invalidate_old_requests) ... ok
+test_non_loopback_binding_refused (test_service.ServiceTests.test_non_loopback_binding_refused) ... ok
+test_proof_cannot_be_moved_to_another_approved_request (test_service.ServiceTests.test_proof_cannot_be_moved_to_another_approved_request) ... ok
+test_session_expiring_during_real_verification_rolls_back (test_service.ServiceTests.test_session_expiring_during_real_verification_rolls_back) ... ok
+test_session_expiry (test_service.ServiceTests.test_session_expiry) ... ok
+test_static_routes_are_allowlisted_and_no_cache (test_service.ServiceTests.test_static_routes_are_allowlisted_and_no_cache) ... ok
+test_strict_json_size_and_content_type (test_service.ServiceTests.test_strict_json_size_and_content_type) ... ok
+test_tampered_proof_does_not_consume_request (test_service.ServiceTests.test_tampered_proof_does_not_consume_request) ... ok
+test_valid_proof_no_identity_values_and_replay_rejection (test_service.ServiceTests.test_valid_proof_no_identity_values_and_replay_rejection) ... ok
+test_expected_failure_is_not_relabelled_as_success (test_split_benchmark.SplitBenchmarkEvidenceTests.test_expected_failure_is_not_relabelled_as_success) ... ok
+test_failed_measurement_retains_partial_results_without_exception_secrets (test_split_benchmark.SplitBenchmarkEvidenceTests.test_failed_measurement_retains_partial_results_without_exception_secrets) ... ok
+test_invalid_counts_and_existing_evidence_do_not_start_measurement (test_split_benchmark.SplitBenchmarkEvidenceTests.test_invalid_counts_and_existing_evidence_do_not_start_measurement) ... ok
+test_one_failed_quota_probe_preserves_all_probe_observations (test_split_benchmark.SplitBenchmarkEvidenceTests.test_one_failed_quota_probe_preserves_all_probe_observations) ... ok
+test_bearer_tokens_are_origin_local_and_request_boundary_is_strict (test_split_service.SplitServiceTests.test_bearer_tokens_are_origin_local_and_request_boundary_is_strict) ... ok
+test_completed_requests_and_reviews_free_session_capacity (test_split_service.SplitServiceTests.test_completed_requests_and_reviews_free_session_capacity) ... ok
+test_denial_is_terminal_and_http_sessions_own_requests (test_split_service.SplitServiceTests.test_denial_is_terminal_and_http_sessions_own_requests) ... ok
+test_denied_and_abandoned_requests_can_be_replaced_at_capacity (test_split_service.SplitServiceTests.test_denied_and_abandoned_requests_can_be_replaced_at_capacity) ... ok
+test_login_rate_limit_and_logout_invalidate_token (test_split_service.SplitServiceTests.test_login_rate_limit_and_logout_invalidate_token) ... ok
+test_logout_succeeds_when_session_and_global_quotas_are_full (test_split_service.SplitServiceTests.test_logout_succeeds_when_session_and_global_quotas_are_full) ... ok
+test_real_proof_needs_wallet_approval_and_verifier_needs_no_private_store (test_split_service.SplitServiceTests.test_real_proof_needs_wallet_approval_and_verifier_needs_no_private_store) ... ok
+test_replacement_preserves_foreign_requests_and_rolls_back_on_failure (test_split_service.SplitServiceTests.test_replacement_preserves_foreign_requests_and_rolls_back_on_failure) ... ok
+test_revocation_stale_request_reissue_and_key_rotation (test_split_service.SplitServiceTests.test_revocation_stale_request_reissue_and_key_rotation) ... ok
+test_running_services_require_wallet_repair_after_verifier_reset (test_split_service.SplitServiceTests.test_running_services_require_wallet_repair_after_verifier_reset) ... ok
+test_session_expiring_during_native_verification_does_not_consume_request (test_split_service.SplitServiceTests.test_session_expiring_during_native_verification_does_not_consume_request) ... ok
+test_two_cli_processes_verify_after_private_stores_are_removed (test_split_service.SplitServiceTests.test_two_cli_processes_verify_after_private_stores_are_removed) ... ok
+test_approval_is_single_use_and_expired_review_cannot_approve (test_split_wallet.SplitWalletTests.test_approval_is_single_use_and_expired_review_cannot_approve) ... ok
+test_authentic_but_extra_disclosure_request_is_refused (test_split_wallet.SplitWalletTests.test_authentic_but_extra_disclosure_request_is_refused) ... ok
+test_backup_does_not_restore_revocations_or_reuse_indices (test_split_wallet.SplitWalletTests.test_backup_does_not_restore_revocations_or_reuse_indices) ... ok
+test_backup_missing_current_key_refuses_issuance_and_foreign_backup (test_split_wallet.SplitWalletTests.test_backup_missing_current_key_refuses_issuance_and_foreign_backup) ... ok
+test_compromised_key_stays_revoked_after_restore (test_split_wallet.SplitWalletTests.test_compromised_key_stays_revoked_after_restore) ... ok
+test_concurrent_replay_and_restart (test_split_wallet.SplitWalletTests.test_concurrent_replay_and_restart) ... ok
+test_consent_tampering_and_final_refusal (test_split_wallet.SplitWalletTests.test_consent_tampering_and_final_refusal) ... ok
+test_device_reset_invalidates_requests_and_old_pairing (test_split_wallet.SplitWalletTests.test_device_reset_invalidates_requests_and_old_pairing) ... ok
+test_issuance_request_is_bound_to_wallet_link_secret (test_split_wallet.SplitWalletTests.test_issuance_request_is_bound_to_wallet_link_secret) ... ok
+test_issuer_transaction_rolls_back_both_stores (test_split_wallet.SplitWalletTests.test_issuer_transaction_rolls_back_both_stores) ... ok
+test_missing_or_empty_nonrevocation_subproof_does_not_consume_request (test_split_wallet.SplitWalletTests.test_missing_or_empty_nonrevocation_subproof_does_not_consume_request) ... ok
+test_registry_rollback_detected_even_after_refusal (test_split_wallet.SplitWalletTests.test_registry_rollback_detected_even_after_refusal) ... ok
+test_revocation_rejects_stale_and_fresh_native_proofs (test_split_wallet.SplitWalletTests.test_revocation_rejects_stale_and_fresh_native_proofs) ... ok
+test_revoked_credential_cannot_omit_nonrevocation_subproof (test_split_wallet.SplitWalletTests.test_revoked_credential_cannot_omit_nonrevocation_subproof) ... ok
+test_rotation_overlap_rollback_retirement_and_reissue (test_split_wallet.SplitWalletTests.test_rotation_overlap_rollback_retirement_and_reissue) ... ok
+test_same_revision_equivocation_and_missing_registry_fail_closed (test_split_wallet.SplitWalletTests.test_same_revision_equivocation_and_missing_registry_fail_closed) ... ok
+test_separate_cli_processes_and_private_state_absent_from_verifier (test_split_wallet.SplitWalletTests.test_separate_cli_processes_and_private_state_absent_from_verifier) ... ok
+test_weaker_proof_tampering_and_expiry_do_not_consume (test_split_wallet.SplitWalletTests.test_weaker_proof_tampering_and_expiry_do_not_consume) ... ok
+
+----------------------------------------------------------------------
+Ran 146 tests in 97.327s
+
+OK
