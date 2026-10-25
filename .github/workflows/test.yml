@@ -1,12 +1,60 @@
 name: ZK license demonstration tests
 on:
   push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '.beads/**'
+      - '*.md'
+      - '.gitignore'
+      - 'LICENSE*'
   pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '.beads/**'
+      - '*.md'
+      - '.gitignore'
+      - 'LICENSE*'
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  # PR diffs are cumulative; main push diffs are incremental, so keep distinct SHAs.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
 jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      tests: ${{ steps.scope.outputs.tests }}
+      python: ${{ steps.scope.outputs.python }}
+      js: ${{ steps.scope.outputs.js }}
+      browser: ${{ steps.scope.outputs.browser }}
+      proof: ${{ steps.scope.outputs.proof }}
+      serial: ${{ steps.scope.outputs.serial }}
+      concurrent: ${{ steps.scope.outputs.concurrent }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select affected validation
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          FULL_RUN: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          if [ "$FULL_RUN" = true ]; then
+            python scripts/ci_scope.py --full
+          else
+            python scripts/ci_scope.py --base "$BASE_SHA"
+          fi
   test:
+    needs: changes
+    if: needs.changes.outputs.python == 'true' || needs.changes.outputs.js == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -20,27 +68,42 @@ jobs:
       REQUIRE_CRYPTO: "1"
       REQUIRE_CARD_CRYPTO: "1"
       PYTHONUTF8: "1"
+      PYTHONPATH: tests
+      TEST_MODULES: ${{ needs.changes.outputs.tests }}
       SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+        if: needs.changes.outputs.python == 'true'
         with:
           python-version: "3.12"
       - name: Install pinned real cryptographic backend
+        if: needs.changes.outputs.python == 'true'
         run: python -m pip install --require-hashes -r requirements-ingestion.txt
       - name: Record environment
+        if: needs.changes.outputs.python == 'true'
         run: |
           mkdir -p artifacts/validation
           python -c 'import json, platform, sqlite3; from importlib.metadata import version; print(json.dumps(dict(python=platform.python_version(), platform=platform.platform(), machine=platform.machine(), sqlite=sqlite3.sqlite_version, anoncreds=version("anoncreds"), cryptography=version("cryptography"), cffi=version("cffi"), pycparser=version("pycparser"))))' | tee artifacts/validation/environment.json
       - name: Policy and real cryptographic tests (missing backend is an error)
-        run: python -W error -m unittest discover -s tests -v 2>&1 | tee artifacts/validation/tests.log
+        if: needs.changes.outputs.tests != ''
+        run: |
+          read -r -a selected <<< "$TEST_MODULES"
+          python -W error -m unittest -v "${selected[@]}" 2>&1 | tee artifacts/validation/tests.log
       - name: Split Web state tests (mocked DOM and transport)
-        run: node --test tests/test_split_web.mjs 2>&1 | tee artifacts/validation/split-web-state.log
+        if: needs.changes.outputs.js == 'true'
+        run: |
+          mkdir -p artifacts/validation
+          node --version
+          node --test tests/test_split_web.mjs 2>&1 | tee artifacts/validation/split-web-state.log
       - name: Generate an actual proof and local report
+        if: needs.changes.outputs.proof == 'true'
         run: python demo.py run --out artifacts/ci-run | tee artifacts/validation/demo.log
       - name: Independent verifier
+        if: needs.changes.outputs.proof == 'true'
         run: python demo.py verify --out artifacts/ci-run | tee artifacts/validation/verify.log
       - name: Replay must fail for the expected reason
+        if: needs.changes.outputs.proof == 'true'
         shell: bash
         run: |
           if python demo.py verify --out artifacts/ci-run 2>artifacts/replay-error.txt; then
@@ -49,8 +112,10 @@ jobs:
           fi
           grep -q already_used artifacts/replay-error.txt
       - name: Measure repeated serial proofs
+        if: needs.changes.outputs.serial == 'true'
         run: python benchmark.py --runs 30 --warmups 3 --out artifacts/validation/benchmark.json
       - name: Measure bounded concurrent split Web flows and quotas
+        if: needs.changes.outputs.concurrent == 'true'
         run: python -W error split_benchmark.py --out artifacts/validation/split-benchmark.json
       - name: Retain validation evidence
         if: always()
@@ -65,6 +130,8 @@ jobs:
           retention-days: 14
 
   browser:
+    needs: changes
+    if: needs.changes.outputs.browser == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
