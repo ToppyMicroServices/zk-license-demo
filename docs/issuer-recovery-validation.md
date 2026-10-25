@@ -87,3 +87,21 @@ filesystem corruption, network storage, loss of the public registry, or
 reconciliation with a real provider. In the committed case the credential result
 can be lost with the process; the consumed offer cannot be retried, so a fresh
 offer is required. This is regression evidence, not production recovery approval.
+
+## Merge review, 2026-10-25
+
+Reviewed `d88d4313f90f2532c83d8422ccd1f99a5c13cc9e..4e64930b9d468f078794aa4aa9104fc8f6e19c7f`.
+No blocking correctness finding remained. Source review covered the real issuance
+path, child termination and cleanup, in-place recovery, index/offer checks and
+the documented limits. Retained log hashes, checkpoint records and test counts
+matched the evidence manifest. This was internal review, not an external audit.
+
+The final PR head passed [hosted run 39585644108](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/39585644108):
+146 Python tests on Ubuntu (48.357 seconds) and Windows (77.209 seconds), five
+JS tests on each, and three Chromium scenarios (12.239 seconds). Proof/replay
+checks, serial/concurrent measurements and CodeQL passed. No local test,
+installation, build, demo or browser execution was performed for this review.
+
+[PR #10](https://github.com/ToppyMicroServices/zk-license-demo/pull/10) merged as
+`7691cebe6841550d5ab14d6fb3323618dadc7752`. The production and real-provider limits
+above remain unchanged.

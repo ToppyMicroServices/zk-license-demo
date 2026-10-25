@@ -149,7 +149,7 @@ SDK採用の場合も、鍵の提供・更新責任と対象OSを契約・現行
 マイナポータルの[本人向け操作マニュアル](https://img.myna.go.jp/manual/03-15/0232.html)には、
 連携後にログインして運転免許情報を表示する手順がある。
 一方、[民間連携向けAPI一覧](https://developers.digital.go.jp/documents/mynaportal-api/specification/)
-（2026-10-08更新）と、自己情報取得APIの
+（2026-10-19更新、2026-10-25確認）と、自己情報取得APIの
 [取得情報一覧](https://developers.digital.go.jp/documents/mynaportal-api/related-contents/self-infomation-list/)
 （令和8年6月時点の表）では、運転免許や停止・取消しの情報項目は確認できなかった。
 本人向けの表示機能から、同じ情報を民間APIで取得できるとは判断しない。
