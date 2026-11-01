@@ -100,3 +100,21 @@ after the hosted artifacts expire. The downloaded ZIP hashes matched the hashes
 returned by GitHub. Windows source hashes reflect its checkout line endings.
 No test, package installation, demo, build or browser execution for this task
 used the user's PC.
+
+## Inputs still needed for production evaluation
+
+Beads `zkl-9w9` remains open. Before designing a production load or recovery
+evaluation, the service owner needs to agree the following inputs. No values
+have been selected from the short synthetic measurements above.
+
+| Input to agree | Gap in the existing evidence |
+| --- | --- |
+| Availability window, acceptable failures and provider-outage behavior | Loopback success does not measure service availability. A provider outage or unknown licence state needs an explicit service outcome. |
+| Sustained request rate, concurrency, traffic mix and latency target | Four-client batches do not establish sustained capacity. Production TLS, identity and status-provider latency are absent. |
+| Recovery time and acceptable data loss for each store | [Issuer recovery](issuer-recovery-validation.md) covers selected process-kill boundaries. Existing backup recovery assumes the current public registry survives; registry loss, power loss and provider reconciliation remain untested. |
+| Retention/deletion rules and responsible deployment operator | The real-card input, identity result, consent record, logs and backups need defined owners and retention periods. The demo's local storage is not a reviewed deployment or retention policy. |
+
+Record those decisions and the chosen deployment configuration before assigning
+pass/fail thresholds or expanding the experiments. This identifies the next
+production decisions; it does not approve a deployment or close the real-provider
+dependencies in the [integration record](real-license-integration.md).

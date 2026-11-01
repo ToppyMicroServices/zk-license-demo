@@ -12,6 +12,13 @@ Review the immutable source snapshot
 is the validation reference for that revision. Keep the source SHA with any
 findings; later changes need their own review or an explicit comparison.
 
+The 2026-11-01 Git comparison from that baseline to
+`0150e3f4862431080ceb6588091b2c7127671d1e` found no changes to application
+modules, existing application tests, dependency files or Web assets. Changes
+were confined to documentation, Beads, CI configuration, the test selector and
+its tests, and repository instructions/ignore rules. This comparison is not a
+new test execution; the original results retain their original conditions.
+
 Start with the [threat model](threat-model.md) and the
 [separate Wallet design](split-wallet.md). Existing evidence includes
 [browser communication and consent](split-web-validation.md),
@@ -21,10 +28,14 @@ Start with the [threat model](threat-model.md) and the
 Those records identify their own tested revisions and limits; older evidence
 must not be relabelled as execution of this baseline.
 
-Any new execution must use GitHub-hosted runners, not the user's PC. The existing
-workflow is `.github/workflows/test.yml`; it covers Ubuntu and Windows Python
-tests and separate Ubuntu Chromium scenarios. Use synthetic inputs only. Retain
-the reviewed SHA, runner details, commands, results and sanitized reproduction
+Start locally with tests affected by the proposed changes. Use hosted runners
+for platform or runtime conditions not established locally. Do not start
+application tests or performance measurements for document-only changes.
+Reuse a prior result only when relevant source/test bytes, fixtures,
+dependencies, OS/runtime, commands and configuration match. The existing
+workflow, `.github/workflows/test.yml`, selects affected Ubuntu and Windows
+Python tests and separate Ubuntu Chromium scenarios. Use synthetic inputs only.
+Retain the reviewed SHA, environment, commands, results and sanitized reproduction
 evidence. Do not publish credentials, private stores, tokens or real personal data.
 
 ## Proposed scope
