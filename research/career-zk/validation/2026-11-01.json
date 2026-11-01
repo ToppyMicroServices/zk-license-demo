@@ -1,0 +1,203 @@
+{
+  "schema": "career-zk/validation/v1",
+  "date": "2026-11-01",
+  "base_commit": "afcfd74cc1c8f50c6ed689afa5eaa347f66d099a",
+  "benchmark": {
+    "schema": "career-zk/benchmark/v1",
+    "created_utc": "2026-11-01T06:04:35Z",
+    "go": "go1.27.3",
+    "os": "darwin",
+    "arch": "arm64",
+    "logical_cpus": 8,
+    "gomaxprocs": 8,
+    "dependencies": {
+      "github.com/bits-and-blooms/bitset": "v1.24.6",
+      "github.com/blang/semver/v4": "v4.0.0",
+      "github.com/consensys/gnark": "v0.16.4",
+      "github.com/consensys/gnark-crypto": "v0.21.1-0.20260913224755-1409fe592052",
+      "github.com/fxamacker/cbor/v2": "v2.9.2",
+      "github.com/google/pprof": "v0.0.0-20260802141513-ef3492d7dac3",
+      "github.com/mattn/go-colorable": "v0.1.15",
+      "github.com/mattn/go-isatty": "v0.0.24",
+      "github.com/ronanh/intcomp": "v1.1.1",
+      "github.com/rs/zerolog": "v1.35.1",
+      "github.com/x448/float16": "v0.8.4",
+      "golang.org/x/crypto": "v0.54.0",
+      "golang.org/x/sync": "v0.22.0",
+      "golang.org/x/sys": "v0.47.0"
+    },
+    "policy": "python-production-days/v1",
+    "setup_id": "8b3f5b9570e790a054413552f7eb2bed335ebf9aebeddc6223bd024cff8ece80",
+    "max_records": 3,
+    "interpretations": 8,
+    "constraints": 18291,
+    "compile_and_setup_ms": 2085.162,
+    "peak_memory": "not measured internally; use /usr/bin/time -l on macOS or -v on Linux",
+    "measurements": [
+      {
+        "case": "yes",
+        "run": 1,
+        "answer": "YES",
+        "prove_with_host_checks_and_self_verify_ms": 174.228,
+        "verify_ms": 1.261,
+        "proof_bytes": 164,
+        "response_json_bytes": 395
+      },
+      {
+        "case": "yes",
+        "run": 2,
+        "answer": "YES",
+        "prove_with_host_checks_and_self_verify_ms": 178.466,
+        "verify_ms": 1.381,
+        "proof_bytes": 164,
+        "response_json_bytes": 395
+      },
+      {
+        "case": "yes",
+        "run": 3,
+        "answer": "YES",
+        "prove_with_host_checks_and_self_verify_ms": 202.774,
+        "verify_ms": 1.296,
+        "proof_bytes": 164,
+        "response_json_bytes": 395
+      },
+      {
+        "case": "no",
+        "run": 1,
+        "answer": "NO",
+        "prove_with_host_checks_and_self_verify_ms": 171.999,
+        "verify_ms": 1.368,
+        "proof_bytes": 164,
+        "response_json_bytes": 394
+      },
+      {
+        "case": "no",
+        "run": 2,
+        "answer": "NO",
+        "prove_with_host_checks_and_self_verify_ms": 153.098,
+        "verify_ms": 1.286,
+        "proof_bytes": 164,
+        "response_json_bytes": 394
+      },
+      {
+        "case": "no",
+        "run": 3,
+        "answer": "NO",
+        "prove_with_host_checks_and_self_verify_ms": 165.432,
+        "verify_ms": 1.413,
+        "proof_bytes": 164,
+        "response_json_bytes": 395
+      },
+      {
+        "case": "undetermined",
+        "run": 1,
+        "answer": "UNDETERMINED",
+        "prove_with_host_checks_and_self_verify_ms": 177.606,
+        "verify_ms": 1.716,
+        "proof_bytes": 164,
+        "response_json_bytes": 404
+      },
+      {
+        "case": "undetermined",
+        "run": 2,
+        "answer": "UNDETERMINED",
+        "prove_with_host_checks_and_self_verify_ms": 168.312,
+        "verify_ms": 1.215,
+        "proof_bytes": 164,
+        "response_json_bytes": 405
+      },
+      {
+        "case": "undetermined",
+        "run": 3,
+        "answer": "UNDETERMINED",
+        "prove_with_host_checks_and_self_verify_ms": 208.685,
+        "verify_ms": 1.409,
+        "proof_bytes": 164,
+        "response_json_bytes": 405
+      },
+      {
+        "case": "incomplete",
+        "run": 1,
+        "answer": "UNDETERMINED",
+        "prove_with_host_checks_and_self_verify_ms": 172.786,
+        "verify_ms": 1.311,
+        "proof_bytes": 164,
+        "response_json_bytes": 405
+      },
+      {
+        "case": "incomplete",
+        "run": 2,
+        "answer": "UNDETERMINED",
+        "prove_with_host_checks_and_self_verify_ms": 159.926,
+        "verify_ms": 2.142,
+        "proof_bytes": 164,
+        "response_json_bytes": 404
+      },
+      {
+        "case": "incomplete",
+        "run": 3,
+        "answer": "UNDETERMINED",
+        "prove_with_host_checks_and_self_verify_ms": 181.913,
+        "verify_ms": 2.323,
+        "proof_bytes": 164,
+        "response_json_bytes": 404
+      }
+    ]
+  },
+  "process_resources": {
+    "status": "passed",
+    "method": "resource.getrusage(RUSAGE_CHILDREN); one compiled child process",
+    "platform": "darwin",
+    "elapsed_seconds": 4.303384124999866,
+    "peak_rss_bytes": 88784896,
+    "binary_sha256": "1737ba58be00cd5428a7789990440faeecde2cca1f18c288b0e4b0e4b8dc13ef",
+    "source_sha256": {
+      "career_test.go": "d2715e6ca4c0a312398b32e2e13eae4ddad6f9f017d8e85ea92231001f43e290",
+      "circuit.go": "15446aebf6ea4b4979f153c1cf333a2c24c17c632c3ff379031d9adbd0244e10",
+      "files.go": "6e9d4f5682766a1106f6bfd539672ecbd35e2c9d34f00ddf9578910ec4f64078",
+      "fixtures.go": "306c3902dab0b2b445c8d58b765afd6af4792acf76a4160373cda0343ae5c2dd",
+      "model.go": "8ea91cf8470e3901221b219eeaa9ee9b1705fb7989dd00a1af536e9cbba9f033",
+      "proof.go": "ce5781ca54ffdf7df158a1b953374f1788a7538efbfffadeb075a7c1e4342fed",
+      "cmd/career-zk/main.go": "011bce818fda82ee3249c14c4900ff901c2f01462e0b942a7fdd39d903c885c3",
+      "go.mod": "cbb0cadce833cf3f39750e88addd19742dac85c5d6e45da48c541f017458f215",
+      "go.sum": "38122e547ac270b9cdaf2c75535b1a3c1bf039879545f7a961654ed6c9d553fa",
+      "scripts/measure.py": "91be93dbad56a5a42746a0ac10771f3bf2775cc8bd5f39a6f01219317b9c3d71"
+    }
+  },
+  "checks": {
+    "go_tests": {
+      "command": "go test -count=1 -json -coverprofile=artifacts/coverage.out ./...",
+      "passed": true,
+      "test_functions": 7,
+      "leaf_cases": 134,
+      "deterministic_random_interval_cases": 40,
+      "library_statement_coverage_percent": 74.3,
+      "note": "CLI is exercised by subprocess, outside the library coverage profile; cases include circuit-solver tests, not only full proofs."
+    },
+    "go_vet": "passed",
+    "go_mod_verify": "passed",
+    "existing_python": {
+      "python": "3.14.10",
+      "command": "REQUIRE_CRYPTO=1 .venv/bin/python -W error -m unittest discover -s tests -v",
+      "total": 86,
+      "initial_passed": 68,
+      "initial_errors": 18,
+      "initial_error_reason": "sandbox denied loopback bind (PermissionError)",
+      "http_retry_command": "REQUIRE_CRYPTO=1 .venv/bin/python -W error -m unittest discover -s tests -p test_service.py -v",
+      "http_retry_passed": 18,
+      "combined_passed": 86
+    },
+    "peak_rss_note": "/usr/bin/time -l could not read kern.clockrate under the sandbox. Final run used resource.getrusage in a fresh Python process; this run followed the test processes.",
+    "not_run": [
+      "hosted CI",
+      "Linux or Windows execution",
+      "production setup ceremony",
+      "independent security audit"
+    ]
+  },
+  "local_log_sha256": {
+    "tests.jsonl": "e34c27b938bd91287fb8ac7793bfa3fe8aadcd54382739f0308834f78615ecca",
+    "python-regression.log": "24609e050ef3acc63ccf3bf85d36bfbceb8c5f9dd09fdba1ca506d92ff0bd7a9",
+    "python-http-regression.log": "08df119c59299713b26aaaf60587e72bb4046f634985920aa4a1cf01bf9cabb4"
+  }
+}

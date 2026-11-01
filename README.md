@@ -80,6 +80,13 @@ python service.py
 警察の停止・取消し照会には接続していません。
 [分離版の実行手順と制限](docs/split-wallet.md)を参照してください。
 
+### 経歴の条件を証明する独立試作
+
+[経歴ZK試作](research/career-zk/README.md)は、署名付きの架空の経歴から、
+指定期間のPython本番運用経験がN日以上かをYES・NO・UNDETERMINEDで証明します。
+Go / gnarkを使う独立モジュールで、実証明・改ざん拒否・別プロセス検証までローカルで確認しています。
+[English](research/career-zk/README.en.md) / [検証記録](research/career-zk/validation.md)。
+
 ### 繰り返し性能評価
 
 ```bash

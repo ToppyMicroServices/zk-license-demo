@@ -1,0 +1,116 @@
+Codex Cloud development brief: career-query ZK research prototype
+Prepared: 2026-10-29
+
+Status: superseded by local implementation on 2026-11-01 at the user's request.
+Implementation: research/career-zk/
+Validation: research/career-zk/validation.md
+The text below preserves the original development brief; no Cloud task was
+needed for this milestone.
+Repository: ToppyMicroServices/zk-license-demo
+Base branch: feat/separate-wallet-lifecycle
+Verified remote base: afcfd74cc1c8f50c6ed689afa5eaa347f66d099a
+At preparation time, remote main was 50ac53a592265cbcf62b4b7e38e82d75d7dcee8d.
+Recheck the chosen branch before submission. Start a separate reviewable branch
+from the selected base; do not overwrite or merge existing branches.
+
+User objective
+
+Build a small, executable research prototype that answers questions about a
+person's career without disclosing the underlying career record. Investigate
+whether proving that an answer is stable across an agreed finite set of
+admissible interpretations offers a useful research contribution. Novelty is
+unconfirmed. Do not claim a new cryptographic primitive or that general ZK
+queries over career credentials are new.
+
+Current project context
+
+Inspect repository instructions and the actual checkout before editing.
+The selected branch already contains an AnonCreds license demo, a local HTTP
+interface/API with consent, and separate issuer/wallet/verifier processes with
+synthetic credential lifecycle operations. Preserve these implementations.
+Their existing predicate verification does not prove arbitrary career queries.
+Add the research prototype in an independent directory and keep dependencies
+isolated where practical. Do not clean up unrelated worktree or Beads files.
+Use bd for task tracking when available; do not change its backend or perform
+an unrelated synchronization/migration to carry out this task.
+
+First milestone
+
+Use one structured question family: as of an agreed date, does this person have
+at least N days of Python production-operations experience within a stated
+time window? Project participation alone is not proof of operational duties.
+Use only signed synthetic evidence. Arbitrary natural-language interpretation,
+real resumes, JPKI integration, and external LLM/API services are outside this
+milestone. Implement the prototype rather than stopping at a design document.
+
+Proof relation and result semantics
+
+1. Define a small authenticated record format, trusted issuers chosen by the
+   verifier, subject consistency, evidence validity, and a precisely scoped
+   completeness declaration. Do not interpret missing records as absence of
+   experience. A completeness declaration is an issuer assertion within a
+   scope, not proof of all facts about a person's real career.
+2. Derive every admissible interpretation deterministically from the evidence
+   and the verifier-agreed policy. Initially bound inputs to three records and
+   eight interpretations. The prover cannot omit unfavorable interpretations
+   or choose a weaker policy. Reject empty sets, invalid dates, unsupported
+   inputs, and bounds overflow as errors.
+3. Evaluate all interpretations. Merge overlapping qualifying intervals before
+   counting days, and define date boundaries. YES means all interpretations
+   satisfy the predicate. NO requires all to fail and certified complete
+   coverage of the queried scope. Disagreement, or missing coverage that could
+   change the answer, gives UNDETERMINED. Sufficient certified positive evidence
+   can support YES without assuming that the rest of the career is complete.
+   Invalid evidence, proof failure, and execution failure are errors, never NO
+   or UNDETERMINED masquerading as successful verification.
+4. Use genuine ZK proof generation and cryptographic verification. Bind evidence
+   authenticity and subject consistency into the proved relation or an explicitly
+   justified binding composition; an unconstrained host-side signature check is
+   insufficient. Bind the canonical query, policy version, evaluation date,
+   issuer configuration, evidence commitment, answer, and verification context.
+   Bind any status snapshot, audience, or nonce used by the implementation.
+   The verifier must check its expected statement, not accept weaker parameters
+   supplied with the proof. Document all public inputs and possible correlation
+   or guessing from commitments. Do not claim protection from every inference
+   obtainable through repeated legitimate queries.
+
+Implementation and validation
+
+Choose a maintained backend after consulting current primary documentation.
+Explain why it fits the relation and the available Cloud resources. Pin the new
+dependencies needed by the independent prototype. Do not silently weaken the
+relation to suit a backend. Mock verifiers, development-mode receipts, and
+ordinary signed answers do not satisfy the ZK milestone. If real proving cannot
+run, leave reproducible setup and state the concrete blocker honestly.
+
+Provide separate commands for proof creation and verification, plus YES, NO,
+and UNDETERMINED fixtures. Include adversarial tests for tampered evidence or
+proofs, an untrusted issuer, mixed subjects, replaced query/policy/answer,
+omitted interpretations, an empty set, incomplete coverage, overlap, and date
+or threshold boundaries. Test status and request substitution if implemented.
+
+Run the new meaningful tests and the relevant existing regression checks.
+Follow the existing affected-test policy and use broader checks when dependency
+impact is uncertain. Do not reuse historical test counts or claim unrun checks.
+Record commands, versions, input bounds, proof sizes, proving/verifying times,
+and peak memory when measurable. Separate benchmark failures from results.
+
+Write concise Japanese usage and design documentation with an English summary.
+Separate implemented behavior, measured results, trust assumptions, and open
+research claims. Compare the finite-interpretation guarantee with prior work;
+if the distinction is already covered, say so and propose a narrower research
+question. Retain the useful executable prototype without inventing novelty.
+
+Primary-source starting points to verify before making precise claims
+
+https://ethz.ch/content/dam/ethz/special-interest/infk/inst-infsec/appliedcrypto/education/theses/masters-thesis_damiano-mombelli.pdf
+https://arxiv.org/abs/2606.03771
+https://ceur-ws.org/Vol-4085/paper19.pdf
+https://eprint.iacr.org/2004/130.pdf
+
+Completion boundary
+
+Return a reviewable change set and the actual validation results in Japanese.
+Do not publish a site, merge into main, use real personal data, or purchase
+services. Use concise English Conventional Commit messages if committing.
+No personal vault secret is expected for this synthetic development milestone.
