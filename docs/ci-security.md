@@ -30,3 +30,15 @@ changes still select full application validation.
 
 References: [CodeQL workflow options](https://docs.github.com/en/code-security/reference/code-scanning/workflow-configuration-options),
 [switching to advanced setup](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/configure-code-scanning/configuring-advanced-setup-for-code-scanning).
+
+## Validation, 2026-11-01
+
+Local actionlint 1.7.12 and 14 focused routing tests passed. After the switch,
+[CodeQL run 41285570063](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/41285570063)
+passed commit `e72cbec8be5640ef057babab08b141e7083aec25`. Both language categories
+were uploaded under `.github/workflows/codeql.yml:analyze`, without analysis
+errors or warnings. Default setup is no longer configured.
+
+[Routing validation 41285570052](https://github.com/ToppyMicroServices/zk-license-demo/actions/runs/41285570052)
+passed 14 tests on each of Ubuntu and Windows. Browser, JS state, proof/replay
+and performance executions were skipped; they are not counted as new passes.
