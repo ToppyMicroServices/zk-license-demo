@@ -15,6 +15,9 @@ ENROLLMENT = {"test_enrollment_gate", "test_enrollment_crash"}
 
 # Include subprocess entry points and shared fixtures, not only Python imports.
 RULES = {
+    # Security workflow changes are validated by CodeQL, not demo execution.
+    ".github/workflows/codeql.yml": (set(), ()),
+    "scripts/ci_scope.py": ({"test_ci_scope"}, ()),
     "card_signature.py": (ENROLLMENT | {"test_card_signature"}, ()),
     "enrollment_gate.py": (ENROLLMENT, ()),
     "request_store.py": (CORE, ("browser", "proof", "serial", "concurrent")),
@@ -70,7 +73,7 @@ def select_scope(paths, root=ROOT):
             elif name.startswith("web/"):
                 selected.add("test_service")
             else:
-                # Includes dependencies, workflows, this selector, deleted tests,
+                # Includes dependencies, other workflows, deleted tests,
                 # new runtime files and unrecognised configuration.
                 selected, flags = available, set(FLAGS)
                 break

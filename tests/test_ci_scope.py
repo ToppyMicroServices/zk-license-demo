@@ -20,12 +20,29 @@ class ScopeTests(unittest.TestCase):
 
     def test_unknown_config_and_selection_contract_require_full_checks(self):
         for path in (".github/workflows/test.yml", "requirements-ingestion.txt",
-                     "scripts/ci_scope.py", "new_runtime.py", "pyproject.toml",
+                     "new_runtime.py", "pyproject.toml",
                      "tests/__init__.py", "tests/deleted_test.py"):
             with self.subTest(path=path):
                 result = select_scope([path])
                 self.assertEqual(set(result["tests"].split()), test_modules(ROOT))
                 self.assertEqual({value for key, value in result.items() if key != "tests"}, {"true"})
+
+    def test_codeql_workflow_does_not_start_demo_validation(self):
+        result = select_scope([".github/workflows/codeql.yml", "docs/ci-security.md"])
+        self.assertEqual(set(result.values()), {"", "false"})
+        mixed = select_scope([".github/workflows/codeql.yml", "card_signature.py"])
+        self.assertEqual(mixed, select_scope(["card_signature.py"]))
+
+    def test_selector_changes_run_routing_tests_without_demo_execution(self):
+        result = select_scope(["scripts/ci_scope.py", "tests/test_ci_scope.py"])
+        self.assertEqual(result["tests"], "test_ci_scope")
+        self.assertEqual(result["python"], "true")
+        self.assertEqual({result[flag] for flag in ("js", "browser", "proof", "serial", "concurrent")},
+                         {"false"})
+        mixed = select_scope(["scripts/ci_scope.py", "request_store.py"])
+        self.assertTrue(set(select_scope(["request_store.py"])["tests"].split())
+                        <= set(mixed["tests"].split()))
+        self.assertEqual(mixed["proof"], "true")
 
     def test_card_changes_include_enrollment_crash_without_demo_checks(self):
         result = select_scope(["card_signature.py"])
